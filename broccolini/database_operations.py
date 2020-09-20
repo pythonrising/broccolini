@@ -7,7 +7,7 @@ from typing import List, Dict, Tuple, Any
 import shortuuid
 from faunadb import query as q
 from faunadb.client import FaunaClient
-from faunadb.objects import Ref
+# from faunadb.objects import Ref
 from faunadb.errors import BadRequest
 
 
@@ -76,7 +76,7 @@ class DataBaseOperations:
         client = self.get_fauna_connection()
         # database: str = kwargs["database"]
         collection_name_temp = f"test_collection_{shortuuid.uuid()}"
-        collection_name: str = kwargs["collection_name"]
+        _collection_name: str = kwargs["collection_name"]
         # return database, collection_name, client
         try:
             # conn_temp = client.query(q.paginate(Ref(collection_name, "243802585534824962")))
