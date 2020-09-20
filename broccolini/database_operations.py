@@ -6,6 +6,7 @@ import logging
 
 # from os import truncate
 from typing import List, Dict, Tuple, Any
+
 # import shortuuid
 from faunadb import query as q
 from faunadb.client import FaunaClient
