@@ -137,8 +137,11 @@ class TestDatabaseOperations:
         """Test Fauna paginate database."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path"])
         result = DataBaseOperations(client_token=client_token).fauna_paginate_database()
-        logging.debug(result)
-        # expected_type = dict
-        # expected = "id=database_conf"
-        # assert isinstance(result, expected_type)
-        # assert expected in str(result)
+        # logging.debug(result['data'])
+        # import pprint as pp
+        # pp.pprint(result['data'])
+        # dict of dict with data that has a list of links
+        expected_type = dict
+        expected = r"collection=Ref(id=databases"
+        assert isinstance(result, expected_type)
+        assert expected in str(result["data"])
