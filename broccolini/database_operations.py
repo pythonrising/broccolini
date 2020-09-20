@@ -74,73 +74,33 @@ class DataBaseOperations:
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error - read database.") from _error
 
-    # def does_collection_exist(self, **kwargs: str) -> bool:
-    #     """check for collection."""
-    #     collection_name: str = kwargs["collection_name"]
-    #     client = self.get_fauna_connection()
-    #     try:
-    #         client.query(q.get(q.collection(collection_name)))
-    #         return True
-    #     except:
-    #         return False
-    # logging.debug(conn_temp_get_collection_data)
-    # return f"collection:{collection_name}: exists"
-    # return True
-    # except (Exception) as _error:  # pragma: no cover
-    #     raise ValueError("Fauna error.") from _error
-
     def fauna_create_collection(self, **kwargs: str) -> bool:
         """Create collection."""
         client = self.get_fauna_connection()
         collection_name: str = kwargs["collection_name"]
-        # collection_exists: bool = False
         try:
             client.query(q.create_collection({"name": collection_name}))
-            # client.query(q.get(q.collection(collection_name)))
-            return True, f"collection:{collection_name}: created"
-            # else:
-            #     try:
-            #         logging.debug(collection_name)
-            #         # return client.query(q.create_collection({"name": collection_name}))
-            #     # logging.debug(collection_name)
-            #     # try:
-            #     #     return client.query(q.create_collection({"name": collection_name}))
-            # except (Exception) as _error:  # pragma: no cover
-            #     raise ValueError("Fauna error inner block.") from _error
+            return True, collection_name
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
-        # finally:
-        #     print("running before if statement")
-        #     if not collection_exists:
-        #         collection_name: str = f"test_collection_{shortuuid.uuid()}"
-        #         logging.debug(collection_name)
-        #         try:
-        #             return client.query(q.create_collection({"name": collection_name}))
-        #         except (Exception) as _error:  # pragma: no cover
-        #             raise ValueError("Fauna error.") from _error
 
+    def fauna_add_records(self, **kwargs: str) -> bool:
+        """Add records.
 
-# def fauna_add_data(self, **kwargs: str) -> bool:
-#         """Paginate collection."""
-#         client = self.get_fauna_connection()
-#         # database: str = kwargs["database"]
-#         # collection_name_temp = f"test_collection_{shortuuid.uuid()}"
-#         collection_name: str = kwargs["collection_name"]
-#         # return database, collection_name, client
-#         try:
-#             # conn_temp = client.query(q.create_collection({"name": collection_name_temp}))
-#             # conn_temp_paginate_collection = client.query(q.paginate(Ref("collections")))
-#             # conn_temp_get_collection_data = client.query(q.get(q.collection("spells")))
-#             conntemp = client.query(
-#                 q.create(
-#                     q.collection(collection_name),
-#                     {"data": {"name": "Fire Beak", "element": ["air", "fire"]}}
-#                 ))
-#             logging.debug(conntemp)
-#             return True
-#             # return conn_temp_create_data
-#         except (BadRequest) as _error:  # pragma: no cover
-#             raise ValueError("Fauna error - create data.") from _error
-
-#     indexes = client.query(q.paginate(q.indexes()))
-#     return indexes
+        input: data to add
+        input: test collection name
+        returns:
+            output: success or failure
+            output type: bool
+        """
+        _client = self.get_fauna_connection()
+        records_to_add: str = kwargs["records_to_add"]
+        return records_to_add
+        # client = self.get_fauna_connection()
+        # collection_name: str = kwargs["collection_name"]
+        # return collection_name
+        # # collection_exists: bool = False
+        # try:
+        #     client.query(q.create_collection({"name": collection_name}))
+        # except (Exception) as _error:  # pragma: no cover
+        #     raise ValueError("Fauna error.") from _error

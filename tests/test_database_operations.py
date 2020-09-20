@@ -88,22 +88,18 @@ class TestDatabaseOperations:
         )
         expected_0 = True
         expected_1 = "test_collection_"
-        logging.debug(result)
-        expected_type = tuple
-        assert isinstance(result, expected_type)
         assert result[0] == expected_0
         assert expected_1 in result[1]
 
-    # @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    # def test_fauna_create_collection_if_not_exists(return_data_dict):
-    #     """Test Fauna DB create collection if it does NOT exist."""
-    #     client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path_track_training"])
-    #     collection_name = (f"test_collection_{shortuuid.uuid()}")
-    #     # logging.debug(collection_name)
-    #     result = DataBaseOperations(client_token=client_token).fauna_create_collection(
-    #         collection_name=collection_name,
-    #     )
-    # #     # expected_type = dict
-    # #     # assert isinstance(result, expected_type)
-    #     logging.debug(result)
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_add_records(return_data_dict):
+        """Test Fauna DB add records."""
+        client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path_track_training"])
+        result = DataBaseOperations(client_token=client_token).fauna_add_records(
+            # database,
+            collection_name=return_data_dict["fauna_collection_name_track_training"],
+            records_to_add=return_data_dict["fauna_test_data"],
+        )
+        expected_type = str
+        assert isinstance(result, expected_type)
