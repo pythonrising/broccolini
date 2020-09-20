@@ -75,11 +75,12 @@ class DataBaseOperations:
         """Paginate collection."""
         client = self.get_fauna_connection()
         # database: str = kwargs["database"]
+        collection_name_temp = f"test_collection_{shortuuid.uuid()}"
         collection_name: str = kwargs["collection_name"]
         # return database, collection_name, client
         try:
             # conn_temp = client.query(q.paginate(Ref(collection_name, "243802585534824962")))
-            conn_temp = client.query(q.create_collection({"name": "spells2"}))
+            conn_temp = client.query(q.create_collection({"name": collection_name_temp}))
             # logging.debug(conn_temp)
             return conn_temp
         except (BadRequest) as _error:  # pragma: no cover
