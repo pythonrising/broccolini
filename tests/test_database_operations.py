@@ -102,4 +102,8 @@ class TestDatabaseOperations:
             collection_name=collection_name,
             records_to_add=return_data_dict["fauna_test_data"],
         )
-        logging.debug(result)
+        expected_type = dict
+        expected = "id=collection_conftest_"
+        assert isinstance(result, expected_type)
+        assert expected in str(result["ref"])
+        # logging.debug(result['ref'])
