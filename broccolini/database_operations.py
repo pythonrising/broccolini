@@ -93,14 +93,11 @@ class DataBaseOperations:
             output: success or failure
             output type: bool
         """
-        _client = self.get_fauna_connection()
+        client = self.get_fauna_connection()
         records_to_add: str = kwargs["records_to_add"]
-        return records_to_add
-        # client = self.get_fauna_connection()
-        # collection_name: str = kwargs["collection_name"]
-        # return collection_name
-        # # collection_exists: bool = False
-        # try:
-        #     client.query(q.create_collection({"name": collection_name}))
-        # except (Exception) as _error:  # pragma: no cover
-        #     raise ValueError("Fauna error.") from _error
+        collection_name: str = kwargs["collection_name"]
+        try:
+            return client.query(q.create(q.collection(collection_name), {"data": {"name": records_to_add, "element": ["air", "fire"]}}))
+            # return True
+        except (Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
