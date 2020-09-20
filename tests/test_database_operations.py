@@ -6,6 +6,7 @@ Testing common Database operations. Starting with www.faunadb.com.
 """
 
 import logging
+from tests.conftest import return_random_uuid
 import pytest
 from faunadb.client import FaunaClient
 from broccolini.authentication_functions import VaultFunctions
@@ -109,7 +110,7 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_delete_database(return_data_dict):
+    def test_fauna_delete_database(return_data_dict, return_random_uuid):
         """Test Fauna DB add records."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path"])
 
@@ -117,25 +118,25 @@ class TestDatabaseOperations:
         #     "database_conftest_7ECDi377DtQs7VwVUzN5uA",
         #     "database_conftest_mAiZnR4iaqnHshSvbjVwkf",
         # ]
-        database = "database_conftest_7ECDi377DtQs7VwVUzN5uA"
+        database = f"database_{return_random_uuid}"
+        # database = "database_conftest_7ECDi377DtQs7VwVUzN5uA"
         #     for each in list_of_databases:
         #         print(each)
         # #         database = each
         result = DataBaseOperations(client_token=client_token).fauna_delete_database(
             database=database,
         )
-        expected_type = str
-        expected = "database_conftest"
+        expected_type = dict
+        expected = "id=database_conf"
         assert isinstance(result, expected_type)
-        assert expected in result
+        # logging.debug(result)
+        assert expected in str(result)
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_delete_database_exception(return_data_dict):
         """Test Fauna DB add records exception."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path"])
-        # bad_database
-        # bad_database = "database_doesn't_exist"
         with pytest.raises(ValueError):
             DataBaseOperations(client_token=client_token).fauna_delete_database(
                 database=return_data_dict["fauna_test_bad_database"],
