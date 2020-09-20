@@ -7,7 +7,7 @@ from typing import List, Dict, Tuple, Any
 from faunadb import query as q
 from faunadb.client import FaunaClient
 from faunadb.errors import BadRequest
-
+from faunadb.objects import Ref
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
@@ -102,5 +102,14 @@ class DataBaseOperations:
         database: str = kwargs["database"]
         try:
             return client.query(q.delete(q.database(database)))
+        except (BadRequest) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
+
+    def fauna_paginate_database(self, **kwargs: str) -> Tuple[bool, Any, str]:
+        """Fauna paginate database."""
+        client = self.get_fauna_connection()
+        # database: str = kwargs["database"]
+        try:
+            return client.query(q.paginate(Ref("databases")))
         except (BadRequest) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error

@@ -112,23 +112,13 @@ class TestDatabaseOperations:
     def test_fauna_delete_database(return_data_dict, return_random_uuid):
         """Test Fauna DB add records."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path"])
-
-        # list_of_databases = [
-        #     "database_conftest_7ECDi377DtQs7VwVUzN5uA",
-        #     "database_conftest_mAiZnR4iaqnHshSvbjVwkf",
-        # ]
         database = f"database_{return_random_uuid}"
-        # database = "database_conftest_7ECDi377DtQs7VwVUzN5uA"
-        #     for each in list_of_databases:
-        #         print(each)
-        # #         database = each
         result = DataBaseOperations(client_token=client_token).fauna_delete_database(
             database=database,
         )
         expected_type = dict
         expected = "id=database_conf"
         assert isinstance(result, expected_type)
-        # logging.debug(result)
         assert expected in str(result)
 
     @staticmethod
@@ -140,3 +130,16 @@ class TestDatabaseOperations:
             DataBaseOperations(client_token=client_token).fauna_delete_database(
                 database=return_data_dict["fauna_test_bad_database"],
             )
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_paginate_database(return_data_dict, return_random_uuid):
+        """Test Fauna DB add records."""
+        client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path"])
+        # database = f"database_{return_random_uuid}"
+        result = DataBaseOperations(client_token=client_token).fauna_paginate_database()
+        logging.debug(result)
+        # expected_type = dict
+        # expected = "id=database_conf"
+        # assert isinstance(result, expected_type)
+        # assert expected in str(result)
