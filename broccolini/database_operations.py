@@ -8,7 +8,7 @@ import shortuuid
 from faunadb import query as q
 from faunadb.client import FaunaClient
 
-# from faunadb.objects import Ref
+from faunadb.objects import Ref
 from faunadb.errors import BadRequest
 
 
@@ -80,9 +80,9 @@ class DataBaseOperations:
         _collection_name: str = kwargs["collection_name"]
         # return database, collection_name, client
         try:
-            # conn_temp = client.query(q.paginate(Ref(collection_name, "243802585534824962")))
             conn_temp = client.query(q.create_collection({"name": collection_name_temp}))
-            # logging.debug(conn_temp)
+            conn_temp2 = client.query(q.paginate(Ref("collections")))
+            logging.debug(conn_temp2)
             return conn_temp
         except (BadRequest) as _error:  # pragma: no cover
             raise ValueError("Fauna error - read database.") from _error
