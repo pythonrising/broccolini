@@ -148,9 +148,9 @@ class TestDatabaseOperations:
     #         DataBaseOperations(client_token=client_token).fauna_delete_database(
     #             database=bad_database,
     #         )
-        # expected_type = dict
-        # expected = "id=collection_conftest_"
-        # assert isinstance(result, expected_type)
-        # assert expected in str(result["ref"])
+    # expected_type = dict
+    # expected = "id=collection_conftest_"
+    # assert isinstance(result, expected_type)
+    # assert expected in str(result["ref"])
 
-        # logging.debug(result)
+    # logging.debug(result)
