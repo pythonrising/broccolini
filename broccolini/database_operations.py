@@ -103,5 +103,5 @@ class DataBaseOperations:
         try:
             return client.query(q.delete(q.database(database)))
         except (BadRequest) as _error:  # pragma: no cover
-            # raise ValueError("Fauna error.") from _error
-            return f"error is {_error}"
+            raise ValueError("Fauna error.") from _error
+            # return f"error is {_error}"
