@@ -81,7 +81,7 @@ class TestDatabaseOperations:
         """Test Fauna DB paginate collection."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path_track_training"])
         result = DataBaseOperations(client_token=client_token).fauna_create_collection(
-    #         # database=return_data_dict["fauna_test_database_track_training"],
+            #         # database=return_data_dict["fauna_test_database_track_training"],
             collection_name=return_data_dict["fauna_collection_name_track_training"],
         )
         logging.debug(result)
