@@ -33,7 +33,7 @@ def return_data_dict():
         fauna_test_test_data=r"string formatted test data from conftest",
         fauna_secret_path_track_training="greg_production/faunadb/database_specific/track_training/api_token",
         fauna_test_database_track_training="track_training",
-        fauna_collection_name_track_training="books",
+        fauna_collection_name_track_training="Source",
     )
     return input_dict
 

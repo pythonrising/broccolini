@@ -69,28 +69,21 @@ class TestDatabaseOperations:
     def test_fauna_read_database(return_data_dict):
         """Test Fauna DB read."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path_track_training"])
-        #     result = DataBaseOperations(client_token=client_token).fauna_add_to_database(
-        #         database=database[2],
         result = DataBaseOperations(client_token=client_token).fauna_read_database()
-        #     database=return_data_dict["fauna_test_database_track_training"],
-        #     collection_name=return_data_dict["fauna_collection_name_track_training"],
-        # )
         expected_type = dict
         expected = "TrainingMaterialsByCompletedFlag"
         assert isinstance(result, expected_type)
         assert expected in str(result["data"])
-        logging.debug(result)
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_paginate_collection(return_data_dict):
-        """Test Fauna DB read."""
+    def test_fauna_create_collection(return_data_dict):
+        """Test Fauna DB paginate collection."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path_track_training"])
-        #     result = DataBaseOperations(client_token=client_token).fauna_add_to_database(
-        #         database=database[2],
-        result = DataBaseOperations(client_token=client_token).fauna_paginate_collection(
-            database=return_data_dict["fauna_test_database_track_training"],
+        result = DataBaseOperations(client_token=client_token).fauna_create_collection(
+    #         # database=return_data_dict["fauna_test_database_track_training"],
             collection_name=return_data_dict["fauna_collection_name_track_training"],
         )
-        expected_type = tuple
-        assert isinstance(result, expected_type)
+        logging.debug(result)
+        # expected_type = tuple
+        # assert isinstance(result, expected_type)

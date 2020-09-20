@@ -7,9 +7,8 @@ from typing import List, Dict, Tuple, Any
 import shortuuid
 from faunadb import query as q
 from faunadb.client import FaunaClient
-
-# from faunadb.objects import Ref
-# from faunadb.errors import BadRequest
+from faunadb.objects import Ref
+from faunadb.errors import BadRequest
 
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
@@ -72,14 +71,19 @@ class DataBaseOperations:
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error - read database.") from _error
 
-    def fauna_paginate_collection(self, **kwargs: str) -> Tuple[str, str]:
+    def fauna_create_collection(self, **kwargs: str) -> bool:
         """Paginate collection."""
         client = self.get_fauna_connection()
-        database: str = kwargs["database"]
+        # database: str = kwargs["database"]
         collection_name: str = kwargs["collection_name"]
-        return database, collection_name, client
-        # try:
+        # return database, collection_name, client
+        try:
+            # conn_temp = client.query(q.paginate(Ref(collection_name, "243802585534824962")))
+            conn_temp = client.query(q.create_collection({"name": "spells2"}))
+            # logging.debug(conn_temp)
+            return conn_temp
+        except (BadRequest) as _error:  # pragma: no cover
+            raise ValueError("Fauna error - read database.") from _error
+
         #     indexes = client.query(q.paginate(q.indexes()))
         #     return indexes
-        # except (Exception) as _error:  # pragma: no cover
-        #     raise ValueError("Fauna error - read database.") from _error
