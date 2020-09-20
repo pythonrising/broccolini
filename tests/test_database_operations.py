@@ -6,7 +6,6 @@ Testing common Database operations. Starting with www.faunadb.com.
 """
 
 import logging
-from tests.conftest import return_random_uuid
 import pytest
 from faunadb.client import FaunaClient
 from broccolini.authentication_functions import VaultFunctions
