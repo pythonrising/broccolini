@@ -138,5 +138,5 @@ class TestDatabaseOperations:
         # bad_database = "database_doesn't_exist"
         with pytest.raises(ValueError):
             DataBaseOperations(client_token=client_token).fauna_delete_database(
-                database=return_data_dict['fauna_test_bad_database'],
+                database=return_data_dict["fauna_test_bad_database"],
             )
