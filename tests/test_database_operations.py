@@ -134,8 +134,9 @@ class TestDatabaseOperations:
     def test_fauna_delete_database_exception(return_data_dict):
         """Test Fauna DB add records exception."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path"])
-        bad_database = "database_doesn't_exist"
+        # bad_database
+        # bad_database = "database_doesn't_exist"
         with pytest.raises(ValueError):
             DataBaseOperations(client_token=client_token).fauna_delete_database(
-                database=bad_database,
+                database=return_data_dict['fauna_test_bad_database'],
             )

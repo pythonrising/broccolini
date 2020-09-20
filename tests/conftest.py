@@ -40,6 +40,7 @@ def return_data_dict():
         fauna_secret_path_track_training="greg_production/faunadb/database_specific/track_training/api_token",
         fauna_test_database_track_training="track_training",
         fauna_collection_name_track_training="Source",
+        fauna_test_bad_database=r"bad_database",
     )
     return input_dict
 
