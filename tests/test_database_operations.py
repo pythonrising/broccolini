@@ -62,7 +62,7 @@ class TestDatabaseOperations:
             database=database,
         )
         expected_type = tuple
-        expected = "test_db_"
+        expected = "_conftest_"
         assert isinstance(result, expected_type)
         assert expected in result[2]
 
