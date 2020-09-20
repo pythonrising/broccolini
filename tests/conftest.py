@@ -5,9 +5,15 @@
 Give data in various forms to the test functions.
 """
 import random
-
+import shortuuid
 import pytest
 from faker import Faker
+
+
+@pytest.fixture(scope="session")
+def return_random_uuid():
+    """Provide random values."""
+    return f"conftest_{shortuuid.uuid()}"
 
 
 @pytest.fixture()

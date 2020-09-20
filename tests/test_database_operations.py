@@ -6,7 +6,8 @@ Testing common Database operations. Starting with www.faunadb.com.
 """
 
 import logging
-import shortuuid
+
+# import shortuuid
 import pytest
 from faunadb.client import FaunaClient
 
@@ -34,7 +35,7 @@ class TestDatabaseOperations:
                 secret_path=secret_path,
             )
             return fauna_secret_key["data"]["data"]["_key"]
-        except KeyError as _error:
+        except KeyError as _error:  # pragma: no cover
             raise ValueError("Missing environment variables") from _error
 
     @staticmethod
@@ -78,29 +79,41 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_create_collection(return_data_dict):
+    def test_fauna_create_collection(return_data_dict, return_random_uuid):
         """Test Fauna DB create collection."""
-        collection_name = f"test_collection_{shortuuid.uuid()}"
+        collection_name = f"collection_{return_random_uuid}"
+        # collection_name = f"test_collection_{shortuuid.uuid()}"
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path_track_training"])
         result = DataBaseOperations(client_token=client_token).fauna_create_collection(
             # collection_name=return_data_dict["fauna_collection_name_track_training"],
-            collection_name=collection_name
+            collection_name=collection_name,
+            # random_uuid=return_data_dict["random_uuid"],
+            # random_var=TestDatabaseOperations.get_consistent_random_value(name='collection_name'),
+            # random_var=return_random_uuid
         )
         expected_0 = True
-        expected_1 = "test_collection_"
+        expected_1 = "_conftest_"
         assert result[0] == expected_0
         assert expected_1 in result[1]
+        logging.debug(result)
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_add_records(return_data_dict):
+    def test_fauna_add_records(return_data_dict, return_random_uuid):
         """Test Fauna DB add records."""
+        collection_name = f"collection_{return_random_uuid}"
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path_track_training"])
+        # collection_name_random = TestDatabaseOperations.get_consistent_random_value
         result = DataBaseOperations(client_token=client_token).fauna_add_records(
             # database,
-            collection_name=return_data_dict["fauna_collection_name_track_training"],
+            # collection_name=return_data_dict["fauna_collection_name_track_training"],
+            collection_name=collection_name,
             records_to_add=return_data_dict["fauna_test_data"],
+            # random_var=return_random_uuid,
         )
-        logging.debug(result)
+        # random_var = TestDatabaseOperations.get_consistent_random_value('collection_name')
+        # logging.debug(random_var)
+        # logging.debug(result)
         # expected_type = dict
         # assert isinstance(result, expected_type)
+        logging.debug(result)

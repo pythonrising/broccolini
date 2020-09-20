@@ -78,6 +78,8 @@ class DataBaseOperations:
         """Create collection."""
         client = self.get_fauna_connection()
         collection_name: str = kwargs["collection_name"]
+        # random_var: str = kwargs["random_var"]
+        # logging.debug(random_var)
         try:
             client.query(q.create_collection({"name": collection_name}))
             return True, collection_name
@@ -96,6 +98,9 @@ class DataBaseOperations:
         client = self.get_fauna_connection()
         records_to_add: str = kwargs["records_to_add"]
         collection_name: str = kwargs["collection_name"]
+        # random_var: str = kwargs["random_var"]
+        # logging.debug(random_var)
+        # confirm random uuid matches collection create function from pytest
         try:
             return client.query(
                 q.create(q.collection(collection_name), {"data": {"name": records_to_add, "element": ["air", "fire"]}})
