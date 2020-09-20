@@ -110,7 +110,7 @@ class TestDatabaseOperations:
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_delete_database(return_data_dict, return_random_uuid):
-        """Test Fauna DB add records."""
+        """Test Fauna DB delete database."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path"])
         database = f"database_{return_random_uuid}"
         result = DataBaseOperations(client_token=client_token).fauna_delete_database(
@@ -124,7 +124,7 @@ class TestDatabaseOperations:
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_delete_database_exception(return_data_dict):
-        """Test Fauna DB add records exception."""
+        """Test Fauna DB delete database exception."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path"])
         with pytest.raises(ValueError):
             DataBaseOperations(client_token=client_token).fauna_delete_database(
@@ -133,10 +133,9 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_paginate_database(return_data_dict, return_random_uuid):
-        """Test Fauna DB add records."""
+    def test_fauna_paginate_database(return_data_dict):
+        """Test Fauna paginate database."""
         client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path"])
-        # database = f"database_{return_random_uuid}"
         result = DataBaseOperations(client_token=client_token).fauna_paginate_database()
         logging.debug(result)
         # expected_type = dict

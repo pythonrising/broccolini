@@ -105,7 +105,7 @@ class DataBaseOperations:
         except (BadRequest) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_paginate_database(self, **kwargs: str) -> Tuple[bool, Any, str]:
+    def fauna_paginate_database(self) -> Tuple[bool, Any, str]:
         """Fauna paginate database."""
         client = self.get_fauna_connection()
         # database: str = kwargs["database"]
