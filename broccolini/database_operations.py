@@ -3,16 +3,10 @@
 DataBase operations.
 """
 import logging
-
-# from os import truncate
 from typing import List, Dict, Tuple, Any
-
-# import shortuuid
 from faunadb import query as q
 from faunadb.client import FaunaClient
-
-# from faunadb.objects import Ref
-# from faunadb.errors import BadRequest
+from faunadb.errors import BadRequest
 
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
@@ -107,7 +101,7 @@ class DataBaseOperations:
         client = self.get_fauna_connection()
         database: str = kwargs["database"]
         try:
-            client.query(q.delete(q.database(database)))
-            return True, query, database
-        except (Exception) as _error:  # pragma: no cover
-            raise ValueError("Unable to create database.") from _error
+            return client.query(q.delete(q.database(database)))
+        except (BadRequest) as _error:  # pragma: no cover
+            # raise ValueError("Fauna error.") from _error
+            print(f'error is {_error}')
