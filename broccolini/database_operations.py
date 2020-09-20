@@ -6,7 +6,7 @@ import logging
 
 # from os import truncate
 from typing import List, Dict, Tuple, Any
-import shortuuid
+# import shortuuid
 from faunadb import query as q
 from faunadb.client import FaunaClient
 
@@ -50,15 +50,14 @@ class DataBaseOperations:
         except Exception as _errorinfo:  # pragma: no cover
             raise ValueError("error connecting") from _errorinfo
 
-    def fauna_create_database(self) -> Tuple[bool, Any, str]:
+    def fauna_create_database(self, **kwargs: str) -> Tuple[bool, Any, str]:
         """Create database.
 
         create random database with shortuuid to ensure randomness
-        returns
-
         """
-        database = f"test_db_{shortuuid.uuid()}"
+        # database = f"test_db_{shortuuid.uuid()}"
         client = self.get_fauna_connection()
+        database: str = kwargs["database"]
         try:
             query = client.query(q.create_database({"name": database}))
             return True, query, database
@@ -78,8 +77,6 @@ class DataBaseOperations:
         """Create collection."""
         client = self.get_fauna_connection()
         collection_name: str = kwargs["collection_name"]
-        # random_var: str = kwargs["random_var"]
-        # logging.debug(random_var)
         try:
             client.query(q.create_collection({"name": collection_name}))
             return True, collection_name
@@ -98,13 +95,9 @@ class DataBaseOperations:
         client = self.get_fauna_connection()
         records_to_add: str = kwargs["records_to_add"]
         collection_name: str = kwargs["collection_name"]
-        # random_var: str = kwargs["random_var"]
-        # logging.debug(random_var)
-        # confirm random uuid matches collection create function from pytest
         try:
             return client.query(
                 q.create(q.collection(collection_name), {"data": {"name": records_to_add, "element": ["air", "fire"]}})
             )
-            # return True
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
