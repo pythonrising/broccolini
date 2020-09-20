@@ -106,3 +106,23 @@ class TestDatabaseOperations:
         expected = "id=collection_conftest_"
         assert isinstance(result, expected_type)
         assert expected in str(result["ref"])
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_delete_database(return_data_dict):
+        """Test Fauna DB add records."""
+        client_token = TestDatabaseOperations.get_test_values(return_data_dict["fauna_secret_path_track_training"])
+
+        list_of_databases = [
+            "database_conftest_dWdT3vrvyqUjaJqkq4bvQm",
+            "database_conftest_7ECDi377DtQs7VwVUzN5uA",
+            "database_conftest_mAiZnR4iaqnHshSvbjVwkf",
+        ]
+
+        for each in list_of_databases:
+            database = each
+            result = DataBaseOperations(client_token=client_token).fauna_delete_database(
+                database=database,
+                records_to_add=return_data_dict["fauna_test_data"],
+            )
+            logging.debug(result)

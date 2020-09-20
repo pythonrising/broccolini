@@ -101,3 +101,13 @@ class DataBaseOperations:
             )
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
+
+    def fauna_delete_database(self, **kwargs: str) -> Tuple[bool, Any, str]:
+        """Fauna delete database."""
+        client = self.get_fauna_connection()
+        database: str = kwargs["database"]
+        try:
+            client.query(q.delete(q.database(database)))
+            return True, query, database
+        except (Exception) as _error:  # pragma: no cover
+            raise ValueError("Unable to create database.") from _error
