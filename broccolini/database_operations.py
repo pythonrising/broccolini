@@ -3,13 +3,15 @@
 DataBase operations.
 """
 import logging
+
+# from os import truncate
 from typing import List, Dict, Tuple, Any
 import shortuuid
 from faunadb import query as q
 from faunadb.client import FaunaClient
 
-from faunadb.objects import Ref
-from faunadb.errors import BadRequest
+# from faunadb.objects import Ref
+# from faunadb.errors import BadRequest
 
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
@@ -75,17 +77,46 @@ class DataBaseOperations:
     def fauna_create_collection(self, **kwargs: str) -> bool:
         """Paginate collection."""
         client = self.get_fauna_connection()
-        # database: str = kwargs["database"]
-        collection_name_temp = f"test_collection_{shortuuid.uuid()}"
-        _collection_name: str = kwargs["collection_name"]
-        # return database, collection_name, client
+        collection_name: str = kwargs["collection_name"]
+        collection_exists: bool = False
         try:
-            conn_temp = client.query(q.create_collection({"name": collection_name_temp}))
-            conn_temp2 = client.query(q.paginate(Ref("collections")))
-            logging.debug(conn_temp2)
-            return conn_temp
-        except (BadRequest) as _error:  # pragma: no cover
-            raise ValueError("Fauna error - read database.") from _error
+            client.query(q.get(q.collection(collection_name)))
+            collection_exists = True
+            return collection_exists
+        except (Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
+        finally:
+            print("running before if statement")
+            if not collection_exists:
+                collection_name: str = f"test_collection_{shortuuid.uuid()}"
+                logging.debug(collection_name)
+                try:
+                    return client.query(q.create_collection({"name": collection_name}))
+                except (Exception) as _error:  # pragma: no cover
+                    raise ValueError("Fauna error.") from _error
 
-        #     indexes = client.query(q.paginate(q.indexes()))
-        #     return indexes
+
+# def fauna_add_data(self, **kwargs: str) -> bool:
+#         """Paginate collection."""
+#         client = self.get_fauna_connection()
+#         # database: str = kwargs["database"]
+#         # collection_name_temp = f"test_collection_{shortuuid.uuid()}"
+#         collection_name: str = kwargs["collection_name"]
+#         # return database, collection_name, client
+#         try:
+#             # conn_temp = client.query(q.create_collection({"name": collection_name_temp}))
+#             # conn_temp_paginate_collection = client.query(q.paginate(Ref("collections")))
+#             # conn_temp_get_collection_data = client.query(q.get(q.collection("spells")))
+#             conntemp = client.query(
+#                 q.create(
+#                     q.collection(collection_name),
+#                     {"data": {"name": "Fire Beak", "element": ["air", "fire"]}}
+#                 ))
+#             logging.debug(conntemp)
+#             return True
+#             # return conn_temp_create_data
+#         except (BadRequest) as _error:  # pragma: no cover
+#             raise ValueError("Fauna error - create data.") from _error
+
+#     indexes = client.query(q.paginate(q.indexes()))
+#     return indexes
