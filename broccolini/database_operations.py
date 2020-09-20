@@ -56,7 +56,6 @@ class DataBaseOperations:
 
         create random database with shortuuid to ensure randomness
         """
-        # database = f"test_db_{shortuuid.uuid()}"
         client = self.get_fauna_connection()
         database: str = kwargs["database"]
         try:

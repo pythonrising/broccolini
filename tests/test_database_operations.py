@@ -106,4 +106,3 @@ class TestDatabaseOperations:
         expected = "id=collection_conftest_"
         assert isinstance(result, expected_type)
         assert expected in str(result["ref"])
-        # logging.debug(result['ref'])
