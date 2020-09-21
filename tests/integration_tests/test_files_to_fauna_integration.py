@@ -34,7 +34,7 @@ class TestIntegrationFileToFauna:
         except KeyError as _error:  # pragma: no cover
             raise ValueError("Missing environment variables") from _error
 
-    # @pytest.mark.skip(reason="integration testing")
+    @pytest.mark.skip(reason="integration testing")
     @pytest.fixture()
     def test_get_files_from_folder(self, return_data_dict):
         """Get list of files from the directory.
@@ -72,8 +72,8 @@ class TestIntegrationFileToFauna:
         collection_name = f"collection_{return_random_uuid}"
         client_token = TestIntegrationFileToFauna.get_test_values(return_data_dict["fauna_secret_path_server"])
         # records_to_add = test_get_files_from_folder  # NEED TO FIX THE DATA BEFORE IMPORT
-#    type(result[0]['folders_and_files'][0])
-        print(test_get_files_from_folder[0]['folders_and_files'][0])
+        #    type(result[0]['folders_and_files'][0])
+        print(test_get_files_from_folder[0]["folders_and_files"][0])
         # records_to_add = return_data_dict["fauna_test_data"]
 
         # DataBaseOperations(client_token=client_token).fauna_create_collection(
