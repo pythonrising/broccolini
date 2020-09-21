@@ -12,6 +12,7 @@ import pytest
 
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.fileoperation_functions import FileOperationFunctions
+
 # from broccolini.database_operations import DataBaseOperations
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
