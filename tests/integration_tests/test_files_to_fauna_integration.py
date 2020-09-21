@@ -48,10 +48,9 @@ class TestIntegrationFileToFauna:
             input_directory=return_data_dict["faker_files"],
             output_file_name=return_data_dict["output_file_name"],
         )
-        # logging.debug(type(result[0]['folders_and_files'][0]))
         return result
 
-    @pytest.mark.skip(reason="integration testing")
+    # @pytest.mark.skip(reason="integration testing")
     def test_write_files_to_fauna_db(self, return_data_dict, return_random_uuid, test_get_files_from_folder):
         """Put list of files into fauna database
 
@@ -73,13 +72,15 @@ class TestIntegrationFileToFauna:
         collection_name = f"collection_{return_random_uuid}"
         client_token = TestIntegrationFileToFauna.get_test_values(return_data_dict["fauna_secret_path_server"])
         # records_to_add = test_get_files_from_folder  # NEED TO FIX THE DATA BEFORE IMPORT
-        records_to_add = return_data_dict["fauna_test_data"]
+#    type(result[0]['folders_and_files'][0])
+        print(test_get_files_from_folder[0]['folders_and_files'][0])
+        # records_to_add = return_data_dict["fauna_test_data"]
 
-        DataBaseOperations(client_token=client_token).fauna_create_collection(
-            collection_name=collection_name,
-        )
-        result = DataBaseOperations(client_token=client_token).fauna_add_records(
-            collection_name=collection_name,
-            records_to_add=records_to_add,
-        )
-        logging.debug(result)
+        # DataBaseOperations(client_token=client_token).fauna_create_collection(
+        #     collection_name=collection_name,
+        # )
+        # result = DataBaseOperations(client_token=client_token).fauna_add_records(
+        #     collection_name=collection_name,
+        #     records_to_add=records_to_add,
+        # )
+        # logging.debug(result)
