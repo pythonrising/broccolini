@@ -12,7 +12,7 @@ import pytest
 
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.fileoperation_functions import FileOperationFunctions
-from broccolini.database_operations import DataBaseOperations
+# from broccolini.database_operations import DataBaseOperations
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
@@ -68,8 +68,8 @@ class TestIntegrationFileToFauna:
         start with just a list of the data to get a record into the database
         then do the cleanup and addition
         """
-        collection_name = f"collection_{return_random_uuid}"
-        client_token = TestIntegrationFileToFauna.get_test_values(return_data_dict["fauna_secret_path_server"])
+        # collection_name = f"collection_{return_random_uuid}"
+        # client_token = TestIntegrationFileToFauna.get_test_values(return_data_dict["fauna_secret_path_server"])
         # records_to_add = test_get_files_from_folder  # NEED TO FIX THE DATA BEFORE IMPORT
         #    type(result[0]['folders_and_files'][0])
         print(test_get_files_from_folder[0]["folders_and_files"][0])
