@@ -73,7 +73,7 @@ class TestIntegrationFileToFauna:
         collection_name = f"collection_{return_random_uuid}"
         client_token = TestIntegrationFileToFauna.get_test_values(return_data_dict["fauna_secret_path_server"])
         # records_to_add = test_get_files_from_folder  # NEED TO FIX THE DATA BEFORE IMPORT
-        records_to_add=return_data_dict["fauna_test_data"]
+        records_to_add = return_data_dict["fauna_test_data"]
 
         DataBaseOperations(client_token=client_token).fauna_create_collection(
             collection_name=collection_name,
