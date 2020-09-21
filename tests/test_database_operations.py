@@ -140,3 +140,4 @@ class TestDatabaseOperations:
         expected = r"collection=Ref(id=databases"
         assert isinstance(result, expected_type)
         assert expected in str(result["data"])
+        logging.debug(result)
