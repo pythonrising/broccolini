@@ -8,7 +8,6 @@ Also used as a basis for testing file async functionality
 """
 
 import logging
-import hvac
 import pytest
 
 from broccolini.authentication_functions import VaultFunctions
