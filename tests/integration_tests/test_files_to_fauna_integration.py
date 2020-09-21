@@ -17,8 +17,10 @@ from broccolini.database_operations import DataBaseOperations
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
+
 class TestIntegrationFileToFauna:
     """Test the integration from files to fauna database."""
+
     @classmethod
     def get_test_values(cls, secret_path):
         """Build values needed for the test."""
@@ -73,11 +75,6 @@ class TestIntegrationFileToFauna:
         # logging.debug(client_token)
 
 
-
-
-
-
-
 #     def get_test_values(cls, secret_path):
 #         """Build values needed for the test."""
 #         try:
@@ -100,7 +97,6 @@ class TestIntegrationFileToFauna:
 # # database in use will be from the token value
 
 # # first get the listt of files
-
 
 
 # # call functions to combine the functions together
