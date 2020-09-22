@@ -69,17 +69,16 @@ class FileOperationFunctions:
         return output_listing
 
     @staticmethod
-    def filter_file_data(**kwargs: str) -> Dict[str, object]:
+    def filter_file_data(**kwargs: str) -> List[Dict[str, object]]:
         """Filter data.
 
         input: dictionary_of_paths_in_pathlib_format
         input_type = input_directory
         output: output_dictionary
-        output_type = Dict[str]
+        output_type = List[Dict[str, str]]
         """
         input_path: Dict[List[str]] = kwargs["input_path"]
         records_to_add = []
-        # records_to_add = [dict]
         for each in input_path["folders_and_files"]:
             records_to_add.append(
                 dict(
