@@ -116,12 +116,9 @@ class FileOperationFunctions:
     def filter_file_data(**kwargs: str) -> Dict[str, object]:
         """Filter data."""
         input_path: str = kwargs["input_path"]
-        # output_dict: Dict[str, object] = dict(
-        #     folders_and_files=list(input_path.rglob("*.*")),
-        # )
         output_dict = dict(
             input_path=input_path,
             # original_full_path="original_full_path_here",
-            # subject="subject_name_from_file_name",
+            subject="subject_name_from_file_name",
         )
         return output_dict
