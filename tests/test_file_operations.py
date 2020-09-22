@@ -75,14 +75,11 @@ class TestFileOperationsFunctions:
 
     @staticmethod
     def test_filter_file_data(test_build_dictionary_of_files):
-        """Filter data from the data provided by the other function
-
-        Gets folder path from conftest and feeds to the function as a pathlib object
-        change to pull the data from other function first
-        """
+        """Filter data from the data provided by the other function."""
+        logging.debug(test_build_dictionary_of_files)
         result = FileOperationFunctions().filter_file_data(
-            # input_path="test1",
             input_path=test_build_dictionary_of_files,
         )
         expected_type = dict
         assert isinstance(result, expected_type)
+        logging.debug(result["subject"])
