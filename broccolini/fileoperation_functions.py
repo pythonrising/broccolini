@@ -79,31 +79,22 @@ class FileOperationFunctions:
         """
         input_path: Dict[List[str]] = kwargs["input_path"]
         records_to_add = []
-        # create a dictionary of values here
+        # create a dictionary of values here in a list
+        records_to_add = [dict]
         for each in input_path["folders_and_files"]:
-            records_to_add.append(each)
-            # print(type(each))
+            # records_to_add.append(each)
+            records_to_add.append(
+                dict(
+                    file_name=each.name,
+                    file_suffix=each.suffix,
+                    parent_dir=each.parent,
+                )
+            )
+        # logging.debug(records_to_add)
+        return records_to_add
 
-            print(f"each.name {each.name}")
-            print(f"each.stat {each.stat}")
-            print(f"each.root {each.root}")
-            print(f"each.parent {each.parent}")
-            print(f"each.parent.parent {each.parent.parent}")
-            print(f"each.parent.parent.parent {each.parent.parent.parent}")
-            print(f"each.anchor {each.anchor}")
-            print(f"each.stat().st_size {each.stat().st_size}")
-            print(f"each.stat().st_mtime {each.stat().st_mtime}")
-            print(f"each.stat().st_ctime {each.stat().st_ctime}")
-            # time will switch based on when function was run
-
-        #             file = Path() / 'doc.txt'  # or Path('./doc.txt')
-        # size = file.stat().st_size
-        # could take parent down until we hit root of training and get the subject
-        # print(f'each.stat {each.stat}')
-        # get it to path and it is easier to get some data
-
-        return dict(
-            original_full_path=input_path,
-            records_to_add=records_to_add,
-            subject="subject_name_from_file_name",
-        )
+        # return dict(
+        #     original_full_path=input_path,
+        #     records_to_add=records_to_add,
+        #     subject="subject_name_from_file_name",
+        # )

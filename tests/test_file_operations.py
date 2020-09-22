@@ -80,6 +80,6 @@ class TestFileOperationsFunctions:
         result = FileOperationFunctions().filter_file_data(
             input_path=test_build_dictionary_of_files,
         )
-        expected_type = dict
+        expected_type = list
         assert isinstance(result, expected_type)
-        logging.debug(result["subject"])
+        # logging.debug(result["subject"])
