@@ -88,8 +88,6 @@ class FileOperationFunctions:
     #     )
     #     return return_dict
 
-
-
     # @staticmethod
     # def build_dictionary(**kwargs: Path) -> Dict[str, object]:
     #     """Builds dictionary of values.
@@ -113,8 +111,6 @@ class FileOperationFunctions:
     #         folders_and_files=list(input_path.rglob("*.*")),
     #     )
     #     return output_dict
-
-
 
     @staticmethod
     def filter_file_data(**kwargs: str) -> Dict[str, object]:
