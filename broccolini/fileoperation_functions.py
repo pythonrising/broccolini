@@ -79,10 +79,8 @@ class FileOperationFunctions:
         """
         input_path: Dict[List[str]] = kwargs["input_path"]
         records_to_add = []
-        # create a dictionary of values here in a list
-        records_to_add = [dict]
+        # records_to_add = [dict]
         for each in input_path["folders_and_files"]:
-            # records_to_add.append(each)
             records_to_add.append(
                 dict(
                     file_name=each.name,
@@ -90,11 +88,4 @@ class FileOperationFunctions:
                     parent_dir=each.parent,
                 )
             )
-        # logging.debug(records_to_add)
         return records_to_add
-
-        # return dict(
-        #     original_full_path=input_path,
-        #     records_to_add=records_to_add,
-        #     subject="subject_name_from_file_name",
-        # )

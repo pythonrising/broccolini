@@ -76,7 +76,7 @@ class TestFileOperationsFunctions:
     @staticmethod
     def test_filter_file_data(test_build_dictionary_of_files):
         """Filter data from the data provided by the other function."""
-        logging.debug(test_build_dictionary_of_files)
+        # logging.debug(test_build_dictionary_of_files)
         result = FileOperationFunctions().filter_file_data(
             input_path=test_build_dictionary_of_files,
         )
