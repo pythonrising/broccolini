@@ -88,21 +88,19 @@ class FileOperationFunctions:
         get the text following training/
         input: list_of_pathlib_files
         input_type = List[Pathlib]
-        \/training\/(\S*)\/+
+        Note - return on first match is good because the list refers to the same path
         """
         pattern = str = kwargs["pattern"]
         input_list: List[Path] = kwargs["input_list"]
-        # break on first match of subject no need to contintue down list
-
         for each in input_list:
-            print(f"line from list is {each}")
-            print(f"pattern is {pattern}")
+            # print(f"line from list is {each}")
+            # print(f"pattern is {pattern}")
             pattern = re.compile(pattern)
             match = re.match(pattern, each)
             if (match := re.match(pattern, each)) is not None:
-                print(f"entire string:{match[0]}:")
-                print(f"just the first matched group:{match[1]}:")
-                return f"subject is:{match[0]}:"
+                # print(f"entire string:{match[0]}:")
+                # print(f"just the first matched group:{match[1]}:")
+                return match[1]
             else:
                 return f"no match on {each}"
         # return pattern, input_list

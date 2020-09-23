@@ -91,10 +91,26 @@ class TestFileOperationsFunctions:
     @staticmethod
     def test_filter_subject_from_list():
         """Filter subject data using re module."""
-        temp_list = ["test_dir_created/training/network/subdir_3/filename.txt')"]
-        pattern = r".*\/training\/(\S*?)/.*"  # matches network/subdir_3:
+        # temp_list = ["test_dir_created/training/network/subdir_3/filename.txt')"]
+
+        parent_list = [
+            "WindowsPath('C:/Users/bachs1x/AppData/Local/Temp/pytest-of-bachs1x/pytest-628/test_dir_created0/test_dir_created/training/javascript/subdir_3/character.txt')",
+            "WindowsPath('C:/Users/bachs1x/AppData/Local/Temp/pytest-of-bachs1x/pytest-628/test_dir_created0/test_dir_created/training/javascript/subdir_3/character2.txt')",
+        ]
+        # parent_list = ["'WindowsPath('C:/Users/bachs1x/AppData/Local/Temp/pytest-of-bachs1x/pytest-690/test_dir_created0/test_dir_created/training/network"]
+        # 'WindowsPath('C:/Users/bachs1x/AppData/Local/Temp/pytest-of-bachs1x/pytest-690/test_dir_created0/test_dir_created')',
+        # 'WindowsPath('C:/Users/bachs1x/AppData/Local/Temp/pytest-of-bachs1x/pytest-690/test_dir_created0')',
+        # 'WindowsPath('C:/Users/bachs1x/AppData/Local/Temp/pytest-of-bachs1x/pytest-690')',
+        # 'WindowsPath('C:/Users/bachs1x/AppData/Local/Temp/pytest-of-bachs1x/',
+        # 'WindowsPath('C:/Users/bachs1x/AppData/Local/Temp',
+        # 'WindowsPath('C:/Users/bachs1x/AppData/Local',
+        # 'WindowsPath('C:/Users/bachs1x/AppData',
+        # 'WindowsPath('C:/Users/bachs1x',
+        # 'WindowsPath('C:/Users',
+        # 'WindowsPath('C:',
+        pattern = r".*training/(\w*)/.*"
         result = FileOperationFunctions().filter_subject_from_list(
-            input_list=temp_list,
+            input_list=parent_list,
             pattern=pattern,
         )
         expected_type = str
