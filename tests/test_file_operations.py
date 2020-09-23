@@ -92,7 +92,7 @@ class TestFileOperationsFunctions:
     def test_filter_subject_from_list():
         """Filter subject data using re module."""
         temp_list = ["test_dir_created/training/network/subdir_3/filename.txt')"]
-        pattern = r'.*\/training\/(\S*?)/.*' # matches network/subdir_3:
+        pattern = r".*\/training\/(\S*?)/.*"  # matches network/subdir_3:
         result = FileOperationFunctions().filter_subject_from_list(
             input_list=temp_list,
             pattern=pattern,
