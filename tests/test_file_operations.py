@@ -13,6 +13,7 @@ import pytest
 from faker import Faker
 
 from broccolini.fileoperation_functions import FileOperationFunctions
+from broccolini.json_functions import JsonFunctions
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
@@ -85,10 +86,31 @@ class TestFileOperationsFunctions:
         )
         expected_type = list
         assert isinstance(result, expected_type)
+
+        input_list_for_json_one_record = [
+            dict(
+                file_name=result[0]['file_name'],
+                file_suffix=result[0]['file_suffix'],
+                parent_dir=str(result[0]['parent_dir']),
+                creation_time=result[0]['creation_time'],
+                mod_time=result[0]['mod_time'],
+                size=result[0]['size'],
+                parent_list=str(result[0]['parent_list']),
+                )
+        ]
+        #     {result[0]['file_name'], result[0]['file_name']]}
+        # # need to write the whole dictionary to json
+
+
+        JsonFunctions().write_list_to_json(
+            input_list=input_list_for_json_one_record,
+            output_file_name='delete_me_sep_2020.json',
+        )
         # logging.debug(result["subject"])
+
         # for each in result:
         #     print(f"{each}\n")
-        # logging.debug(result)
+        # logging.debug(result[0]['file_name'])
         return result
 
     @staticmethod
@@ -102,5 +124,5 @@ class TestFileOperationsFunctions:
             pattern=pattern,
         )
         expected_type = str
-        logging.debug(result)
+        # logging.debug(result)
         assert isinstance(result, expected_type)

@@ -92,7 +92,8 @@ class FileOperationFunctions:
             if (match := re.match(regexp, text_path_name)) is not None:
                 subject = match[1]
             else:
-                print(f"missing:{text_path_name}:\n {pattern}\n")
+                subject = "subject_not_available"
+                # print(f"missing:{text_path_name}:\n {pattern}\n")
         return subject
 
     @staticmethod
