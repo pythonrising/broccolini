@@ -6,7 +6,8 @@ Testing common file operations including use of pathlib..
 """
 import logging
 from pathlib import Path
-from typing import Pattern
+
+# from typing import Pattern
 import pytest
 
 from faker import Faker
@@ -75,6 +76,7 @@ class TestFileOperationsFunctions:
         return result
 
     @staticmethod
+    @pytest.fixture()
     def test_filter_file_data(test_build_dictionary_of_files):
         """Filter data from the data provided by the other function."""
         # logging.debug(test_build_dictionary_of_files)
@@ -84,24 +86,24 @@ class TestFileOperationsFunctions:
         expected_type = list
         assert isinstance(result, expected_type)
         # logging.debug(result["subject"])
-        for each in result:
-            print(f"{each}\n")
+        # for each in result:
+        #     print(f"{each}\n")
         # logging.debug(result)
+        return result
 
     @staticmethod
-    def test_filter_subject_from_list():
+    def test_file_filter_subject_from_list(test_filter_file_data):
         """Filter subject data using re module."""
         # temp_list = ["test_dir_created/training/network/subdir_3/filename.txt')"]
 
-        parent_list = [
-            "WindowsPath('C:/Users/bachs1x/AppData/Local/Temp/pytest-of-bachs1x/pytest-628/test_dir_created0/test_dir_created/training/javascript/subdir_3/character.txt')",
-            "WindowsPath('C:/Users/bachs1x/AppData/Local/Temp/pytest-of-bachs1x/pytest-628/test_dir_created0/test_dir_created/training/javascript/subdir_3/character2.txt')",
-        ]
-        pattern = r".*training/(\w*)/.*"
+        input_list = test_filter_file_data[0]["parent_list"]
+        pattern = r"(.*training\\)"  # works partially
+        pattern = r".*training\\(\w*)"
         result = FileOperationFunctions().filter_subject_from_list(
-            input_list=parent_list,
+            # input_list=parent_list,
+            input_list=input_list,
             pattern=pattern,
         )
-        expected_type = str
+        # expected_type = str
         logging.debug(result)
-        assert isinstance(result, expected_type)
+        # assert isinstance(result, expected_type)
