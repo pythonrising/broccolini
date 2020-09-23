@@ -6,7 +6,7 @@ File operations, eg, open close read write.
 import logging
 import re
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Pattern
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
@@ -69,44 +69,32 @@ class FileOperationFunctions:
             output_listing.append(write_to_json)
         return output_listing
 
-    # def is_this_valid_subject(self) -> bool:
-    #     """Filter data.
-    #     do 1 or 2 tests
-    #     is the text followed by training/*
-    #     does the training meet one of these group
-    #     """
-    #     input_subject_name = self.possible_subject_name
-    #     valid_subjects = ['python', 'javascript', 'ml', 'ai', 'network', 'general']
-
     @staticmethod
-    def filter_subject_from_list(**kwargs: str) -> List[Dict[str, object]]:
-        """When given list of parents in pathlib format - search for the line we need
+    def filter_subject_from_list(**kwargs: str) -> str:
+        """When given list of parents in pathlib format - search for the relevant line
 
-        Given list like this:
-        WindowsPath('C:/Users/bachs1x/AppData/Local/Temp/pytest-of-bachs1x/pytest-690/test_dir_created0/
-        test_dir_created/training/network/subdir_3'),
-        get the text following training/
+        Note - return on first match is good because the list refers to the same path
+
         input: list_of_pathlib_files
         input_type = List[Pathlib]
-        Note - return on first match is good because the list refers to the same path
+        output: match[1]
+        output_type: str
         """
-        pattern = str = kwargs["pattern"]
-        input_list: List[Path] = kwargs["input_list"]
+        subject = "missingsubject"
+        pattern = kwargs["pattern"]
+        input_list = kwargs["input_list"]
         for each in input_list:
-            # print(f"line from list is {each}")
-            # print(f"pattern is {pattern}")
             pattern = re.compile(pattern)
             match = re.match(pattern, each)
             if (match := re.match(pattern, each)) is not None:
-                # print(f"entire string:{match[0]}:")
-                # print(f"just the first matched group:{match[1]}:")
-                return match[1]
-            else:
-                return f"no match on {each}"
-        # return pattern, input_list
+                print(type(match[1]))
+                subject = match[1]
+                break
+                # return subject
+        return subject
 
     @staticmethod
-    def filter_file_data(**kwargs: str) -> List[Dict[str, object]]:
+    def filter_file_data(**kwargs) -> List[Dict[str, object]]:
         """Filter data.
 
         input: dictionary_of_paths_in_pathlib_format
@@ -119,7 +107,8 @@ class FileOperationFunctions:
         x = "Success!" if (y == 2) else "Failed!"
         x = "valid" if in list else failed  or do a dictionary lookup of the valid subjects
         """
-        input_path: Dict[List[str]] = kwargs["input_path"]
+        # input_path: Dict[List[str], Dict[str, object]] = kwargs["input_path"]
+        input_path = kwargs["input_path"]
         # subject = 'unknown_subject'
         records_to_add = []
         for each in input_path["folders_and_files"]:
