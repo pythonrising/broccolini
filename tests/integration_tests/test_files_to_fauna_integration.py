@@ -98,5 +98,7 @@ class TestIntegrationFileToFauna:
         #         collection_name=collection_name,
         #         records_to_add=records_to_add,
         #     )
+        # open the json file and compute the subject name from that one before the write
+        # In the integartion test function put the parent dir from json in to get the subject
 
-        return result
+        # return result

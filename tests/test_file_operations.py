@@ -78,7 +78,7 @@ class TestFileOperationsFunctions:
 
     @staticmethod
     @pytest.fixture()
-    def test_filter_file_data(test_build_dictionary_of_files):
+    def test_filter_file_data(test_build_dictionary_of_files, create_generic_json_test_file):
         """Filter data from the data provided by the other function."""
         # logging.debug(test_build_dictionary_of_files)
         result = FileOperationFunctions().filter_file_data(
@@ -89,22 +89,19 @@ class TestFileOperationsFunctions:
 
         input_list_for_json_one_record = [
             dict(
-                file_name=result[0]['file_name'],
-                file_suffix=result[0]['file_suffix'],
-                parent_dir=str(result[0]['parent_dir']),
-                creation_time=result[0]['creation_time'],
-                mod_time=result[0]['mod_time'],
-                size=result[0]['size'],
-                parent_list=str(result[0]['parent_list']),
-                )
+                file_name=result[0]["file_name"],
+                file_suffix=result[0]["file_suffix"],
+                parent_dir=str(result[0]["parent_dir"]),
+                creation_time=result[0]["creation_time"],
+                mod_time=result[0]["mod_time"],
+                size=result[0]["size"],
+                parent_list=str(result[0]["parent_list"]),
+            )
         ]
-        #     {result[0]['file_name'], result[0]['file_name']]}
-        # # need to write the whole dictionary to json
-
 
         JsonFunctions().write_list_to_json(
             input_list=input_list_for_json_one_record,
-            output_file_name='delete_me_sep_2020.json',
+            output_file_name=create_generic_json_test_file,
         )
         # logging.debug(result["subject"])
 
