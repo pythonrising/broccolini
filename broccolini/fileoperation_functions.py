@@ -6,7 +6,7 @@ File operations, eg, open close read write.
 import logging
 import re
 from pathlib import Path
-from typing import Dict, List, Pattern
+from typing import Dict, List
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
@@ -90,7 +90,7 @@ class FileOperationFunctions:
                 print(type(match[1]))
                 subject = match[1]
                 break
-                # return subject
+
         return subject
 
     @staticmethod
