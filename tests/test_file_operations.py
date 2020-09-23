@@ -80,7 +80,6 @@ class TestFileOperationsFunctions:
     @pytest.fixture()
     def test_filter_file_data(test_build_dictionary_of_files, create_generic_json_test_file):
         """Filter data from the data provided by the other function."""
-        # logging.debug(test_build_dictionary_of_files)
         result = FileOperationFunctions().filter_file_data(
             input_path=test_build_dictionary_of_files,
         )
@@ -103,11 +102,6 @@ class TestFileOperationsFunctions:
             input_list=input_list_for_json_one_record,
             output_file_name=create_generic_json_test_file,
         )
-        # logging.debug(result["subject"])
-
-        # for each in result:
-        #     print(f"{each}\n")
-        # logging.debug(result[0]['file_name'])
         return result
 
     @staticmethod
@@ -121,5 +115,4 @@ class TestFileOperationsFunctions:
             pattern=pattern,
         )
         expected_type = str
-        # logging.debug(result)
         assert isinstance(result, expected_type)
