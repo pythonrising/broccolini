@@ -6,6 +6,7 @@ Testing common file operations including use of pathlib..
 """
 import logging
 from pathlib import Path
+from typing import Pattern
 import pytest
 
 from faker import Faker
@@ -88,12 +89,14 @@ class TestFileOperationsFunctions:
         # logging.debug(result)
 
     @staticmethod
-    def test_filter_subject_from_list(test_build_dictionary_of_files):
-        """Filter data from the data provided by the other function."""
-        temp_list = ["test_dir_created/training/network/subdir_3')"]
+    def test_filter_subject_from_list():
+        """Filter subject data using re module."""
+        temp_list = ["test_dir_created/training/network/subdir_3/filename.txt')"]
+        pattern = r'.*\/training\/(\S*?)/.*' # matches network/subdir_3:
         result = FileOperationFunctions().filter_subject_from_list(
             input_list=temp_list,
+            pattern=pattern,
         )
-        expected_type = list
+        expected_type = str
         logging.debug(result)
         assert isinstance(result, expected_type)
