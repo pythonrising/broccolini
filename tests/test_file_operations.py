@@ -94,16 +94,13 @@ class TestFileOperationsFunctions:
     @staticmethod
     def test_file_filter_subject_from_list(test_filter_file_data):
         """Filter subject data using re module."""
-        # temp_list = ["test_dir_created/training/network/subdir_3/filename.txt')"]
-
         input_list = test_filter_file_data[0]["parent_list"]
-        pattern = r"(.*training\\)"  # works partially
         pattern = r".*training\\(\w*)"
         result = FileOperationFunctions().filter_subject_from_list(
             # input_list=parent_list,
             input_list=input_list,
             pattern=pattern,
         )
-        # expected_type = str
+        expected_type = str
         logging.debug(result)
-        # assert isinstance(result, expected_type)
+        assert isinstance(result, expected_type)

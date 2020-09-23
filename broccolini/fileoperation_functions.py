@@ -80,36 +80,20 @@ class FileOperationFunctions:
         output: match[1]
         output_type: str
         """
-        subject = "missingsubject"
+        subject = "subject_not_available"
         input_list = kwargs["input_list"]
         pattern = kwargs["pattern"]
         regexp = re.compile(pattern)
 
         for each in input_list:
-            # print(each)
             path = Path(each)
-            # print(path.resolve())
             text_path_name = str(path.resolve())
-
             match = re.match(regexp, text_path_name)
-
             if (match := re.match(regexp, text_path_name)) is not None:
-                # print(f'entire line is {match[0]}')
                 subject = match[1]
-                # print(f'FOUND {subject} MATCH {text_path_name}\n {pattern}\n')
-                # break
             else:
                 print(f"missing:{text_path_name}:\n {pattern}\n")
-        # # return subject
-        logging.debug(subject)
-
-        # for each in input_list:
-        #     pattern = re.compile(pattern)
-        #     match = re.match(pattern, each)
-        #     if (match := re.match(pattern, each)) is not None:
-        #         subject = match[1]
-        #         break
-        # return subject
+        return subject
 
     @staticmethod
     def filter_file_data(**kwargs) -> List[Dict[str, object]]:
