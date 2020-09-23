@@ -75,8 +75,8 @@ class TestIntegrationFileToFauna:
 
         # @pytest.mark.skip(reason="integration testing")
         # def test_write_files_to_fauna_db_updated_with_filtering_function(
-            # self, return_data_dict, return_random_uuid, test_get_files_from_folder
-            # ):
+        # self, return_data_dict, return_random_uuid, test_get_files_from_folder
+        # ):
         #     """Put list of files into fauna database using data from different function in file operations.
 
         #     input: list
