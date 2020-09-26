@@ -42,7 +42,6 @@ def return_data_dict():
         fauna_secret_path_server="python_rising/dev/faunadb/pythonrising_dev/server/api_token",
         fauna_collection_name_for_delete="collection_name_used_for_delete_test",
         fauna_test_bad_database=r"bad_database",
-
     )
     return input_dict
 
