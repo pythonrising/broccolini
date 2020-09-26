@@ -127,8 +127,8 @@ class DataBaseOperations:
     #     collection_name: str = kwargs["collection_name"]
     #     logging.debug(collection_name)
     #     return collection_name
-        # try:
-        #     client.query(q.create_collection({"name": collection_name}))
-        #     return True, collection_name
-        # except (Exception) as _error:  # pragma: no cover
-        #     raise ValueError("Fauna error.") from _error
+    # try:
+    #     client.query(q.create_collection({"name": collection_name}))
+    #     return True, collection_name
+    # except (Exception) as _error:  # pragma: no cover
+    #     raise ValueError("Fauna error.") from _error
