@@ -3,8 +3,9 @@
 Process operations functions such as psutil.  Will likely rename later.
 """
 import logging
-import psutil
 from typing import List, Tuple
+import psutil
+
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
@@ -38,3 +39,8 @@ class ProcessOperations:
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as _error:
                 raise ValueError("Missing environment variables") from _error
         return list_of_processes
+
+    @staticmethod
+    def view_running_processes_updated() -> str:
+        """View Running Processes."""
+        return "greg"

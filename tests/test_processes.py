@@ -24,9 +24,11 @@ class TestProcessOperations:
         expected_type = list
         assert expected == result[0][0]
         assert isinstance(result, expected_type)
-        import pprint as pp
-        pp.pprint(result)
-
-
-        # print(result)
         logging.debug(result)
+
+    @staticmethod
+    def test_view_running_processes2():
+        """Test view running processes."""
+        result = ProcessOperations().view_running_processes()
+        expected_type = str
+        assert isinstance(result, expected_type)
