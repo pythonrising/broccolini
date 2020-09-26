@@ -29,6 +29,6 @@ class TestProcessOperations:
     @staticmethod
     def test_view_running_processes2():
         """Test view running processes."""
-        result = ProcessOperations().view_running_processes()
+        result = ProcessOperations().view_running_processes_updated()
         expected_type = str
         assert isinstance(result, expected_type)
