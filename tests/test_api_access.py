@@ -71,4 +71,4 @@ class TestApiAccess:
         # expected = "api_url"
         # assert isinstance(result, expected_type)
         # assert expected in str(result)
-        print(f'result is {result}')
+        print(f"result is {result}")
