@@ -6,7 +6,9 @@ Testing API access functions.
 """
 
 import logging
+from unittest.mock import MagicMock
 import pytest
+
 
 # from typing import Dict
 from broccolini.api_access import ApiAccess
@@ -64,16 +66,20 @@ class TestApiAccess:
 
     @staticmethod
     def test_return_statistics_from_api(test_get_api_settings):
-        """Test we can get statistics via the api."""
+        """Test we can get statistics via the api.
+
+        The test url is not reachable from github. Use mock.
+        the key in method has to match the assert called with value given
+        """
         result = ApiAccess().return_statistics_from_api(
             api_url=test_get_api_settings["api_url"],
             api_key=test_get_api_settings["api_key"],
         )
-        # expected_type = dict
-        # expected = "api_url"
-        # assert isinstance(result, expected_type)
-        # assert expected in str(result)
-        print(f"result is {result}")
+        result.method = MagicMock(return_value=4)
+        result.method(api_url=test_get_api_settings["api_url"], api_key=test_get_api_settings["api_key"], key="value")
+        result.method.assert_called_with(
+            api_url=test_get_api_settings["api_url"], api_key=test_get_api_settings["api_key"], key="value"
+        )
 
     @staticmethod
     def test_return_statistics_from_api_exception(test_get_api_settings):
@@ -88,3 +94,32 @@ class TestApiAccess:
                 api_url=test_get_api_settings["api_url"],
                 api_key="BAD_KEY_HERE",
             )
+
+
+#     from unittest import TestCase
+# from mock import patch # for Python >= 3.3 use unittest.mock
+
+
+# # from main import url_exists
+
+
+# class FetchTests(TestCase):
+#     def test_returns_true_if_url_found(self):
+#         with patch('requests.get') as mock_request:
+#             url = 'http://google.com'
+
+#             # set a `status_code` attribute on the mock object
+#             # with value 200
+#             mock_request.return_value.status_code = 200
+
+#             self.assertTrue(url_exists(url))
+
+#     def test_returns_false_if_url_not_found(self):
+#         with patch('requests.get') as mock_request:
+#                 url = 'http://google.com/nonexistingurl'
+
+#                 # set a `status_code` attribute on the mock object
+#                 # with value 404
+#                 mock_request.return_value.status_code = 404
+
+#                 self.assertFalse(url_exists(url))
