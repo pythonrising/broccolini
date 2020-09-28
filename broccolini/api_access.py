@@ -3,9 +3,9 @@
 API Access functions.
 """
 import logging
+from typing import Dict
 import requests
 
-from typing import Dict
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
@@ -34,15 +34,16 @@ class ApiAccess:
         """
         api_url: str = kwargs["api_url"]
         api_key: str = kwargs["api_key"]
-
-        HEADERS = {"Authorization": f"Bearer {api_key}"}
-        # print(HEADERS)
+        headers = {"Authorization": f"Bearer {api_key}"}
+        # print(headers)
 
         with requests.Session() as session:
-            session.headers.update(HEADERS)
+            session.headers.update(headers)
             response = session.get(api_url)
-
-        return response
+            if response.status_code != 200:
+                raise ValueError("Issue with url or authentication.")
+                # print(f'failure:{api_url}:')
+            return response
 
     #         # def fetch(session, csv):
     #         with requests.Session() as session:
