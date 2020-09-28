@@ -3,6 +3,7 @@
 API Access functions.
 """
 import logging
+import requests
 
 from typing import Dict
 
@@ -34,10 +35,41 @@ class ApiAccess:
         api_url: str = kwargs["api_url"]
         api_key: str = kwargs["api_key"]
 
-        return dict(
-            api_url=api_url,
-            api_key=api_key,
-        )
+        HEADERS = {'Authorization': f'Bearer {api_key}'}
+        # print(HEADERS)
+
+        with requests.Session() as session:
+            session.headers.update(HEADERS)
+            response = session.get(api_url)
+
+        return response
+
+
+#         # def fetch(session, csv):
+#         with requests.Session() as session:
+#             # r = requests.get('<MY_URI>', headers={'Authorization': 'TOK:<MY_TOKEN>'})
+#             # api_url = "https://people.sc.fsu.edu/~jburkardt/data/csv/"
+
+#         access_token = #yourAccessTokenHere#
+
+# result = requests.post(url,
+#       headers={'Content-Type':'application/json',
+#                'Authorization': 'Bearer {}'.format(access_token)})
+
+#             with session.get(api_url) as response:
+#                 data = response.text
+#                 return data
+        #     if response.status_code != 200:
+        #         print(f'failure:{}"FAILURE::{0}".format(url))
+        # logging.debug(data)
+        #     # Return .csv data for future consumption
+        #     # return data
+
+
+        # return dict(
+        #     api_url=api_url,
+        #     api_key=api_key,
+        # )
 
     @staticmethod
     def return_statistics_from_api_updated() -> str:
