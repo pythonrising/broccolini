@@ -81,19 +81,19 @@ class TestApiAccess:
             api_url=test_get_api_settings["api_url"], api_key=test_get_api_settings["api_key"], key="value"
         )
 
-    @staticmethod
-    def test_return_statistics_from_api_exception(test_get_api_settings):
-        """Test we can get statistics via the api exception."""
-        # message = "Missing environment variables"
-        # with pytest.raises(ValueError, match=message):
-        #     VaultFunctions.get_vault_credentials(vault_url="VAULT_URL_BAD", vault_token="VAULT_TOKEN_BAD")
-        message = "Issue with url or authentication"
-        with pytest.raises(ValueError, match=message):
-            # put bad url and or key here
-            ApiAccess().return_statistics_from_api(
-                api_url=test_get_api_settings["api_url"],
-                api_key="BAD_KEY_HERE",
-            )
+    # @staticmethod
+    # def test_return_statistics_from_api_exception(test_get_api_settings):
+    #     """Test we can get statistics via the api exception."""
+    #     # message = "Missing environment variables"
+    #     # with pytest.raises(ValueError, match=message):
+    #     #     VaultFunctions.get_vault_credentials(vault_url="VAULT_URL_BAD", vault_token="VAULT_TOKEN_BAD")
+    #     message = "Issue with url or authentication"
+    #     with pytest.raises(ValueError, match=message):
+    #         # put bad url and or key here
+    #         ApiAccess().return_statistics_from_api(
+    #             api_url=test_get_api_settings["api_url"],
+    #             api_key="BAD_KEY_HERE",
+    #         )
 
 
 #     from unittest import TestCase
