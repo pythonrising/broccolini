@@ -6,9 +6,11 @@ Testing API access functions.
 """
 
 import logging
+import pytest
 
 # from typing import Dict
 from broccolini.api_access import ApiAccess
+from broccolini.authentication_functions import VaultFunctions
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
@@ -16,8 +18,31 @@ logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - 
 class TestApiAccess:
     """Test API Access functions."""
 
+    @classmethod
+    def get_test_values(cls, secret_path):
+        """[Get values for use in other test functions.]
+        Args:
+            api_url [str]): [path to grab from vault to return url]
+            api_key [str]): [path to grab from vault to return key]
+
+
+        Returns:
+            secret_key ([str]): [returns data from vault]
+        """
+        try:
+            secret_key = VaultFunctions().query_vault_data(
+                vault_url="VAULT_URL",
+                vault_token="VAULT_TOKEN",
+                secret_path=secret_path,
+            )
+            return secret_key["data"]["data"]["_key"]
+        except KeyError as _error:  # pragma: no cover
+            raise ValueError("Missing environment variables") from _error
+
     @staticmethod
-    def test_connect_to_api():
+    @pytest.fixture
+    # @pytest.mark.dependency(name="test_get_api_connection")
+    def test_get_api_settings(return_data_dict):
         """Test connect to api.
 
         input from conftest with secret path
@@ -28,19 +53,21 @@ class TestApiAccess:
         output: my_dict
         output_type: Dict[str, str]
         """
-        result = ApiAccess().connect_to_api()
-        # expected = "ystem"
-        # expected_type = list
-        # # assert expected == result[0][0]
-        # assert expected in result[0][0]
-        # assert isinstance(result, expected_type)
-        logging.debug(result)
-        # print(result)
+        api_url = TestApiAccess.get_test_values(return_data_dict["api_url"])
+        api_key = TestApiAccess.get_test_values(return_data_dict["api_key"])
+        return dict(
+            api_url=api_url,
+            api_key=api_key,
+        )
 
     @staticmethod
-    def test_view_running_processes2():
-        """Test view running processes."""
-        result = ApiAccess().connect_to_api_updated()
-        logging.debug(result)
-        # expected_type = str
-        # assert isinstance(result, expected_type)
+    def test_return_statistics_from_api(test_get_api_settings):
+        """Test we can get statistics via the api."""
+        result = ApiAccess().return_statistics_from_api(
+            api_url=test_get_api_settings['api_url'],
+            api_key=test_get_api_settings['api_key'],
+        )
+        expected_type = dict
+        expected = "api_url"
+        assert isinstance(result, expected_type)
+        assert expected in str(result)

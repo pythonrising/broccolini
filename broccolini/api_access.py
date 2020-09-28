@@ -4,7 +4,7 @@ API Access functions.
 """
 import logging
 
-# from typing import List, Tuple, Dict
+from typing import Dict
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
@@ -21,21 +21,27 @@ class ApiAccess:
         return f"{class_name}"
 
     @staticmethod
-    # def view_running_processes(**kwargs: str) -> List[Tuple[str, int]]:
-    def connect_to_api() -> str:
-        """View Running Processes.
-        input: input_data
+    def return_statistics_from_api(**kwargs: str) -> Dict[str, str]:
+        """Connect to an Application Programming Interface.
+        input: api_url
         input_type: str
-        output: list_of_files
-        output_type: List[Tuple]
+        input: api_url
+        input_type: str
+
+        output: output_data
+        output_type: Dict[str, str]
         """
-        return "greg"
-        # input_data: str = kwargs["input_data"]
-        # return input_data
+        api_url: str = kwargs["api_url"]
+        api_key: str = kwargs["api_key"]
+
+        return dict(
+            api_url=api_url,
+            api_key=api_key,
+        )
 
     @staticmethod
-    def connect_to_api_updated() -> str:
+    def return_statistics_from_api_updated() -> str:
         """View Running Processes."""
-        return "greg"
+        return "dummy_string"
         # input_data: str = kwargs["input_data"]
         # return input_data
