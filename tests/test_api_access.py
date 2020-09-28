@@ -64,8 +64,8 @@ class TestApiAccess:
     def test_return_statistics_from_api(test_get_api_settings):
         """Test we can get statistics via the api."""
         result = ApiAccess().return_statistics_from_api(
-            api_url=test_get_api_settings['api_url'],
-            api_key=test_get_api_settings['api_key'],
+            api_url=test_get_api_settings["api_url"],
+            api_key=test_get_api_settings["api_key"],
         )
         expected_type = dict
         expected = "api_url"
