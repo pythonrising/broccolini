@@ -43,7 +43,8 @@ class TestApiAccess:
 
     @staticmethod
     @pytest.fixture
-    # @pytest.mark.dependency(name="test_get_api_connection")
+    @pytest.mark.dependency(name="test_get_api_settings")
+    @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_get_api_settings(return_data_dict):
         """Test connect to api.
 
@@ -65,6 +66,8 @@ class TestApiAccess:
         # put in exception here if not getting 200
 
     @staticmethod
+    @pytest.mark.dependency(depends=["test_get_api_settings"])
+    @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_return_statistics_from_api(test_get_api_settings):
         """Test we can get statistics via the api.
 
@@ -80,46 +83,3 @@ class TestApiAccess:
         result.method.assert_called_with(
             api_url=test_get_api_settings["api_url"], api_key=test_get_api_settings["api_key"], key="value"
         )
-
-    # @staticmethod
-    # def test_return_statistics_from_api_exception(test_get_api_settings):
-    #     """Test we can get statistics via the api exception."""
-    #     # message = "Missing environment variables"
-    #     # with pytest.raises(ValueError, match=message):
-    #     #     VaultFunctions.get_vault_credentials(vault_url="VAULT_URL_BAD", vault_token="VAULT_TOKEN_BAD")
-    #     message = "Issue with url or authentication"
-    #     with pytest.raises(ValueError, match=message):
-    #         # put bad url and or key here
-    #         ApiAccess().return_statistics_from_api(
-    #             api_url=test_get_api_settings["api_url"],
-    #             api_key="BAD_KEY_HERE",
-    #         )
-
-
-#     from unittest import TestCase
-# from mock import patch # for Python >= 3.3 use unittest.mock
-
-
-# # from main import url_exists
-
-
-# class FetchTests(TestCase):
-#     def test_returns_true_if_url_found(self):
-#         with patch('requests.get') as mock_request:
-#             url = 'http://google.com'
-
-#             # set a `status_code` attribute on the mock object
-#             # with value 200
-#             mock_request.return_value.status_code = 200
-
-#             self.assertTrue(url_exists(url))
-
-#     def test_returns_false_if_url_not_found(self):
-#         with patch('requests.get') as mock_request:
-#                 url = 'http://google.com/nonexistingurl'
-
-#                 # set a `status_code` attribute on the mock object
-#                 # with value 404
-#                 mock_request.return_value.status_code = 404
-
-#                 self.assertFalse(url_exists(url))
