@@ -15,6 +15,13 @@ class TestVaultFunctions:
     """Test Vault Functions."""
 
     @staticmethod
+    def test_unseal_vault():
+        """Test unseal vault."""
+        result = VaultFunctions.unseal_vault(value1="value1entered")
+        expected = "value1entered"
+        assert result == expected
+
+    @staticmethod
     @pytest.mark.dependency(name="test_login_to_vault")
     def test_login_to_vault():
         """Test login to vault.

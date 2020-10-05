@@ -35,6 +35,12 @@ class VaultFunctions:
         return str(self)
 
     @staticmethod
+    def unseal_vault(**kwargs: str) -> Client:
+        """Unseal vault."""
+        value1: str = kwargs["value1"]
+        return value1
+
+    @staticmethod
     def get_vault_credentials(**kwargs: str) -> Client:
         """Login to vault using credentials and return client."""
         try:
