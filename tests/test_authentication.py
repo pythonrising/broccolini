@@ -15,10 +15,17 @@ class TestVaultFunctions:
     """Test Vault Functions."""
 
     @staticmethod
+    @pytest.mark.skip(reason="needs mock")
     def test_unseal_vault():
         """Test unseal vault."""
-        result = VaultFunctions.unseal_vault(value1="value1entered")
-        expected = "value1entered"
+        result = VaultFunctions().unseal_vault(
+            vault_url="VAULT_URL",
+            vault_token="VAULT_TOKEN",
+            vault_unseal_token="VAULT_UNSEAL_TOKEN",
+        )
+        expected = True
+        expected_type = bool
+        assert isinstance(result, expected_type)
         assert result == expected
 
     @staticmethod
@@ -49,7 +56,7 @@ class TestVaultFunctions:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_vault"])
-    def test_query_from_vault(return_data_dict):
+    def test_query_vault_data(return_data_dict):
         """Test query to vault.
 
         input : successful client
