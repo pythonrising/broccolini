@@ -45,8 +45,8 @@ class TestApiAccess:
 
     @staticmethod
     @pytest.fixture
-    # @pytest.mark.dependency(name="test_get_api_settings")
-    # @pytest.mark.skip(reason="needs to be mocked on github actions run")
+    @pytest.mark.dependency(name="test_get_api_settings")
+    @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_get_api_settings(return_data_dict):
         """Test connect to api.
 
@@ -68,8 +68,8 @@ class TestApiAccess:
         # put in exception here if not getting 200
 
     @staticmethod
-    # @pytest.mark.dependency(depends=["test_get_api_settings"])
-    # @pytest.mark.skip(reason="needs to be mocked on github actions run")
+    @pytest.mark.dependency(depends=["test_get_api_settings"])
+    @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_return_statistics_from_api_mock(test_get_api_settings):
         """Test we can get statistics via the api.
 
@@ -87,8 +87,8 @@ class TestApiAccess:
         )
 
     @staticmethod
-    # @pytest.mark.dependency(depends=["test_get_api_settings"])
-    # @pytest.mark.skip(reason="needs to be mocked on github actions run")
+    @pytest.mark.dependency(depends=["test_get_api_settings"])
+    @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_return_statistics_from_api(test_get_api_settings):
         """Test we can get statistics via the api.
 
@@ -99,11 +99,10 @@ class TestApiAccess:
             api_url=test_get_api_settings["api_url"],
             api_key=test_get_api_settings["api_key"],
         )
-        # print(result)
 
     @staticmethod
-    # @pytest.mark.dependency(depends=["test_get_api_settings"])
-    # @pytest.mark.skip(reason="needs to be mocked on github actions run")
+    @pytest.mark.dependency(depends=["test_get_api_settings"])
+    @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_return_statistics_from_api_updated(test_get_api_settings):
         """Test we can get statistics via the api.
 
@@ -114,9 +113,6 @@ class TestApiAccess:
             api_url=test_get_api_settings["api_url"],
             api_key=test_get_api_settings["api_key"],
         )
-        # import pprint as pp
-        # shares_good = result['results']['shares_good']
-        # pp.pprint(result['results']['shares_good'])
         expected_type = dict
         expected = 1000
         assert result["results"]["shares_good"] >= expected
