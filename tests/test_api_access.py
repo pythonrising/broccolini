@@ -119,5 +119,5 @@ class TestApiAccess:
         # pp.pprint(result['results']['shares_good'])
         expected_type = dict
         expected = 1000
-        assert result['results']['shares_good'] >= expected
+        assert result["results"]["shares_good"] >= expected
         assert isinstance(result, expected_type)
