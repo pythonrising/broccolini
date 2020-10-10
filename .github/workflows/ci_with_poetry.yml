@@ -53,7 +53,7 @@ jobs:
         with:
           name: pytest-results-${{ matrix.python-version }}
           # path: ${{ github.workspace }}
-          run: echo ${{ github.workspace }} >> $GITHUB_PATH
+          # run: echo ${{ github.workspace }} >> $GITHUB_PATH
 
       - name: Codecov
         uses: codecov/codecov-action@v1.0.13
