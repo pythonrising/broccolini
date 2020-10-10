@@ -12,6 +12,10 @@ jobs:
         python-version: [3.8]
     steps:
       - uses: actions/checkout@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VAULT_URL: ${{ secrets.VAULT_URL }}
+          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
@@ -41,6 +45,7 @@ jobs:
 
       - name: Test with pytest - address CVE and deprecation.
         run: poetry run pytest --cov . --cov-report=xml
+
         # with:
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         #   VAULT_URL: ${{ secrets.VAULT_URL }}
