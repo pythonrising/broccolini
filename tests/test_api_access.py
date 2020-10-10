@@ -44,7 +44,6 @@ class TestApiAccess:
     @staticmethod
     @pytest.fixture
     @pytest.mark.dependency(name="test_get_api_settings")
-    @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_get_api_settings(return_data_dict):
         """Test connect to api.
 
@@ -58,17 +57,13 @@ class TestApiAccess:
         """
         api_url = TestApiAccess.get_test_values(return_data_dict["api_url"])
         api_key = TestApiAccess.get_test_values(return_data_dict["api_key"])
-        return dict(
-            api_url=api_url,
-            api_key=api_key,
-        )
+        return dict(api_url=api_url, api_key=api_key)
 
         # put in exception here if not getting 200
 
     @staticmethod
-    @pytest.mark.dependency(depends=["test_get_api_settings"])
-    @pytest.mark.skip(reason="needs to be mocked on github actions run")
-    def test_return_statistics_from_api(test_get_api_settings):
+    @pytest.mark.skip(reason="needs mocking for cicd")
+    def test_return_statistics_from_api_mock(test_get_api_settings):
         """Test we can get statistics via the api.
 
         The test url is not reachable from github. Use mock.
@@ -83,3 +78,21 @@ class TestApiAccess:
         result.method.assert_called_with(
             api_url=test_get_api_settings["api_url"], api_key=test_get_api_settings["api_key"], key="value"
         )
+
+    @staticmethod
+    @pytest.mark.skip(reason="needs mocking for cicd")
+    def test_return_statistics_from_api(test_get_api_settings):
+        """Test we can get statistics via the api.
+
+        The test url is not reachable from github. Use mock.
+        the key in method has to match the assert called with value given
+        """
+        result = ApiAccess().return_statistics_from_api(
+            api_url=test_get_api_settings["api_url"],
+            api_key=test_get_api_settings["api_key"],
+        )
+        expected_type = dict
+        result_json = result.json()
+        expected = 1000
+        assert result_json["results"]["shares_good"] >= expected
+        assert isinstance(result_json, expected_type)

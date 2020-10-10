@@ -50,5 +50,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_ANSIBLE: false
+          VALIDATE_PYTHON_BLACK: false
           DEFAULT_BRANCH: master
           FILTER_REGEX_EXCLUDE: poetry.lock
