@@ -3,7 +3,7 @@
 API Access functions.
 """
 import logging
-from typing import Dict
+# from typing import Dict
 import requests
 
 
