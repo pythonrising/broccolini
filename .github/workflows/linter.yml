@@ -52,4 +52,3 @@ jobs:
           VALIDATE_ANSIBLE: false
           DEFAULT_BRANCH: master
           FILTER_REGEX_EXCLUDE: poetry.lock
-          PYTHON_BLACK_CONFIG_FILE: .isort.cfg, pyproject.toml
