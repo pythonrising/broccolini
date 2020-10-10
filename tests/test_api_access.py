@@ -112,7 +112,11 @@ class TestApiAccess:
             api_url=test_get_api_settings["api_url"],
             api_key=test_get_api_settings["api_key"],
         )
-        # print(result)
+        print(len(result))
+        expected_type = str
+        expected = "worker_id"
+        assert isinstance(result, expected_type)
+        assert expected in result
 
     # def test_return_statistics_from_api_updated(test_get_api_settings):
     #     """Test we can get statistics via the api.
