@@ -28,6 +28,7 @@ twilio = "^6.45.1"
 hvac = "^0.10.5"
 faunadb = "^3.0.0"
 shortuuid = "^1.0.1"
+pytest-xdist = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"

@@ -57,10 +57,7 @@ class TestApiAccess:
         """
         api_url = TestApiAccess.get_test_values(return_data_dict["api_url"])
         api_key = TestApiAccess.get_test_values(return_data_dict["api_key"])
-        return dict(
-            api_url=api_url,
-            api_key=api_key,
-        )
+        return dict(api_url=api_url, api_key=api_key)
 
         # put in exception here if not getting 200
 
