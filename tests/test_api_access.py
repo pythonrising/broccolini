@@ -102,6 +102,8 @@ class TestApiAccess:
         # print(result)
 
     @staticmethod
+    # @pytest.mark.dependency(depends=["test_get_api_settings"])
+    # @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_return_statistics_from_api_updated(test_get_api_settings):
         """Test we can get statistics via the api.
 
@@ -112,20 +114,10 @@ class TestApiAccess:
             api_url=test_get_api_settings["api_url"],
             api_key=test_get_api_settings["api_key"],
         )
-        print(len(result))
-        expected_type = str
-        expected = "worker_id"
+        # import pprint as pp
+        # shares_good = result['results']['shares_good']
+        # pp.pprint(result['results']['shares_good'])
+        expected_type = dict
+        expected = 1000
+        assert result['results']['shares_good'] >= expected
         assert isinstance(result, expected_type)
-        assert expected in result
-
-    # def test_return_statistics_from_api_updated(test_get_api_settings):
-    #     """Test we can get statistics via the api.
-
-    #     The test url is not reachable from github. Use mock.
-    #     the key in method has to match the assert called with value given
-    #     """
-    #     result = ApiAccess().return_statistics_from_api_updated(
-    #         api_url=test_get_api_settings["api_url"],
-    #         api_key=test_get_api_settings["api_key"],
-    #     )
-    #     print(result)

@@ -54,4 +54,5 @@ class ApiAccess:
             response = session.get(api_url)
             if response.status_code != 200:
                 raise ValueError("Issue with url or authentication.")
-            return response.text
+            # print(response.json())
+            return response.json()
