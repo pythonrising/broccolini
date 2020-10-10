@@ -3,8 +3,8 @@
 API Access functions.
 """
 import logging
-import requests
 
+import requests
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
 
