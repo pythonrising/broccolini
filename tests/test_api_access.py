@@ -19,7 +19,6 @@ logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - 
 mylogger = logging.getLogger()
 
 
-
 class TestApiAccess:
     """Test API Access functions."""
 
