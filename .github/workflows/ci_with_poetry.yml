@@ -10,12 +10,9 @@ jobs:
     strategy:
       matrix:
         python-version: [3.8]
+        poetry-version: [1.0.10]
     steps:
       - uses: actions/checkout@v2
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # VAULT_URL: ${{ secrets.VAULT_URL }}
-          # VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
@@ -23,6 +20,11 @@ jobs:
 
       - name: Install Poetry
         uses: dschep/install-poetry-action@v1.3
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VAULT_URL: ${{ secrets.VAULT_URL }}
+          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
 
       - name: Cache Poetry virtualenv
         uses: actions/cache@v1
