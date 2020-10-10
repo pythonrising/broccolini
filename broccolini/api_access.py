@@ -28,22 +28,18 @@ class ApiAccess:
         input_type: str
         input: api_url
         input_type: str
-
         output: output_data
         output_type: Dict[str, str]
         """
         api_url: str = kwargs["api_url"]
         api_key: str = kwargs["api_key"]
         headers = {"Authorization": f"Bearer {api_key}"}
-        # print(headers)
 
         with requests.Session() as session:
             session.headers.update(headers)
             response = session.get(api_url)
             if response.status_code != 200:
                 raise ValueError("Issue with url or authentication.")
-                # print(f'failure:{api_url}:')
-            # return data
             return response
 
     @staticmethod
@@ -52,18 +48,10 @@ class ApiAccess:
         api_url: str = kwargs["api_url"]
         api_key: str = kwargs["api_key"]
         headers = {"Authorization": f"Bearer {api_key}"}
-        # print(headers)
 
         with requests.Session() as session:
             session.headers.update(headers)
             response = session.get(api_url)
             if response.status_code != 200:
                 raise ValueError("Issue with url or authentication.")
-                # print(f'failure:{api_url}:')
             return response.text
-
-        # return "dummy_string"
-        #   print(response.text)
-
-        # input_data: str = kwargs["input_data"]
-        # return input_data
