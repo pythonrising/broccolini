@@ -46,7 +46,7 @@ class TestApiAccess:
     @staticmethod
     @pytest.fixture
     @pytest.mark.dependency(name="test_get_api_settings")
-    @pytest.mark.skip(reason="needs to be mocked on github actions run")
+    # @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_get_api_settings(return_data_dict):
         """Test connect to api.
 
@@ -68,8 +68,8 @@ class TestApiAccess:
         # put in exception here if not getting 200
 
     @staticmethod
-    @pytest.mark.dependency(depends=["test_get_api_settings"])
-    @pytest.mark.skip(reason="needs to be mocked on github actions run")
+    # @pytest.mark.dependency(depends=["test_get_api_settings"])
+    # @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_return_statistics_from_api_mock(test_get_api_settings):
         """Test we can get statistics via the api.
 
