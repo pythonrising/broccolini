@@ -15,6 +15,9 @@ from broccolini.api_access import ApiAccess
 from broccolini.authentication_functions import VaultFunctions
 
 logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
+# logging.basicConfig(level=logging.DEBUG)
+mylogger = logging.getLogger()
+
 
 
 class TestApiAccess:
@@ -43,8 +46,8 @@ class TestApiAccess:
 
     @staticmethod
     @pytest.fixture
-    @pytest.mark.dependency(name="test_get_api_settings")
-    @pytest.mark.skip(reason="needs to be mocked on github actions run")
+    # @pytest.mark.dependency(name="test_get_api_settings")
+    # @pytest.mark.skip(reason="needs to be mocked on github actions run")
     def test_get_api_settings(return_data_dict):
         """Test connect to api.
 
@@ -66,9 +69,9 @@ class TestApiAccess:
         # put in exception here if not getting 200
 
     @staticmethod
-    @pytest.mark.dependency(depends=["test_get_api_settings"])
-    @pytest.mark.skip(reason="needs to be mocked on github actions run")
-    def test_return_statistics_from_api(test_get_api_settings):
+    # @pytest.mark.dependency(depends=["test_get_api_settings"])
+    # @pytest.mark.skip(reason="needs to be mocked on github actions run")
+    def test_return_statistics_from_api_mock(test_get_api_settings):
         """Test we can get statistics via the api.
 
         The test url is not reachable from github. Use mock.
@@ -83,3 +86,43 @@ class TestApiAccess:
         result.method.assert_called_with(
             api_url=test_get_api_settings["api_url"], api_key=test_get_api_settings["api_key"], key="value"
         )
+
+    @staticmethod
+    # @pytest.mark.dependency(depends=["test_get_api_settings"])
+    # @pytest.mark.skip(reason="needs to be mocked on github actions run")
+    def test_return_statistics_from_api(test_get_api_settings):
+        """Test we can get statistics via the api.
+
+        The test url is not reachable from github. Use mock.
+        the key in method has to match the assert called with value given
+        """
+        result = ApiAccess().return_statistics_from_api(
+            api_url=test_get_api_settings["api_url"],
+            api_key=test_get_api_settings["api_key"],
+        )
+        print(result)
+
+    @staticmethod
+    def test_return_statistics_from_api_updated(test_get_api_settings):
+        """Test we can get statistics via the api.
+
+        The test url is not reachable from github. Use mock.
+        the key in method has to match the assert called with value given
+        """
+        result = ApiAccess().return_statistics_from_api_updated(
+            api_url=test_get_api_settings["api_url"],
+            api_key=test_get_api_settings["api_key"],
+        )
+        print(result)
+
+    # def test_return_statistics_from_api_updated(test_get_api_settings):
+    #     """Test we can get statistics via the api.
+
+    #     The test url is not reachable from github. Use mock.
+    #     the key in method has to match the assert called with value given
+    #     """
+    #     result = ApiAccess().return_statistics_from_api_updated(
+    #         api_url=test_get_api_settings["api_url"],
+    #         api_key=test_get_api_settings["api_key"],
+    #     )
+    #     print(result)
