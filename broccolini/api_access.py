@@ -21,29 +21,29 @@ class ApiAccess:
         class_name = self.__class__.__name__
         return f"{class_name}"
 
-    @staticmethod
-    def return_statistics_from_api(**kwargs: str) -> Dict[str, str]:
-        """Connect to an Application Programming Interface.
-        input: api_url
-        input_type: str
-        input: api_url
-        input_type: str
-        output: output_data
-        output_type: Dict[str, str]
-        """
-        api_url: str = kwargs["api_url"]
-        api_key: str = kwargs["api_key"]
-        headers = {"Authorization": f"Bearer {api_key}"}
+    # @staticmethod
+    # def return_statistics_from_api(**kwargs: str) -> Dict[str, str]:
+    #     """Connect to an Application Programming Interface.
+    #     input: api_url
+    #     input_type: str
+    #     input: api_url
+    #     input_type: str
+    #     output: output_data
+    #     output_type: Dict[str, str]
+    #     """
+    #     api_url: str = kwargs["api_url"]
+    #     api_key: str = kwargs["api_key"]
+    #     headers = {"Authorization": f"Bearer {api_key}"}
 
-        with requests.Session() as session:
-            session.headers.update(headers)
-            response = session.get(api_url)
-            if response.status_code != 200:
-                raise ValueError("Issue with url or authentication.")
-            return response
+    #     with requests.Session() as session:
+    #         session.headers.update(headers)
+    #         response = session.get(api_url)
+    #         if response.status_code != 200:
+    #             raise ValueError("Issue with url or authentication.")
+    #         return response
 
     @staticmethod
-    def return_statistics_from_api_updated(**kwargs):
+    def return_statistics_from_api(**kwargs):
         """Get data."""
         api_url: str = kwargs["api_url"]
         api_key: str = kwargs["api_key"]
@@ -54,5 +54,5 @@ class ApiAccess:
             response = session.get(api_url)
             if response.status_code != 200:
                 raise ValueError("Issue with url or authentication.")
-            # print(response.json())
-            return response.json()
+            return response
+            # return response.json()
