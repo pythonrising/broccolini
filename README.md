@@ -4,7 +4,7 @@
 ![CI_WITH_POETRY](https://github.com/pythonrising/broccolini/workflows/CI_WITH_POETRY/badge.svg)
 ![CodeQL](https://github.com/pythonrising/broccolini/workflows/CodeQL/badge.svg)
 ![Lint Code Base](https://github.com/pythonrising/broccolini/workflows/Lint%20Code%20Base/badge.svg)
-[![codecov](https://codecov.io/gh/pythonrising/broccolini/branch/master/graph/badge.svg)](https://codecov.io/gh/pythonrising/broccolini)
+[![codecov](https://codecov.io/gh/pythonrising/broccolini/branch/main/graph/badge.svg)](https://codecov.io/gh/pythonrising/broccolini)
 
 ## Description
 

@@ -56,7 +56,7 @@ def return_a_list():
             "api_version": "v1alpha1",
             "directorate_name": "directname",
             "project_name": "PROJNAMEHERE",
-            "target_revision": "master",
+            "target_revision": "main",
         },
         {
             "file1_name": "file_to_be_copied_created_by_conftest.txt",
