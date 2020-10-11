@@ -11,6 +11,7 @@ logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
 )
 
+
 class TestIntegrationFileToFauna:
     """Testing integration of api access."""
 

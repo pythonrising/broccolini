@@ -15,11 +15,6 @@ def return_random_uuid():
     """Provide random values."""
     return f"conftest_{shortuuid.uuid()}"
 
-
-# account_sid = TestTwilioFunctions.get_test_values(return_data_dict["twilio_account_sid"])
-#         auth_token = TestTwilioFunctions.get_test_values(return_data_dict["twilio_path_auth_token"])
-
-
 @pytest.fixture()
 def return_data_dict():
     """Provide dictionary values to functions."""
@@ -30,7 +25,7 @@ def return_data_dict():
         secret=dict(secret_test_key="secret_value_from_conftest"),
         twilio_auth_token="python_rising/dev/twilio_data/TWILIO_AUTH_TOKEN",
         twilio_account_sid="python_rising/dev/twilio_data/TWILIO_ACCOUNT_SID",
-        twilio_notification_number="python_rising/dev/twilio_data/TWILIO_NOTIFICATION_NUMBER",
+        twilio_notify_number="python_rising/dev/twilio_data/TWILIO_NOTIFICATION_NUMBER",
         twilio_phone_number="python_rising/dev/twilio_data/TWILIO_PHONE_NUMBER",
         written_directories=["dir_test1", "dir_test2", "dir_test3"],
         valid_json_file_name="json_file_from_conftest.json",
@@ -39,7 +34,7 @@ def return_data_dict():
         input_directory_path=r"",
         fauna_secret_path_admin="python_rising/dev/faunadb/admin/api_token",
         fauna_test_data=r"string formatted test data from conftest",
-        fauna_secret_path_server="python_rising/dev/faunadb/pythonrising_dev/server/api_token",
+        fauna_path_srv="python_rising/dev/faunadb/pythonrising_dev/server/api_token",
         fauna_collection_name_for_delete="collection_name_used_for_delete_test",
         fauna_test_bad_database=r"bad_database",
         api_url=r"python_rising/dev/python_rising/dev/api_data/API_URL",

@@ -57,21 +57,21 @@ class TwilioFunctions:
         input_type: str
         input: twilio_phone_number
         input_type: str
-        input: twilio_notification_number
+        input: twilio_notify_number
         input_type: str
-        side effect: text to twilio_notification_number
+        side effect: text to twilio_notify_number
         output: message_sid
         output_type: str
         """
         message_body = f'written directories: {kwargs["written_directories"]}'
         twilio_phone_number = kwargs["twilio_phone_number"]
-        twilio_notification_number = kwargs["twilio_notification_number"]
+        twilio_notify_number = kwargs["twilio_notify_number"]
         client = self.get_twilio_connection()
         try:
             message = client.messages.create(
                 body=message_body,
                 from_=twilio_phone_number,
-                to=twilio_notification_number,
+                to=twilio_notify_number,
             )
             return f"successful message_sid:{message.sid}:"
         except (TwilioException, TwilioRestException) as _error:  # pragma: no cover

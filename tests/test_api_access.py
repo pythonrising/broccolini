@@ -86,4 +86,3 @@ class TestApiAccess:
             api_key=test_get_api_settings["api_key"],
             key="value",
         )
-

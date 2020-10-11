@@ -67,14 +67,14 @@ class TestTwilioFunctions:
         account_sid = TestTwilioFunctions.get_test_values(
             return_data_dict["twilio_account_sid"]
         )
-        twilio_notification_number = TestTwilioFunctions.get_test_values(
-            return_data_dict["twilio_notification_number"]
+        twilio_notify_number = TestTwilioFunctions.get_test_values(
+            return_data_dict["twilio_notify_number"]
         )
         this = TwilioFunctions(account_sid, auth_token)
         result = this.send_twilio_notification(
             written_directories=return_data_dict["written_directories"],
             twilio_phone_number=twilio_phone_number,
-            twilio_notification_number=twilio_notification_number,
+            twilio_notify_number=twilio_notify_number,
         )
         expected_type = str
         assert isinstance(result, expected_type)

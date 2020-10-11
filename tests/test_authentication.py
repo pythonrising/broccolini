@@ -18,7 +18,6 @@ logging.basicConfig(
 class TestVaultFunctions:
     """Test Vault Functions."""
 
-
     @staticmethod
     @pytest.mark.dependency(name="test_login_to_vault")
     def test_login_to_vault():
