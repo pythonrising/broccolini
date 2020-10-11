@@ -41,10 +41,14 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Test with pytest - address CVE and deprecation.
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            VAULT_URL: ${{ secrets.VAULT_URL }}
+            VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
         run: |
-          echo GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} >> "$GITHUB_ENV"
-          echo VAULT_URL=${{ secrets.VAULT_URL }} >> "$GITHUB_ENV"
-          echo VAULT_TOKEN=${{ secrets.VAULT_TOKEN }} >> "$GITHUB_ENV"
+          # echo GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} >> "$GITHUB_ENV"
+          # echo VAULT_URL=${{ secrets.VAULT_URL }} >> "$GITHUB_ENV"
+          # echo VAULT_TOKEN=${{ secrets.VAULT_TOKEN }} >> "$GITHUB_ENV"
           poetry run pytest --cov . --cov-report=xml
 
       - name: Upload pytest test results
