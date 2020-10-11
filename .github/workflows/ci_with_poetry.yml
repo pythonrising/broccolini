@@ -28,13 +28,11 @@ jobs:
           key: poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             poetry-${{ hashFiles('**/poetry.lock') }}
-          # run: echo "~/.virtualenvs" >> $GITHUB_PATH
-          # run: echo ${{ github.workspace }} >> $GITHUB_PATH
 
-      # - name: Set Poetry config
-      #   run: |
-      #     poetry config settings.virtualenvs.in-project false
-      #     poetry config settings.virtualenvs.path ~/.virtualenvs
+      - name: Set Poetry config
+        run: |
+          poetry config settings.virtualenvs.in-project false
+          poetry config settings.virtualenvs.path ~/.virtualenvs
 
       # - name: Install Dependencies
       #   run: poetry install
