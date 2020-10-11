@@ -24,11 +24,11 @@ jobs:
         uses: actions/cache@v2
         id: cache
         with:
-          # path: ~/.virtualenvs
+          path: ~/.virtualenvs
           key: poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             poetry-${{ hashFiles('**/poetry.lock') }}
-          run: echo "~/.virtualenvs" >> $GITHUB_PATH
+          # run: echo "~/.virtualenvs" >> $GITHUB_PATH
           # run: echo ${{ github.workspace }} >> $GITHUB_PATH
 
       # - name: Set Poetry config
