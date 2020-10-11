@@ -31,8 +31,8 @@ jobs:
           restore-keys: |
             poetry-${{ hashFiles('**/poetry.lock') }}
 
-      - name: Set Poetry config 2
-        run: ls ~/.virtualenvs
+      # - name: Set Poetry config 2
+      #   run: ls ~/.virtualenvs
 
       # - name: Set Poetry config
       #   run: |
