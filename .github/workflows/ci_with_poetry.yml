@@ -19,6 +19,8 @@ jobs:
 
       - name: Install Poetry
         uses: dschep/install-poetry-action@v1.2
+        with:
+          create_virtualenvs: true
 
       - name: Cache Poetry virtualenv
         uses: actions/cache@v1
@@ -29,33 +31,41 @@ jobs:
           restore-keys: |
             poetry-${{ hashFiles('**/poetry.lock') }}
 
+      # - name: Set Poetry config 2
+      #   run: ls ~/.virtualenvs
+
+      # - name: Set Poetry config
+      #   run: |
+      #     poetry config settings.virtualenvs.in-project false
+      #     poetry config settings.virtualenvs.path ~/.virtualenvs
+
       - name: Install Dependencies
         run: poetry install
         if: steps.cache.outputs.cache-hit != 'true'
 
-      # - name: Code Quality
-      #   run: poetry run black . --check
+      - name: Set env variables
+        run: |
+          echo "GITHUB_TOKEN=${{secrets.GITHUB_TOKEN}}" >> $GITHUB_ENV
+          echo "VAULT_URL=${{secrets.VAULT_URL}}" >> $GITHUB_ENV
+          echo "VAULT_TOKEN=${{secrets.VAULT_TOKEN}}" >> $GITHUB_ENV
 
-      - name: Test with pytest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VAULT_URL: ${{ secrets.VAULT_URL }}
-          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
-        run: poetry run pytest --cov . --cov-report=xml
-        # pytest --cov=./ --cov-report=xml
-
-      - name: Poetry export requirements.
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VAULT_URL: ${{ secrets.VAULT_URL }}
-          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
-        run: poetry export --format=requirements.txt --without-hashes --dev --output=docs/requirements.txt
+      - name: Test with pytest - address CVE and deprecation.
+        # env:
+        #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #     VAULT_URL: ${{ secrets.VAULT_URL }}
+        #     VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+        run: |
+          # echo "GITHUB_TOKEN=${{secrets.GITHUB_TOKEN}}" >> $GITHUB_ENV
+          # echo "VAULT_URL=${{secrets.VAULT_URL}}" >> $GITHUB_ENV
+          # echo "VAULT_TOKEN=${{secrets.VAULT_TOKEN}}" >> $GITHUB_ENV
+          poetry run pytest --cov . --cov-report=xml
 
       - name: Upload pytest test results
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: pytest-results-${{ matrix.python-version }}
           path: ${{ github.workspace }}
+
 
       - name: Codecov
         uses: codecov/codecov-action@v1.0.13

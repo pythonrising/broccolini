@@ -3,7 +3,8 @@
 DataBase operations.
 """
 import logging
-from typing import List, Dict, Tuple, Any
+from typing import Any, Dict, List, Tuple
+
 from faunadb import query as q
 from faunadb.client import FaunaClient
 from faunadb.errors import BadRequest
