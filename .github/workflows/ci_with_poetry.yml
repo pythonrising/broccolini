@@ -46,21 +46,22 @@ jobs:
       #   run: poetry install
       #   if: steps.cache.outputs.cache-hit != 'true'
 
-      # - name: Test with pytest - address CVE and deprecation.
-      #   run: poetry run pytest --cov . --cov-report=xml
+      - name: Test with pytest - address CVE and deprecation.
+        # run: poetry run pytest --cov . --cov-report=xml
+        run: echo ${{ secrets.VAULT_URL }} >> $GITHUB_ENV
+        # env:
+          # GH_TOKEN: ${{ secrets.DEPLOY_GH_TOKEN }}
+          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+          # VAULT_URL: ${{ secrets.VAULT_URL }}
+          # VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
 
-      - name: Print the variable
-        run: echo "VAULT_URL"
-        with:
-          # poetry-version: ${{ matrix.poetry-version }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VAULT_URL: ${{ secrets.VAULT_URL }}
-          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
 
-        # with:
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #   VAULT_URL: ${{ secrets.VAULT_URL }}
-        #   VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+      # - name: Print the variable
+      #   run: echo "VAULT_URL"
+      #   with:
+      #     # poetry-version: ${{ matrix.poetry-version }}
 
       - name: Upload pytest test results
         uses: actions/upload-artifact@v1
