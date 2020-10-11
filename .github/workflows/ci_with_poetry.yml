@@ -49,7 +49,8 @@ jobs:
       - name: Test with pytest - address CVE and deprecation.
         # run: poetry run pytest --cov . --cov-report=xml
         # run: echo ${{ secrets.VAULT_URL }} >> $GITHUB_ENV
-        run: echo "foo=bar" >> "$GITHUB_ENV"
+        # run: echo "foo=bar" >> "$GITHUB_ENV"  # this one works
+        run: echo $VAULT_URL >> $GITHUB_ENV
         # env:
           # GH_TOKEN: ${{ secrets.DEPLOY_GH_TOKEN }}
           # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
