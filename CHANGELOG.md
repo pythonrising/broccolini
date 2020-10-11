@@ -1,6 +1,10 @@
 
 # CHANGELOG
 
+## 0.1.3
+
+Added additional functions including API calls.  Changed CICD steps:
+
 ## 0.1.2
 
 Added additional functions including API access methods:
