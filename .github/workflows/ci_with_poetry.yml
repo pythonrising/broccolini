@@ -45,8 +45,11 @@ jobs:
         run: poetry install
         if: steps.cache.outputs.cache-hit != 'true'
 
-      - name: Test with pytest - address CVE and deprecation.
-        run: poetry run pytest --cov . --cov-report=xml
+      # - name: Test with pytest - address CVE and deprecation.
+      #   run: poetry run pytest --cov . --cov-report=xml
+
+      - name: Print the variable
+        run: echo "$VAULT_URL"
 
         # with:
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
