@@ -50,9 +50,10 @@ jobs:
         # run: poetry run pytest --cov . --cov-report=xml
         # run: echo ${{ secrets.VAULT_URL }} >> $GITHUB_ENV
         # run: echo "foo=bar" >> "$GITHUB_ENV"
-        run: echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> "$GITHUB_ENV"
-        run: echo "VAULT_URL=${{ secrets.VAULT_URL }}" >> "$GITHUB_ENV"
-        run: echo "VAULT_TOKEN=${{ secrets.VAULT_TOKEN }}" >> "$GITHUB_ENV"
+        run: |
+          echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> "$GITHUB_ENV"
+          echo "VAULT_URL=${{ secrets.VAULT_URL }}" >> "$GITHUB_ENV"
+          echo "VAULT_TOKEN=${{ secrets.VAULT_TOKEN }}" >> "$GITHUB_ENV"
         # run: echo foo-bar }} >> $GITHUB_PATH
         # this foo one works
         # run: echo secrets.VAULT_URL >> $GITHUB_ENV
