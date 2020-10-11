@@ -14,7 +14,9 @@ import pytest
 from broccolini.api_access import ApiAccess
 from broccolini.authentication_functions import VaultFunctions
 
-logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 class TestApiAccess:
@@ -74,9 +76,15 @@ class TestApiAccess:
             api_key=test_get_api_settings["api_key"],
         )
         result.method = MagicMock(return_value=4)
-        result.method(api_url=test_get_api_settings["api_url"], api_key=test_get_api_settings["api_key"], key="value")
+        result.method(
+            api_url=test_get_api_settings["api_url"],
+            api_key=test_get_api_settings["api_key"],
+            key="value",
+        )
         result.method.assert_called_with(
-            api_url=test_get_api_settings["api_url"], api_key=test_get_api_settings["api_key"], key="value"
+            api_url=test_get_api_settings["api_url"],
+            api_key=test_get_api_settings["api_key"],
+            key="value",
         )
 
     @staticmethod
