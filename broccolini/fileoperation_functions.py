@@ -109,10 +109,11 @@ class FileOperationFunctions:
         output: output_dictionary
         output_type = List[Dict[str, str]]
         # to get the subject
-        # do a quick regex to find the parent after the text created/training/TEXTHEREISWHATWEWANT
-        # -bachs1x/pytest-669/test_dir_created0/test_dir_created/training/javascript/subdir_3/seek.txt')
+        # regex to find the parent after the text created/training/TEXTHEREISWHATWEWANT
+        # -bachs1x/pytest-669/
+        # test_dir_created0/test_dir_created/training/javascript/subdir_3/seek.txt')
         x = "Success!" if (y == 2) else "Failed!"
-        x = "valid" if in list else failed  or do a dictionary lookup of the valid subjects
+        x = "valid" if in list else failed or dictionary lookup of the valid subject
         """
         # input_path: Dict[List[str], Dict[str, object]] = kwargs["input_path"]
         input_path = kwargs["input_path"]

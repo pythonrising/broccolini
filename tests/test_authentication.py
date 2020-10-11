@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 """Testing authentication functions."""
 import logging
+from unittest.mock import MagicMock
 
 import hvac
 import pytest
+
 
 from broccolini.authentication_functions import VaultFunctions
 
@@ -16,19 +18,6 @@ logging.basicConfig(
 class TestVaultFunctions:
     """Test Vault Functions."""
 
-    @staticmethod
-    @pytest.mark.skip(reason="needs mock")
-    def test_unseal_vault():
-        """Test unseal vault."""
-        result = VaultFunctions().unseal_vault(
-            vault_url="VAULT_URL",
-            vault_token="VAULT_TOKEN",
-            vault_unseal_token="VAULT_UNSEAL_TOKEN",
-        )
-        expected = True
-        expected_type = bool
-        assert isinstance(result, expected_type)
-        assert result == expected
 
     @staticmethod
     @pytest.mark.dependency(name="test_login_to_vault")
@@ -110,3 +99,17 @@ class TestVaultFunctions:
         expected_type = bool
         assert isinstance(result, expected_type)
         assert result == expected
+
+    @staticmethod
+    def test_unseal_vault():
+        """Test unseal vault."""
+        expected_mock = True
+        expected_type_mock = bool
+        result_mock = MagicMock(return_value=True)
+        result_mock.return_value = VaultFunctions().unseal_vault(
+            vault_url="VAULT_URL",
+            vault_token="VAULT_TOKEN",
+            vault_unseal_token="VAULT_UNSEAL_TOKEN",
+        )
+        assert result_mock.return_value == expected_mock
+        assert isinstance(result_mock.return_value, expected_type_mock)

@@ -8,7 +8,7 @@
 
 ## Description
 
-Collection of utilities used by other python programs.
+Collection of utilities used by other python programs.  Note this python library will require python 3.9 or later.  This is to support a couple of features introduced in python3.9(type hint improvements is key)
 
 ## QuickStart
 
