@@ -8,7 +8,9 @@ import re
 from pathlib import Path
 from typing import Dict, List
 
-logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 class FileOperationFunctions:
@@ -65,7 +67,9 @@ class FileOperationFunctions:
 
         output_listing: List[Dict[str, object]] = []
         for each in folder_list:
-            write_to_json: Dict[str, object] = FileOperationFunctions.build_dictionary(input_path=each)
+            write_to_json: Dict[str, object] = FileOperationFunctions.build_dictionary(
+                input_path=each
+            )
             output_listing.append(write_to_json)
         return output_listing
 

@@ -15,7 +15,9 @@ from broccolini.fileoperation_functions import FileOperationFunctions
 
 from broccolini.database_operations import DataBaseOperations
 
-logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 class TestIntegrationFileToFauna:
@@ -51,14 +53,18 @@ class TestIntegrationFileToFauna:
         return result
 
     @pytest.mark.skip(reason="integration testing")
-    def test_write_files_to_fauna_db(self, return_data_dict, return_random_uuid, test_get_files_from_folder):
+    def test_write_files_to_fauna_db(
+        self, return_data_dict, return_random_uuid, test_get_files_from_folder
+    ):
         """Put list of files into fauna database.
 
         input: list
         output or side effect: fauna database
         """
         collection_name = f"collection_{return_random_uuid}"
-        client_token = TestIntegrationFileToFauna.get_test_values(return_data_dict["fauna_secret_path_server"])
+        client_token = TestIntegrationFileToFauna.get_test_values(
+            return_data_dict["fauna_secret_path_server"]
+        )
         records_to_add = []
         result = test_get_files_from_folder
         # for each in result:

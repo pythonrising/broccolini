@@ -15,7 +15,9 @@ from faker import Faker
 from broccolini.fileoperation_functions import FileOperationFunctions
 from broccolini.json_functions import JsonFunctions
 
-logging.basicConfig(level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 class TestFileOperationsFunctions:
@@ -78,7 +80,9 @@ class TestFileOperationsFunctions:
 
     @staticmethod
     @pytest.fixture()
-    def test_filter_file_data(test_build_dictionary_of_files, create_generic_json_test_file):
+    def test_filter_file_data(
+        test_build_dictionary_of_files, create_generic_json_test_file
+    ):
         """Filter data from the data provided by the other function."""
         result = FileOperationFunctions().filter_file_data(
             input_path=test_build_dictionary_of_files,
