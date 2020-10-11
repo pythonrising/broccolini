@@ -23,7 +23,7 @@ jobs:
         #   create_virtualenvs: true
 
       - name: Cache Poetry virtualenv
-        uses: actions/cache@v2
+        uses: actions/cache@v1
         id: cache
         with:
           path: ~/.virtualenvs
