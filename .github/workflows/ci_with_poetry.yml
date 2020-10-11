@@ -58,8 +58,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: pytest-results-${{ matrix.python-version }}
-          # path: ${{ github.workspace }}
-          run: echo ${{ github.workspace }} >> $GITHUB_PATH
+          path: ${{ github.workspace }}
+          # run: echo ${{ github.workspace }} >> $GITHUB_PATH
 
 
       - name: Codecov
