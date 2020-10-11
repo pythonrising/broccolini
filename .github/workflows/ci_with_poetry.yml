@@ -46,6 +46,7 @@ jobs:
           echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> "$GITHUB_ENV"
           echo "VAULT_URL=${{ secrets.VAULT_URL }}" >> "$GITHUB_ENV"
           echo "VAULT_TOKEN=${{ secrets.VAULT_TOKEN }}" >> "$GITHUB_ENV"
+          poetry run pytest --cov . --cov-report=xml
 
       - name: Upload pytest test results
         uses: actions/upload-artifact@v2
