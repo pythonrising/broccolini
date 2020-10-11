@@ -19,8 +19,8 @@ jobs:
 
       - name: Install Poetry
         uses: dschep/install-poetry-action@v1.2
-        # with:
-        #   create_virtualenvs: true
+        with:
+          create_virtualenvs: true
 
       - name: Cache Poetry virtualenv
         uses: actions/cache@v1
@@ -31,10 +31,10 @@ jobs:
           restore-keys: |
             poetry-${{ hashFiles('**/poetry.lock') }}
 
-      - name: Set Poetry config
-        run: |
-          poetry config settings.virtualenvs.in-project false
-          poetry config settings.virtualenvs.path ~/.virtualenvs
+      # - name: Set Poetry config
+      #   run: |
+      #     poetry config settings.virtualenvs.in-project false
+      #     poetry config settings.virtualenvs.path ~/.virtualenvs
 
       - name: Install Dependencies
         run: poetry install
