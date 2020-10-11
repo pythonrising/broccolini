@@ -55,11 +55,12 @@ jobs:
 
 
       - name: Upload pytest test results
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: pytest-results-${{ matrix.python-version }}
           # path: ${{ github.workspace }}
           run: echo ${{ github.workspace }} >> $GITHUB_PATH
+
 
       - name: Codecov
         uses: codecov/codecov-action@v1.0.13
