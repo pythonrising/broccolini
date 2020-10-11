@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.8]
-        poetry-version: [1.0.10]
+        # poetry-version: [1.0.10]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -21,7 +21,7 @@ jobs:
       - name: Install Poetry
         uses: dschep/install-poetry-action@v1.3
         with:
-          poetry-version: ${{ matrix.poetry-version }}
+          # poetry-version: ${{ matrix.poetry-version }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VAULT_URL: ${{ secrets.VAULT_URL }}
           VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
@@ -41,15 +41,15 @@ jobs:
       #     poetry config settings.virtualenvs.in-project false
       #     poetry config settings.virtualenvs.path ~/.virtualenvs
 
-      - name: Install Dependencies
-        run: poetry install
-        if: steps.cache.outputs.cache-hit != 'true'
+      # - name: Install Dependencies
+      #   run: poetry install
+      #   if: steps.cache.outputs.cache-hit != 'true'
 
       # - name: Test with pytest - address CVE and deprecation.
       #   run: poetry run pytest --cov . --cov-report=xml
 
       - name: Print the variable
-        run: echo "$VAULT_URL"
+        run: echo "VAULT_URL"
 
         # with:
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
