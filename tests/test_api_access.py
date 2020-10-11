@@ -64,7 +64,7 @@ class TestApiAccess:
         # put in exception here if not getting 200
 
     @staticmethod
-    # @pytest.mark.skip(reason="needs mocking for cicd")
+    @pytest.mark.skip(reason="needs mocking for cicd")
     def test_return_statistics_from_api_mock(test_get_api_settings):
         """Test we can get statistics via the api.
 
@@ -76,6 +76,7 @@ class TestApiAccess:
             api_key=test_get_api_settings["api_key"],
         )
         result.method = MagicMock(return_value=4)
+
         result.method(
             api_url=test_get_api_settings["api_url"],
             api_key=test_get_api_settings["api_key"],

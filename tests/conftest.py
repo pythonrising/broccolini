@@ -15,6 +15,7 @@ def return_random_uuid():
     """Provide random values."""
     return f"conftest_{shortuuid.uuid()}"
 
+
 @pytest.fixture()
 def return_data_dict():
     """Provide dictionary values to functions."""
