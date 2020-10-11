@@ -18,13 +18,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
           architecture: x64
 
-      - name: Install Poetry
-        uses: dschep/install-poetry-action@v1.3
-        with:
-          # poetry-version: ${{ matrix.poetry-version }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VAULT_URL: ${{ secrets.VAULT_URL }}
-          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+      # - name: Install Poetry
+      #   uses: dschep/install-poetry-action@v1.3
+      #   with:
+      #     # poetry-version: ${{ matrix.poetry-version }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     VAULT_URL: ${{ secrets.VAULT_URL }}
+      #     VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
 
 
       - name: Cache Poetry virtualenv
@@ -50,7 +50,7 @@ jobs:
         # run: poetry run pytest --cov . --cov-report=xml
         # run: echo ${{ secrets.VAULT_URL }} >> $GITHUB_ENV
         # run: echo "foo=bar" >> "$GITHUB_ENV"  # this one works
-        run: echo $VAULT_URL >> $GITHUB_ENV
+        run: echo secrets.VAULT_URL >> $GITHUB_ENV
         # env:
           # GH_TOKEN: ${{ secrets.DEPLOY_GH_TOKEN }}
           # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
