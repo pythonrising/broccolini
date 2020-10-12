@@ -6,7 +6,7 @@ Testing API access functions.
 """
 
 import logging
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 import pytest
 
 
@@ -70,6 +70,9 @@ class TestApiAccess:
 
         The test url is not reachable from github. Use mock.
         the key in method has to match the assert called with value given
+        use mock patch to run using example from here
+        https://www.youtube.com/watch?v=6tNS--WetLI
+        magic mock is not preventing it from calling when run in cicd
         """
         result = ApiAccess().return_statistics_from_api(
             api_url=test_get_api_settings["api_url"],
