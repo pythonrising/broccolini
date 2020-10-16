@@ -63,7 +63,7 @@ class TestIntegrationFileToFauna:
         """
         collection_name = f"collection_{return_random_uuid}"
         client_token = TestIntegrationFileToFauna.get_test_values(
-            return_data_dict["fauna_secret_path_server"]
+            return_data_dict["fauna_path_srv"]
         )
         records_to_add = []
         result = test_get_files_from_folder
