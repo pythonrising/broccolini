@@ -123,33 +123,33 @@ class TestDatabaseOperations:
     #     assert isinstance(result, expected_type)
     #     # assert expected in str(result["ref"])
 
-    @staticmethod
-    @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_delete_database(return_data_dict, return_random_uuid):
-        """Test Fauna DB delete database."""
-        client_token = TestDatabaseOperations.get_test_values(
-            return_data_dict["fauna_secret_path_admin"]
-        )
-        database = f"database_{return_random_uuid}"
-        result = DataBaseOperations(client_token=client_token).fauna_delete_database(
-            database=database,
-        )
-        expected_type = dict
-        expected = "id=database_conf"
-        assert isinstance(result, expected_type)
-        assert expected in str(result)
+    # @staticmethod
+    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    # def test_fauna_delete_database(return_data_dict, return_random_uuid):
+    #     """Test Fauna DB delete database."""
+    #     client_token = TestDatabaseOperations.get_test_values(
+    #         return_data_dict["fauna_secret_path_admin"]
+    #     )
+    #     database = f"database_{return_random_uuid}"
+    #     result = DataBaseOperations(client_token=client_token).fauna_delete_database(
+    #         database=database,
+    #     )
+    #     expected_type = dict
+    #     expected = "id=database_conf"
+    #     assert isinstance(result, expected_type)
+    #     assert expected in str(result)
 
-    @staticmethod
-    @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_delete_database_exception(return_data_dict):
-        """Test Fauna DB delete database exception."""
-        client_token = TestDatabaseOperations.get_test_values(
-            return_data_dict["fauna_secret_path_admin"]
-        )
-        with pytest.raises(ValueError):
-            DataBaseOperations(client_token=client_token).fauna_delete_database(
-                database=return_data_dict["fauna_test_bad_database"],
-            )
+    # @staticmethod
+    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    # def test_fauna_delete_database_exception(return_data_dict):
+    #     """Test Fauna DB delete database exception."""
+    #     client_token = TestDatabaseOperations.get_test_values(
+    #         return_data_dict["fauna_secret_path_admin"]
+    #     )
+    #     with pytest.raises(ValueError):
+    #         DataBaseOperations(client_token=client_token).fauna_delete_database(
+    #             database=return_data_dict["fauna_test_bad_database"],
+    #         )
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
