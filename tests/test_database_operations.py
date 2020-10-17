@@ -83,7 +83,7 @@ class TestDatabaseOperations:
             database=return_data_dict['fauna_db_name']
         )
         expected_type = dict
-        expected = "id=all_storehouses"
+        # expected = "id=all_storehouses"
         assert isinstance(result, expected_type)
         # assert expected in str(result["data"])
 
@@ -95,7 +95,9 @@ class TestDatabaseOperations:
     #     client_token = TestDatabaseOperations.get_test_values(
     #         return_data_dict["fauna_secret_path_admin"]
     #     )
-    #     result = DataBaseOperations(client_token=client_token).fauna_create_collection(
+    #     result = DataBaseOperations(
+    # client_token=client_token
+    # ).fauna_create_collection(
     #         # database='testdatabasename',
     #         collection_name=collection_name,
     #     )

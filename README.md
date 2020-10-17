@@ -6,9 +6,13 @@
 ![Lint Code Base](https://github.com/pythonrising/broccolini/workflows/Lint%20Code%20Base/badge.svg)
 [![codecov](https://codecov.io/gh/pythonrising/broccolini/branch/main/graph/badge.svg)](https://codecov.io/gh/pythonrising/broccolini)
 
+## Python Version Warning
+
+This library will always only support the latest version of python.  Expect breaking changes always.  If you are looking for stability please plan on forking and maintaining yourself.
+
 ## Description
 
-Collection of utilities used by other python programs.  Note this python library will require python 3.9 or later.  This is to support a couple of features introduced in python3.9(type hint improvements is key)
+Collection of utilities used in my programming projects.
 
 ## QuickStart
 
