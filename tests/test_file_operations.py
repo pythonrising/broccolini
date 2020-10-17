@@ -69,7 +69,7 @@ class TestFileOperationsFunctions:
         Gets folder path from conftest and feeds to the function as a pathlib object
         """
         result = FileOperationFunctions().build_dictionary(
-            input_path=Path(create_list_of_filenames_and_directories[1]),
+            input_dict=Path(create_list_of_filenames_and_directories[1]),
         )
         expected = "test_dir_created"
         expected_type, expected_len = dict, 9
@@ -85,7 +85,7 @@ class TestFileOperationsFunctions:
     ):
         """Filter data from the data provided by the other function."""
         result = FileOperationFunctions().filter_file_data(
-            input_path=test_build_dictionary_of_files,
+            input_dict=test_build_dictionary_of_files,
         )
         expected_type = list
         assert isinstance(result, expected_type)

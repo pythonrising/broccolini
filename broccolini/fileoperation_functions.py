@@ -41,9 +41,9 @@ class FileOperationFunctions:
             file_size
             modification date - from pathlib
         """
-        input_path: Path = kwargs["input_path"]
+        input_dict: Path = kwargs["input_dict"]
         output_dict: dict[str, object] = dict(
-            folders_and_files=list(input_path.rglob("*.*")),
+            folders_and_files=list(input_dict.rglob("*.*")),
         )
         return output_dict
 
@@ -67,7 +67,7 @@ class FileOperationFunctions:
         output_listing: list[dict[str, object]] = []
         for each in folder_list:
             write_to_json: dict[str, object] = FileOperationFunctions.build_dictionary(
-                input_path=each
+                input_dict=each
             )
             output_listing.append(write_to_json)
         return output_listing
@@ -100,7 +100,7 @@ class FileOperationFunctions:
         return subject
 
     @staticmethod
-    def filter_file_data(**kwargs) -> list[dict[str, object]]:
+    def filter_file_data(**kwargs: dict[Path, str]):
         """Filter data.
 
         input: dictionary_of_paths_in_pathlib_format
@@ -115,10 +115,11 @@ class FileOperationFunctions:
         x = "valid" if in list else failed or dictionary lookup of the valid subject
         """
         # input_path: Dict[List[str], Dict[str, object]] = kwargs["input_path"]
-        input_path = kwargs["input_path"]
+        input_dict = kwargs["input_dict"]
+        print(input_dict)
         # subject = 'unknown_subject'
         records_to_add = []
-        for each in input_path["folders_and_files"]:
+        for each in input_dict["folders_and_files"]:
             records_to_add.append(
                 dict(
                     file_name=each.name,
