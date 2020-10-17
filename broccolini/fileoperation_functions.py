@@ -2,11 +2,9 @@
 
 File operations, eg, open close read write.
 """
-
 import logging
 import re
 from pathlib import Path
-from typing import Dict, List, Any
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -134,3 +132,55 @@ class FileOperationFunctions:
             )
         return records_to_add
 
+
+# def search_for_text(
+#     pattern: str, data_to_search: str, file_name: str = None
+# ) -> list[str]:
+#     """Search for text in files given.
+
+#     Args:
+#         pattern (str): pattern to search for
+#         data_to_search (str): data we are searching in
+#         input_file_name (str): file name being used (Optional)
+
+#     Returns:
+#         list[str]: [description]
+#     """
+#     matched_string = ""
+#     matched_line = ""
+#     list_of_results = []
+
+#     try:
+#         if (search := re.search(pattern, data_to_search)) is not None:
+#             matched_string = search[0]
+#             matched_line = search[1]
+#             list_of_results.append(
+#                 dict(
+#                     file_name=file_name,
+#                     pattern=pattern,
+#                     matched_string=matched_string,
+#                     matched_line=matched_line,
+#                 )
+#             )
+#     except Exception as _error:
+#         logging.debug(_error)
+
+#     # print(len(list_of_results))
+#     return list_of_results
+
+
+# async def read_data_async(file_name: str, output_folder: str = None) -> None:
+#     """Read data and process with async."""
+#     try:
+#         async with aiofiles.open(file_name, encoding="utf-8") as afp:
+#             data_ = await afp.read(4096)
+#             results = search_for_text(pattern=PATTERN,
+# data_to_search=data_, file_name=file_name)
+#             if len(results) == 1:
+#                 print(results)
+#                 return results
+
+#     except Exception as _error:
+#         print(f"error is _{_error} for file_name = {file_name}")
+#         # with open(output_folder, "a") as file_target:
+#         #     file_target.write(f"error is _{_error} for file_name = {file_name}")
