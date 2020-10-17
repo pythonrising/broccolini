@@ -116,12 +116,12 @@ class DataBaseOperations:
         """Delete document."""
         return True
 
-    # @staticmethod
-    # def fauna_delete_index() -> bool:
-    #     """Delete index."""
-    #     return True
+    @staticmethod
+    def fauna_delete_index() -> bool:
+        """Delete index."""
+        return True
 
-    # @staticmethod
-    # def fauna_delete_collection() -> bool:
-    #     """Delete collection."""
-    #     return True
+    @staticmethod
+    def fauna_delete_collection() -> bool:
+        """Delete collection."""
+        return True

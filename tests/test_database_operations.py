@@ -143,30 +143,28 @@ class TestDatabaseOperations:
         assert isinstance(result, expected_type)
         assert expected == result
 
-    # @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    # def test_fauna_delete_index(return_database_settings):
-    #     """Test delete index."""
-    #     client_token = TestDatabaseOperations.get_test_values(
-    #         return_database_settings["fauna_path_srv"]
-    #     )
-    #     result = DataBaseOperations(client_token=client_token).fauna_delete_index()
-    #     expected = True
-    #     expected_type = bool
-    #     assert isinstance(result, expected_type)
-    #     assert expected == result
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_delete_index(return_database_settings):
+        """Test delete index."""
+        client_token = TestDatabaseOperations.get_test_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(client_token=client_token).fauna_delete_index()
+        expected = True
+        expected_type = bool
+        assert isinstance(result, expected_type)
+        assert expected == result
 
-    # @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    # def test_fauna_delete_collection(return_database_settings):
-    #     """Test delete collection."""
-    #     client_token = TestDatabaseOperations.get_test_values(
-    #         return_database_settings["fauna_path_srv"]
-    #     )
-    #     result = DataBaseOperations(client_token=client_token).fauna_delete_collection()
-    #     expected = True
-    #     expected_type = bool
-    #     assert isinstance(result, expected_type)
-    #     assert expected == result
-
-   
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_delete_collection(return_database_settings):
+        """Test delete collection."""
+        client_token = TestDatabaseOperations.get_test_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(client_token=client_token).fauna_delete_collection()
+        expected = True
+        expected_type = bool
+        assert isinstance(result, expected_type)
+        assert expected == result
