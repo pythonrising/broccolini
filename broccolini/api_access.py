@@ -5,6 +5,7 @@ API Access functions.
 import logging
 
 import requests
+from requests.models import Response
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -23,7 +24,7 @@ class ApiAccess:
         return f"{class_name}"
 
     @staticmethod
-    def return_statistics_from_api(**kwargs):
+    def return_statistics_from_api(**kwargs: str) -> Response:
         """Get data."""
         api_url: str = kwargs["api_url"]
         api_key: str = kwargs["api_key"]
