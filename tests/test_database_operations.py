@@ -59,11 +59,14 @@ class TestDatabaseOperations:
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
         )
-        result = DataBaseOperations(client_token=client_token).fauna_create_collection()
-        expected = True
-        expected_type = bool
-        assert isinstance(result, expected_type)
-        assert expected == result
+        # print(client_token)
+        result = DataBaseOperations(client_token=client_token).fauna_create_collection(
+            fauna_collection_name=return_database_settings["fauna_collection_name"],
+        )
+        # expected = True
+        # expected_type = bool
+        # assert isinstance(result, expected_type)
+        # assert expected == result
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])

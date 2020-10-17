@@ -48,15 +48,17 @@ class DataBaseOperations:
 
     def fauna_create_collection(self, **kwargs: str) -> bool:
         """Create collection."""
-        return True
-        # client = self.fauna_get_connection()
-        # fauna_collection_name: str = kwargs["fauna_collection_name"]
-        # try:
-        #     client.query(q.create_collection({"name": fauna_collection_name}))
-        #     return True, fauna_collection_name
-        # except (Exception) as _error:  # pragma: no cover
-        #     print(_error)
-        #     raise ValueError("Fauna error.") from _error
+        client = self.fauna_get_connection()
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
+        print(fauna_collection_name)
+        try:
+            # client.query(q.create_collection({"name": "boons"}))
+            client.query(q.create_collection({"name": fauna_collection_name}))
+            return True
+            # return True, fauna_collection_name
+        except (Exception) as _error:  # pragma: no cover
+            print(_error)
+            raise ValueError("Fauna error.") from _error
 
     def fauna_create_index(self, **kwargs):
         """Create index."""
