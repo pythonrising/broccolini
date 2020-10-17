@@ -120,8 +120,3 @@ class TestFileOperationsFunctions:
         )
         expected_type = str
         assert isinstance(result, expected_type)
-
-    @staticmethod
-    def test_file_read_data_async():
-        """Need here."""
-        assert 0

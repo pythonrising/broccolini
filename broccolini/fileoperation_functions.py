@@ -2,14 +2,9 @@
 
 File operations, eg, open close read write.
 """
-import asyncio
 import logging
 import re
 from pathlib import Path
-import shortuuid
-import aiofiles.os
-
-
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -174,13 +169,13 @@ class FileOperationFunctions:
 #     return list_of_results
 
 
-
 # async def read_data_async(file_name: str, output_folder: str = None) -> None:
 #     """Read data and process with async."""
 #     try:
 #         async with aiofiles.open(file_name, encoding="utf-8") as afp:
 #             data_ = await afp.read(4096)
-#             results = search_for_text(pattern=PATTERN, data_to_search=data_, file_name=file_name)
+#             results = search_for_text(pattern=PATTERN,
+# data_to_search=data_, file_name=file_name)
 #             if len(results) == 1:
 #                 print(results)
 #                 return results
