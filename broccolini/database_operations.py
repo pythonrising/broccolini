@@ -64,65 +64,64 @@ class DataBaseOperations:
 
 
     def fauna_create_document(self, **kwargs: str) -> bool:
-        """Add records.
+        """Add document.
 
         input: data to add
-        input: test collection name
         returns:
             output: success or failure
             output type: bool
         """
         return True
-        # client = self.fauna_get_connection()
-        # document_to_add: str = kwargs["document_to_add"]
-        # fauna_collection_name: str = kwargs["fauna_collection_name"]
-        # try:
-        #     return client.query(
-        #         q.create(
-        #             q.collection(fauna_collection_name),
-        #             {
-        #                 "data": {
-        #                     "name": document_to_add,
-        #                 }
-        #             },
-        #         )
-        #     )
-        # except (Exception) as _error:  # pragma: no cover
-        #     raise ValueError("Fauna error.") from _error
+    #     # client = self.fauna_get_connection()
+    #     # document_to_add: str = kwargs["document_to_add"]
+    #     # fauna_collection_name: str = kwargs["fauna_collection_name"]
+    #     # try:
+    #     #     return client.query(
+    #     #         q.create(
+    #     #             q.collection(fauna_collection_name),
+    #     #             {
+    #     #                 "data": {
+    #     #                     "name": document_to_add,
+    #     #                 }
+    #     #             },
+    #     #         )
+    #     #     )
+    #     # except (Exception) as _error:  # pragma: no cover
+    #     #     raise ValueError("Fauna error.") from _error
 
     def fauna_paginate_database(self) -> tuple[bool, Any, str]:
         """Fauna paginate database."""
         return True
-        # client = self.fauna_get_connection()
-        # # database: str = kwargs["database"]
-        # try:
-        #     return client.query(q.paginate(Ref("databases")))
-        # except (BadRequest) as _error:  # pragma: no cover
-        #     raise ValueError("Fauna error.") from _error
+    #     # client = self.fauna_get_connection()
+    #     # # database: str = kwargs["database"]
+    #     # try:
+    #     #     return client.query(q.paginate(Ref("databases")))
+    #     # except (BadRequest) as _error:  # pragma: no cover
+    #     #     raise ValueError("Fauna error.") from _error
 
     def fauna_read_database(self, **kwargs) -> dict[list[str, Any]]:
         """Read from fauna database."""
         return True
-        # try:
-        #     _database: str = kwargs["database"]
-        #     client = self.fauna_get_connection()
-        #     client.query(q.get(q.database(_database)))
-        #     indexes = client.query(q.paginate(q.indexes()))
-        #     return indexes
-        # except (Exception) as _error:  # pragma: no cover
-        #     raise ValueError("Fauna error - read database.") from _error
+    #     # try:
+    #     #     _database: str = kwargs["database"]
+    #     #     client = self.fauna_get_connection()
+    #     #     client.query(q.get(q.database(_database)))
+    #     #     indexes = client.query(q.paginate(q.indexes()))
+    #     #     return indexes
+    #     # except (Exception) as _error:  # pragma: no cover
+    #     #     raise ValueError("Fauna error - read database.") from _error
 
     @staticmethod
     def fauna_delete_document() -> bool:
         """Delete document."""
         return True
 
-    @staticmethod
-    def fauna_delete_index() -> bool:
-        """Delete index."""
-        return True
+    # @staticmethod
+    # def fauna_delete_index() -> bool:
+    #     """Delete index."""
+    #     return True
 
-    @staticmethod
-    def fauna_delete_collection() -> bool:
-        """Delete collection."""
-        return True
+    # @staticmethod
+    # def fauna_delete_collection() -> bool:
+    #     """Delete collection."""
+    #     return True
