@@ -6,6 +6,7 @@ File operations, eg, open close read write.
 import logging
 import re
 from pathlib import Path
+from typing import Dict, List, Any
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -79,7 +80,7 @@ class FileOperationFunctions:
         Note - return on first match is good because the list refers to the same path
 
         input: list_of_pathlib_files
-        input_type = List[Pathlib]
+        input_type = List[Path]
         output: match[1]
         output_type: str
         """
@@ -96,17 +97,16 @@ class FileOperationFunctions:
                 subject = match[1]
             else:
                 subject = "subject_not_available"
-                # print(f"missing:{text_path_name}:\n {pattern}\n")
         return subject
 
     @staticmethod
-    def filter_file_data(**kwargs: dict[Path, str]):
+    def filter_file_data(**kwargs):
         """Filter data.
 
         input: dictionary_of_paths_in_pathlib_format
         input_type = input_directory
         output: output_dictionary
-        output_type = List[Dict[str, str]]
+        output_type = TBD
         # to get the subject
         # regex to find the parent after the text created/training/TEXTHEREISWHATWEWANT
         # -bachs1x/pytest-669/
@@ -116,8 +116,6 @@ class FileOperationFunctions:
         """
         # input_path: Dict[List[str], Dict[str, object]] = kwargs["input_path"]
         input_dict = kwargs["input_dict"]
-        print(input_dict)
-        # subject = 'unknown_subject'
         records_to_add = []
         for each in input_dict["folders_and_files"]:
             records_to_add.append(
@@ -135,3 +133,4 @@ class FileOperationFunctions:
                 )
             )
         return records_to_add
+
