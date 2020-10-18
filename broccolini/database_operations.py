@@ -127,7 +127,6 @@ class DataBaseOperations:
     #     except (Exception) as _error:  # pragma: no cover
     #         print(_error)
     #         raise ValueError("Fauna error.") from _error
-
     def fauna_query_collection(self, **kwargs) -> bool:
         """Query collection."""
         client = self.fauna_get_connection()
