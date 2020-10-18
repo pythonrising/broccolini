@@ -91,10 +91,20 @@ class DataBaseOperations:
             print(_error)
             raise ValueError("Fauna error.") from _error
 
-    @staticmethod
-    def fauna_create_document():
+    def fauna_create_document(self, **kwargs: str) -> bool:
         """Add document."""
-        return True
+        client = self.fauna_get_connection()
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
+        try:
+            client.query(
+                q.create(
+                    q.collection(fauna_collection_name),
+                    {"data": {"name": "Fire Beak", "element": ["air", "fire"]}}
+                )
+            )
+            return True
+        except (BadRequest, Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
 
     @staticmethod
     def fauna_paginate_database():

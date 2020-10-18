@@ -106,7 +106,9 @@ class TestDatabaseOperations:
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
         )
-        result = DataBaseOperations(client_token=client_token).fauna_create_document()
+        result = DataBaseOperations(client_token=client_token).fauna_create_document(
+            fauna_collection_name=return_database_settings["fauna_collection_name"],
+        )
         expected = True
         expected_type = bool
         assert isinstance(result, expected_type)
