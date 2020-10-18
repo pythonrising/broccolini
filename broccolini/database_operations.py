@@ -3,12 +3,15 @@
 DataBase operations.
 """
 import logging
-from typing import Any, Dict, List, Tuple
+
+# from typing import Any
 
 from faunadb import query as q
 from faunadb.client import FaunaClient
+
 from faunadb.errors import BadRequest
-from faunadb.objects import Ref
+
+# from faunadb.objects import Ref
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -19,7 +22,6 @@ class DataBaseOperations:
     """DataBase Operation Functions.
 
     Authentication and secrets from Hashicorp Vault.
-    Vault credentials used to retrieve twilio settings.
     input: client_token - from vault data
     input_type: str
     """
@@ -33,8 +35,7 @@ class DataBaseOperations:
         class_name = self.__class__.__name__
         return f"{class_name}"
 
-    # def get_fauna_connection(self) -> FaunaClient:
-    def get_fauna_connection(self) -> FaunaClient:
+    def fauna_get_connection(self) -> FaunaClient:
         """Get Fauna Connection.
 
         input: client_token from class
@@ -48,96 +49,101 @@ class DataBaseOperations:
         except Exception as _errorinfo:  # pragma: no cover
             raise ValueError("error connecting") from _errorinfo
 
-    def fauna_create_database(self, **kwargs: str) -> Tuple[bool, Any, str]:
-        """Create database.
-
-        create random database with shortuuid to ensure randomness
-        """
-        client = self.get_fauna_connection()
-        database: str = kwargs["database"]
-        try:
-            query = client.query(q.create_database({"name": database}))
-            return True, query, database
-        except (Exception) as _error:  # pragma: no cover
-            raise ValueError("Unable to create database.") from _error
-
-    def fauna_read_database(self, **kwargs) -> Dict[List[str], Any]:
-        """Read from fauna database."""
-        try:
-            _database: str = kwargs["database"]
-            client = self.get_fauna_connection()
-            client.query(q.get(q.database(_database)))
-            indexes = client.query(q.paginate(q.indexes()))
-            return indexes
-        except (Exception) as _error:  # pragma: no cover
-            raise ValueError("Fauna error - read database.") from _error
-
     def fauna_create_collection(self, **kwargs: str) -> bool:
         """Create collection."""
-        # _database: str = kwargs["database"]
-        client = self.get_fauna_connection()
-        # client.query(q.get(q.database(_database)))
-        collection_name: str = kwargs["collection_name"]
+        client = self.fauna_get_connection()
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
         try:
-            client.query(q.create_collection({"name": collection_name}))
-            return True, collection_name
+            client.query(q.create_collection({"name": fauna_collection_name}))
+            return True
         except (Exception) as _error:  # pragma: no cover
             print(_error)
             raise ValueError("Fauna error.") from _error
 
-    def fauna_add_records(self, **kwargs: str) -> bool:
-        """Add records.
-
-        input: data to add
-        input: test collection name
-        returns:
-            output: success or failure
-            output type: bool
-        """
-        client = self.get_fauna_connection()
-        records_to_add: str = kwargs["records_to_add"]
-        collection_name: str = kwargs["collection_name"]
-        # client.query(q.get(q.collection("spells")))
+    def fauna_create_index(self, **kwargs: str) -> bool:
+        """Create index."""
+        client = self.fauna_get_connection()
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
+        fauna_index_name: str = kwargs["fauna_index_name"]
         try:
-            return client.query(
-                q.create(
-                    q.collection(collection_name),
+            client.query(
+                q.create_index(
                     {
-                        "data": {
-                            "name": records_to_add,
-                        }
-                    },
+                        "name": fauna_index_name,
+                        "source": q.collection(fauna_collection_name),
+                        "values": [{"field": ["data", "name"]}],
+                    }
                 )
             )
+            return True
+        except (BadRequest, Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
+
+    def fauna_query_index(self, **kwargs: str) -> bool:
+        """query index."""
+        client = self.fauna_get_connection()
+        # _fauna_collection_name: str = kwargs["fauna_collection_name"]
+        fauna_index_name: str = kwargs["fauna_index_name"]
+        try:
+            client.query(q.get(q.index(fauna_index_name)))
+            return True
+        except (Exception) as _error:  # pragma: no cover
+            print(_error)
+            raise ValueError("Fauna error.") from _error
+
+    @staticmethod
+    def fauna_create_document():
+        """Add document."""
+        return True
+
+    @staticmethod
+    def fauna_paginate_database():
+        """Fauna paginate database."""
+        return True
+
+    @staticmethod
+    def fauna_read_database():
+        """Read from fauna database."""
+        return True
+
+    @staticmethod
+    def fauna_delete_document() -> bool:
+        """Delete document."""
+        return True
+
+    def fauna_delete_index(self, **kwargs: str) -> bool:
+        """Delete index."""
+        client = self.fauna_get_connection()
+        # _fauna_collection_name: str = kwargs["fauna_collection_name"]
+        fauna_index_name: str = kwargs["fauna_index_name"]
+        try:
+            client.query(
+                q.delete(q.index(
+                    fauna_index_name
+                    )
+                )
+            )
+            return True
+        except (Exception) as _error:  # pragma: no cover
+            print(_error)
+            raise ValueError("Fauna error.") from _error
+
+    def fauna_query_collection(self, **kwargs) -> bool:
+        """Query collection."""
+        client = self.fauna_get_connection()
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
+        try:
+            client.query(q.get(q.collection(fauna_collection_name)))
+            return True
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_delete_database(self, **kwargs: str) -> Tuple[bool, Any, str]:
-        """Fauna delete database."""
-        client = self.get_fauna_connection()
-        database: str = kwargs["database"]
+    def fauna_delete_collection(self, **kwargs) -> bool:
+        """Delete collection."""
+        client = self.fauna_get_connection()
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
         try:
-            return client.query(q.delete(q.database(database)))
-        except (BadRequest) as _error:  # pragma: no cover
+            client.query(q.delete(q.collection(fauna_collection_name)))
+            return True
+        except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
-
-    def fauna_paginate_database(self) -> Tuple[bool, Any, str]:
-        """Fauna paginate database."""
-        client = self.get_fauna_connection()
-        # database: str = kwargs["database"]
-        try:
-            return client.query(q.paginate(Ref("databases")))
-        except (BadRequest) as _error:  # pragma: no cover
-            raise ValueError("Fauna error.") from _error
-
-    # def fauna_delete_collection(self, **kwargs):
-    #     """Create collection."""
-    #     client = self.get_fauna_connection()
-    #     collection_name: str = kwargs["collection_name"]
-    #     logging.debug(collection_name)
-    #     return collection_name
-    # try:
-    #     client.query(q.create_collection({"name": collection_name}))
-    #     return True, collection_name
-    # except (Exception) as _error:  # pragma: no cover
-    #     raise ValueError("Fauna error.") from _error

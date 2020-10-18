@@ -7,6 +7,8 @@ Testing common Database operations. Starting with www.faunadb.com.
 
 import logging
 import pytest
+
+# from faunadb.client import FaunaClient, client
 from faunadb.client import FaunaClient
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.database_operations import DataBaseOperations
@@ -17,16 +19,11 @@ logging.basicConfig(
 
 
 class TestDatabaseOperations:
-    """Test Database Operation Functions.
-
-    Build test directory with data.
-    client_token = api_key_dict["data"]["data"]["_key"]
-    client = Client(self.account_sid, self.auth_token)
-    """
+    """Test Database Operation Functions."""
 
     @classmethod
     def get_test_values(cls, secret_path):
-        """Build values needed for the test."""
+        """Build values for the test."""
         try:
             fauna_secret_key = VaultFunctions().query_vault_data(
                 vault_url="VAULT_URL",
@@ -39,7 +36,7 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(name="test_login_to_fauna")
-    def test_get_fauna_connection(return_data_dict):
+    def test_fauna_get_connection(return_database_settings):
         """Test login to fauna.
 
         input: client_token
@@ -48,9 +45,9 @@ class TestDatabaseOperations:
         output example: <faunadb.client.FaunaClient object at 0x000002439xxxxx>
         """
         client_token = TestDatabaseOperations.get_test_values(
-            return_data_dict["fauna_secret_path_admin"]
+            return_database_settings["fauna_path_srv"]
         )
-        result = DataBaseOperations(client_token=client_token).get_fauna_connection()
+        result = DataBaseOperations(client_token=client_token).fauna_get_connection()
         expected = "faunadb.client.FaunaClient"
         expected_type = FaunaClient
         assert expected in str(result)
@@ -58,108 +55,98 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_create_database(return_data_dict, return_random_uuid):
-        """Test Fauna DB create."""
-        database = f"database_{return_random_uuid}"
+    def test_fauna_create_collection(return_database_settings):
+        """Test create collection."""
         client_token = TestDatabaseOperations.get_test_values(
-            return_data_dict["fauna_secret_path_admin"]
+            return_database_settings["fauna_path_srv"]
         )
-        result = DataBaseOperations(client_token=client_token).fauna_create_database(
-            database=database,
-        )
-        expected_type = tuple
-        expected = "_conftest_"
+        this = DataBaseOperations(client_token=client_token)
+        try:
+            this.fauna_query_collection(
+                fauna_collection_name=return_database_settings["fauna_collection_name"]
+            )
+            return True
+        except ValueError:
+            result = this.fauna_create_collection(
+                fauna_collection_name=return_database_settings["fauna_collection_name"],
+            )
+        expected = True
+        expected_type = bool
         assert isinstance(result, expected_type)
-        assert expected in result[2]
+        assert expected == result
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_read_database(return_data_dict):
-        """Test Fauna DB read."""
+    def test_fauna_create_index(return_database_settings):
+        """Test create index."""
         client_token = TestDatabaseOperations.get_test_values(
-            return_data_dict["fauna_secret_path_admin"]
+            return_database_settings["fauna_path_srv"]
         )
-        result = DataBaseOperations(client_token=client_token).fauna_read_database(
-            database=return_data_dict['fauna_db_name']
-        )
-        expected_type = dict
-        # expected = "id=all_storehouses"
+        this = DataBaseOperations(client_token=client_token)
+        try:
+            this.fauna_query_index(
+                fauna_collection_name=return_database_settings["fauna_collection_name"],
+                fauna_index_name=return_database_settings["fauna_index_name"],
+            )
+            return True
+        except ValueError:
+            result = this.fauna_create_index(
+                fauna_collection_name=return_database_settings["fauna_collection_name"],
+                fauna_index_name=return_database_settings["fauna_index_name"],
+            )
+        expected = True
+        expected_type = bool
         assert isinstance(result, expected_type)
-        # assert expected in str(result["data"])
-
-    # @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    # def test_fauna_create_collection(return_data_dict, return_random_uuid):
-    #     """Test Fauna DB create collection."""
-    #     collection_name = f"collection_{return_random_uuid}"
-    #     client_token = TestDatabaseOperations.get_test_values(
-    #         return_data_dict["fauna_secret_path_admin"]
-    #     )
-    #     result = DataBaseOperations(
-    # client_token=client_token
-    # ).fauna_create_collection(
-    #         # database='testdatabasename',
-    #         collection_name=collection_name,
-    #     )
-    #     expected_0 = True
-    #     expected_1 = "_conftest_"
-    #     assert result[0] == expected_0
-    #     assert expected_1 in result[1]
-
-    # @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    # def test_fauna_add_records(return_data_dict, return_random_uuid):
-    #     """Test Fauna DB add records."""
-    #     collection_name = f"collection_{return_random_uuid}"
-    #     client_token = TestDatabaseOperations.get_test_values(
-    #         return_data_dict["fauna_path_srv"]
-    #     )
-    #     result = DataBaseOperations(client_token=client_token).fauna_add_records(
-    #         collection_name=collection_name,
-    #         records_to_add=return_data_dict["fauna_test_data"],
-    #     )
-    #     expected_type = dict
-    #     expected = "id=collection_conftest_"
-    #     assert isinstance(result, expected_type)
-    #     # assert expected in str(result["ref"])
-
-    # @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    # def test_fauna_delete_database(return_data_dict, return_random_uuid):
-    #     """Test Fauna DB delete database."""
-    #     client_token = TestDatabaseOperations.get_test_values(
-    #         return_data_dict["fauna_secret_path_admin"]
-    #     )
-    #     database = f"database_{return_random_uuid}"
-    #     result = DataBaseOperations(client_token=client_token).fauna_delete_database(
-    #         database=database,
-    #     )
-    #     expected_type = dict
-    #     expected = "id=database_conf"
-    #     assert isinstance(result, expected_type)
-    #     assert expected in str(result)
-
-    # @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    # def test_fauna_delete_database_exception(return_data_dict):
-    #     """Test Fauna DB delete database exception."""
-    #     client_token = TestDatabaseOperations.get_test_values(
-    #         return_data_dict["fauna_secret_path_admin"]
-    #     )
-    #     with pytest.raises(ValueError):
-    #         DataBaseOperations(client_token=client_token).fauna_delete_database(
-    #             database=return_data_dict["fauna_test_bad_database"],
-    #         )
+        assert expected == result
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_paginate_database(return_data_dict):
+    def test_fauna_create_document(return_database_settings):
+        """Test create document."""
+        client_token = TestDatabaseOperations.get_test_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(client_token=client_token).fauna_create_document()
+        expected = True
+        expected_type = bool
+        assert isinstance(result, expected_type)
+        assert expected == result
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_paginate_database(return_database_settings):
         """Test Fauna paginate database."""
         client_token = TestDatabaseOperations.get_test_values(
-            return_data_dict["fauna_secret_path_admin"]
+            return_database_settings["fauna_path_srv"]
         )
         result = DataBaseOperations(client_token=client_token).fauna_paginate_database()
-        expected_type = dict
-        expected = r"collection=Ref(id=databases"
+        expected = True
+        expected_type = bool
         assert isinstance(result, expected_type)
-        assert expected in str(result["data"])
+        assert expected == result
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_read_database(return_database_settings):
+        """Test Fauna DB read."""
+        client_token = TestDatabaseOperations.get_test_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(client_token=client_token).fauna_read_database()
+        expected = True
+        expected_type = bool
+        assert isinstance(result, expected_type)
+        assert expected == result
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_delete_document(return_database_settings):
+        """Test delete document."""
+        client_token = TestDatabaseOperations.get_test_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(client_token=client_token).fauna_delete_document()
+        expected = True
+        expected_type = bool
+        assert isinstance(result, expected_type)
+        assert expected == result

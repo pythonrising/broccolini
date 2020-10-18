@@ -33,14 +33,27 @@ def return_data_dict():
         faker_files=r"./tests/fake_data_from_conftest/training",
         output_file_name=r"./tests/__output_files/output_json_files.json",
         input_directory_path=r"",
+        api_url=r"python_rising/dev/python_rising/dev/api_data/API_URL",
+        api_key=r"python_rising/dev/python_rising/dev/api_data/API_KEY",
+    )
+    return input_dict
+
+
+@pytest.fixture(scope="session")
+def return_database_settings():
+    """Provide dictionary values to functions.
+
+    Note Fauna has admin keys and server keys.
+    Most of our testing uses server keys locked to the database
+    """
+    input_dict = dict(
         fauna_secret_path_admin="python_rising/dev/faunadb/admin/api_token",
         fauna_test_data=r"string formatted test data from conftest",
         fauna_path_srv="python_rising/dev/faunadb/pythonrising_dev/server/api_token",
         fauna_db_name="pythonrising_dev",
-        fauna_collection_name_for_delete="collection_name_used_for_delete_test",
+        fauna_collection_name="collection_name_used_for_delete_test",
+        fauna_index_name="index_name_used_for_delete_test",
         fauna_test_bad_database=r"bad_database",
-        api_url=r"python_rising/dev/python_rising/dev/api_data/API_URL",
-        api_key=r"python_rising/dev/python_rising/dev/api_data/API_KEY",
     )
     return input_dict
 
