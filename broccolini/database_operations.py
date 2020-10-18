@@ -9,7 +9,8 @@ import logging
 from faunadb import query as q
 from faunadb.client import FaunaClient
 
-# from faunadb.errors import BadRequest
+from faunadb.errors import BadRequest
+
 # from faunadb.objects import Ref
 
 logging.basicConfig(
@@ -61,15 +62,30 @@ class DataBaseOperations:
 
     def fauna_create_index(self, **kwargs: str) -> bool:
         """Create index."""
-        # return True
         client = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
+        fauna_index_name: str = kwargs["fauna_index_name"]
         try:
             client.query(
                 q.create_index(
-                    {fauna_collection_name}
+                    {
+                        "name": fauna_index_name,
+                        "source": q.collection(fauna_collection_name),
+                        "values": [{"field": ["data", "name"]}],
+                    }
                 )
             )
+            return True
+        except (BadRequest, Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
+
+    def fauna_query_index(self, **kwargs: str) -> bool:
+        """query index."""
+        client = self.fauna_get_connection()
+        _fauna_collection_name: str = kwargs["fauna_collection_name"]
+        fauna_index_name: str = kwargs["fauna_index_name"]
+        try:
+            client.query(q.get(q.index(fauna_index_name)))
             return True
         except (Exception) as _error:  # pragma: no cover
             print(_error)
@@ -95,10 +111,22 @@ class DataBaseOperations:
         """Delete document."""
         return True
 
-    @staticmethod
-    def fauna_delete_index() -> bool:
-        """Delete index."""
-        return True
+    # def fauna_delete_index(self, **kwargs: str) -> bool:
+    #     """Delete index."""
+    #     client = self.fauna_get_connection()
+    #     _fauna_collection_name: str = kwargs["fauna_collection_name"]
+    #     fauna_index_name: str = kwargs["fauna_index_name"]
+    #     try:
+    #         client.query(
+    #             q.delete(q.index(
+    #                 fauna_index_name
+    #                 )
+    #             )
+    #         )
+    #         return True
+    #     except (Exception) as _error:  # pragma: no cover
+    #         print(_error)
+    #         raise ValueError("Fauna error.") from _error
 
     def fauna_query_collection(self, **kwargs) -> bool:
         """Query collection."""

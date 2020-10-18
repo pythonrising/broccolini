@@ -52,6 +52,7 @@ def return_database_settings():
         fauna_path_srv="python_rising/dev/faunadb/pythonrising_dev/server/api_token",
         fauna_db_name="pythonrising_dev",
         fauna_collection_name="collection_name_used_for_delete_test",
+        fauna_index_name="index_name_used_for_delete_test",
         fauna_test_bad_database=r"bad_database",
     )
     return input_dict

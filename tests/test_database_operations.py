@@ -56,10 +56,7 @@ class TestDatabaseOperations:
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_create_collection(return_database_settings):
-        """Test create collection.
-
-        Need to test if collection exists before deleting.
-        """
+        """Test create collection."""
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
         )
@@ -73,17 +70,6 @@ class TestDatabaseOperations:
             result = this.fauna_create_collection(
                 fauna_collection_name=return_database_settings["fauna_collection_name"],
             )
-
-        # if this.fauna_query_collection(
-        #     fauna_collection_name=return_database_settings["fauna_collection_name"]
-        # ):
-        #     result = True
-        # else:
-        #     result = DataBaseOperations(
-        #     client_token=client_token
-        # ).fauna_create_collection(
-        #    fauna_collection_name=return_database_settings["fauna_collection_name"],
-        #     )
         expected = True
         expected_type = bool
         assert isinstance(result, expected_type)
@@ -96,7 +82,18 @@ class TestDatabaseOperations:
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
         )
-        result = DataBaseOperations(client_token=client_token).fauna_create_index()
+        this = DataBaseOperations(client_token=client_token)
+        try:
+            this.fauna_query_index(
+                fauna_collection_name=return_database_settings["fauna_collection_name"],
+                fauna_index_name=return_database_settings["fauna_index_name"],
+            )
+            return True
+        except ValueError:
+            result = this.fauna_create_index(
+                fauna_collection_name=return_database_settings["fauna_collection_name"],
+                fauna_index_name=return_database_settings["fauna_index_name"],
+            )
         expected = True
         expected_type = bool
         assert isinstance(result, expected_type)
@@ -114,14 +111,6 @@ class TestDatabaseOperations:
         expected_type = bool
         assert isinstance(result, expected_type)
         assert expected == result
-        # result = DataBaseOperations(client_token=client_token).fauna_create_document(
-        #     fauna_collection_name=return_database_settings["fauna_collection_name"],
-        #     document_to_add=return_database_settings["fauna_test_data"],
-        # )
-        # expected = True
-        # expected_type = bool
-        # assert isinstance(result, expected_type)
-        # assert expected == result
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
@@ -136,11 +125,6 @@ class TestDatabaseOperations:
         assert isinstance(result, expected_type)
         assert expected == result
 
-    #     # expected_type = dict
-    #     # expected = r"collection=Ref(id=databases"
-    #     # assert isinstance(result, expected_type)
-    #     # assert expected in str(result["data"])
-
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_read_database(return_database_settings):
@@ -153,11 +137,6 @@ class TestDatabaseOperations:
         expected_type = bool
         assert isinstance(result, expected_type)
         assert expected == result
-
-    #     # expected_type = dict
-    #     # # expected = "id=all_storehouses"
-    #     # assert isinstance(result, expected_type)
-    #     # # assert expected in str(result["data"])
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
@@ -172,18 +151,21 @@ class TestDatabaseOperations:
         assert isinstance(result, expected_type)
         assert expected == result
 
-    @staticmethod
-    @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_delete_index(return_database_settings):
-        """Test delete index."""
-        client_token = TestDatabaseOperations.get_test_values(
-            return_database_settings["fauna_path_srv"]
-        )
-        result = DataBaseOperations(client_token=client_token).fauna_delete_index()
-        expected = True
-        expected_type = bool
-        assert isinstance(result, expected_type)
-        assert expected == result
+    # @staticmethod
+    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    # def test_fauna_delete_index(return_database_settings):
+    #     """Test delete index."""
+    #     client_token = TestDatabaseOperations.get_test_values(
+    #         return_database_settings["fauna_path_srv"]
+    #     )
+    #     result = DataBaseOperations(client_token=client_token).fauna_delete_index(
+    #             fauna_collection_name=return_database_settings["fauna_collection_name"],
+    #             fauna_index_name=return_database_settings["fauna_index_name"],
+    #     )
+    #     expected = True
+    #     expected_type = bool
+    #     assert isinstance(result, expected_type)
+    #     assert expected == result
 
     # @staticmethod
     # @pytest.mark.dependency(depends=["test_login_to_fauna"])
@@ -192,11 +174,22 @@ class TestDatabaseOperations:
     #     client_token = TestDatabaseOperations.get_test_values(
     #         return_database_settings["fauna_path_srv"]
     #     )
-    #     result = DataBaseOperations(client_token=client_token).
-    # fauna_delete_collection(
-    #         fauna_collection_name=return_database_settings["fauna_collection_name"],
-    #     )
-    #      expected = True
+    #     try:
+    #         this = DataBaseOperations(client_token=client_token)
+    #         collection_exists = this.fauna_query_collection(
+    #             fauna_collection_name=return_database_settings["fauna_collection_name"]
+    #         )
+    #         if not collection_exists:
+    #             return True
+    #         result = DataBaseOperations(
+    #             client_token=client_token
+    #         ).fauna_delete_collection(
+    #             fauna_collection_name=return_database_settings["fauna_collection_name"],
+    #         )
+    #     except Exception:
+    #         return True
+
+    #     expected = True
     #     expected_type = bool
     #     assert isinstance(result, expected_type)
     #     assert expected == result
