@@ -66,7 +66,7 @@ Project maintainers who do not follow or enforce the Code of Conduct in good
 faith may face temporary or permanent repercussions as determined by other
 members of the project's leadership.
 
-* Please contact Gregory Wendel (@pythonrising): greg.wendel@hey.com for information.
+* Please contact Gregory Wendel (@ipv6_python): greg.wendel@hey.com for information.
 
 ## Attribution
 
