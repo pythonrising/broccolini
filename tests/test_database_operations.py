@@ -7,6 +7,7 @@ Testing common Database operations. Starting with www.faunadb.com.
 
 import logging
 import pytest
+
 # from faunadb.client import FaunaClient, client
 from faunadb.client import FaunaClient
 from broccolini.authentication_functions import VaultFunctions
@@ -66,7 +67,7 @@ class TestDatabaseOperations:
         try:
             this.fauna_query_collection(
                 fauna_collection_name=return_database_settings["fauna_collection_name"]
-                )
+            )
             return True
         except ValueError:
             result = this.fauna_create_collection(
@@ -78,8 +79,10 @@ class TestDatabaseOperations:
         # ):
         #     result = True
         # else:
-        #     result = DataBaseOperations(client_token=client_token).fauna_create_collection(
-        #         fauna_collection_name=return_database_settings["fauna_collection_name"],
+        #     result = DataBaseOperations(
+        #     client_token=client_token
+        # ).fauna_create_collection(
+        #    fauna_collection_name=return_database_settings["fauna_collection_name"],
         #     )
         expected = True
         expected_type = bool
@@ -132,6 +135,7 @@ class TestDatabaseOperations:
         expected_type = bool
         assert isinstance(result, expected_type)
         assert expected == result
+
     #     # expected_type = dict
     #     # expected = r"collection=Ref(id=databases"
     #     # assert isinstance(result, expected_type)
@@ -149,6 +153,7 @@ class TestDatabaseOperations:
         expected_type = bool
         assert isinstance(result, expected_type)
         assert expected == result
+
     #     # expected_type = dict
     #     # # expected = "id=all_storehouses"
     #     # assert isinstance(result, expected_type)
@@ -187,10 +192,11 @@ class TestDatabaseOperations:
     #     client_token = TestDatabaseOperations.get_test_values(
     #         return_database_settings["fauna_path_srv"]
     #     )
-    #     result = DataBaseOperations(client_token=client_token).fauna_delete_collection(
+    #     result = DataBaseOperations(client_token=client_token).
+    # fauna_delete_collection(
     #         fauna_collection_name=return_database_settings["fauna_collection_name"],
     #     )
-    #     expected = True
+    #      expected = True
     #     expected_type = bool
     #     assert isinstance(result, expected_type)
     #     assert expected == result

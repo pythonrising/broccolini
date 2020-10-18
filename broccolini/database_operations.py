@@ -131,9 +131,6 @@ class DataBaseOperations:
         """Delete index."""
         return True
 
-
-        
-
     def fauna_query_collection(self, **kwargs) -> bool:
         """Query collection."""
         client = self.fauna_get_connection()
@@ -143,7 +140,6 @@ class DataBaseOperations:
             return True
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
-
 
     def fauna_delete_collection(self, **kwargs) -> bool:
         """Delete collection."""

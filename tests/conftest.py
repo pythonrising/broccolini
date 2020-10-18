@@ -38,6 +38,7 @@ def return_data_dict():
     )
     return input_dict
 
+
 @pytest.fixture(scope="session")
 def return_database_settings():
     """Provide dictionary values to functions.
@@ -54,6 +55,7 @@ def return_database_settings():
         fauna_test_bad_database=r"bad_database",
     )
     return input_dict
+
 
 @pytest.fixture
 def return_a_list():

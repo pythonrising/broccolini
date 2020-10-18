@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """Testing authentication functions."""
 import logging
-from unittest.mock import MagicMock
+
+# from unittest.mock import MagicMock
 
 import hvac
 import pytest
