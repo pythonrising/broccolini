@@ -82,7 +82,7 @@ class DataBaseOperations:
     def fauna_query_index(self, **kwargs: str) -> bool:
         """query index."""
         client = self.fauna_get_connection()
-        _fauna_collection_name: str = kwargs["fauna_collection_name"]
+        # _fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_index_name: str = kwargs["fauna_index_name"]
         try:
             client.query(q.get(q.index(fauna_index_name)))
@@ -111,22 +111,23 @@ class DataBaseOperations:
         """Delete document."""
         return True
 
-    # def fauna_delete_index(self, **kwargs: str) -> bool:
-    #     """Delete index."""
-    #     client = self.fauna_get_connection()
-    #     _fauna_collection_name: str = kwargs["fauna_collection_name"]
-    #     fauna_index_name: str = kwargs["fauna_index_name"]
-    #     try:
-    #         client.query(
-    #             q.delete(q.index(
-    #                 fauna_index_name
-    #                 )
-    #             )
-    #         )
-    #         return True
-    #     except (Exception) as _error:  # pragma: no cover
-    #         print(_error)
-    #         raise ValueError("Fauna error.") from _error
+    def fauna_delete_index(self, **kwargs: str) -> bool:
+        """Delete index."""
+        client = self.fauna_get_connection()
+        _fauna_collection_name: str = kwargs["fauna_collection_name"]
+        fauna_index_name: str = kwargs["fauna_index_name"]
+        try:
+            client.query(
+                q.delete(q.index(
+                    fauna_index_name
+                    )
+                )
+            )
+            return True
+        except (Exception) as _error:  # pragma: no cover
+            print(_error)
+            raise ValueError("Fauna error.") from _error
+
     def fauna_query_collection(self, **kwargs) -> bool:
         """Query collection."""
         client = self.fauna_get_connection()
@@ -144,7 +145,5 @@ class DataBaseOperations:
         try:
             client.query(q.delete(q.collection(fauna_collection_name)))
             return True
-            # return True, fauna_collection_name
         except (Exception) as _error:  # pragma: no cover
-            # print(_error)
             raise ValueError("Fauna error.") from _error
