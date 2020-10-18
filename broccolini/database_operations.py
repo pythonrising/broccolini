@@ -3,12 +3,14 @@
 DataBase operations.
 """
 import logging
-from typing import Any
+
+# from typing import Any
 
 from faunadb import query as q
 from faunadb.client import FaunaClient
-from faunadb.errors import BadRequest
-from faunadb.objects import Ref
+
+# from faunadb.errors import BadRequest
+# from faunadb.objects import Ref
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -50,7 +52,7 @@ class DataBaseOperations:
         """Create collection."""
         client = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
-        print(fauna_collection_name)
+        # print(fauna_collection_name)
         try:
             # client.query(q.create_collection({"name": "boons"}))
             client.query(q.create_collection({"name": fauna_collection_name}))
@@ -60,12 +62,13 @@ class DataBaseOperations:
             print(_error)
             raise ValueError("Fauna error.") from _error
 
-    def fauna_create_index(self, **kwargs):
+    @staticmethod
+    def fauna_create_index():
         """Create index."""
         return True
 
-
-    def fauna_create_document(self, **kwargs: str) -> bool:
+    @staticmethod
+    def fauna_create_document():
         """Add document.
 
         input: data to add
@@ -74,6 +77,7 @@ class DataBaseOperations:
             output type: bool
         """
         return True
+
     #     # client = self.fauna_get_connection()
     #     # document_to_add: str = kwargs["document_to_add"]
     #     # fauna_collection_name: str = kwargs["fauna_collection_name"]
@@ -91,9 +95,11 @@ class DataBaseOperations:
     #     # except (Exception) as _error:  # pragma: no cover
     #     #     raise ValueError("Fauna error.") from _error
 
-    def fauna_paginate_database(self) -> tuple[bool, Any, str]:
+    @staticmethod
+    def fauna_paginate_database():
         """Fauna paginate database."""
         return True
+
     #     # client = self.fauna_get_connection()
     #     # # database: str = kwargs["database"]
     #     # try:
@@ -101,9 +107,11 @@ class DataBaseOperations:
     #     # except (BadRequest) as _error:  # pragma: no cover
     #     #     raise ValueError("Fauna error.") from _error
 
-    def fauna_read_database(self, **kwargs) -> dict[list[str, Any]]:
+    @staticmethod
+    def fauna_read_database():
         """Read from fauna database."""
         return True
+
     #     # try:
     #     #     _database: str = kwargs["database"]
     #     #     client = self.fauna_get_connection()
@@ -123,7 +131,28 @@ class DataBaseOperations:
         """Delete index."""
         return True
 
-    @staticmethod
-    def fauna_delete_collection() -> bool:
+
+        
+
+    def fauna_query_collection(self, **kwargs) -> bool:
+        """Query collection."""
+        client = self.fauna_get_connection()
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
+        try:
+            client.query(q.get(q.collection(fauna_collection_name)))
+            return True
+        except (Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
+
+
+    def fauna_delete_collection(self, **kwargs) -> bool:
         """Delete collection."""
-        return True
+        client = self.fauna_get_connection()
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
+        try:
+            client.query(q.delete(q.collection(fauna_collection_name)))
+            return True
+            # return True, fauna_collection_name
+        except (Exception) as _error:  # pragma: no cover
+            # print(_error)
+            raise ValueError("Fauna error.") from _error
