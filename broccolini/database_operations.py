@@ -114,7 +114,7 @@ class DataBaseOperations:
     def fauna_delete_index(self, **kwargs: str) -> bool:
         """Delete index."""
         client = self.fauna_get_connection()
-        _fauna_collection_name: str = kwargs["fauna_collection_name"]
+        # _fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_index_name: str = kwargs["fauna_index_name"]
         try:
             client.query(
