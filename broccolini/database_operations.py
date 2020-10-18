@@ -4,12 +4,13 @@ DataBase operations.
 """
 import logging
 
-# from typing import Any
-
 from faunadb import query as q
 from faunadb.client import FaunaClient
-
 from faunadb.errors import BadRequest
+
+
+# from typing import Any
+
 
 # from faunadb.objects import Ref
 
@@ -92,15 +93,15 @@ class DataBaseOperations:
             raise ValueError("Fauna error.") from _error
 
     def fauna_create_document(self, **kwargs: str) -> bool:
-        """Add document."""
+        """Add document.
+        {"data": {"name": "Fire Beak", "element": ["air", "fire"]}}
+        """
         client = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
+        fauna_document_data: str = kwargs["fauna_document_data"]
         try:
             client.query(
-                q.create(
-                    q.collection(fauna_collection_name),
-                    {"data": {"name": "Fire Beak", "element": ["air", "fire"]}}
-                )
+                q.create(q.collection(fauna_collection_name), fauna_document_data)
             )
             return True
         except (BadRequest, Exception) as _error:  # pragma: no cover
@@ -127,12 +128,7 @@ class DataBaseOperations:
         # _fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_index_name: str = kwargs["fauna_index_name"]
         try:
-            client.query(
-                q.delete(q.index(
-                    fauna_index_name
-                    )
-                )
-            )
+            client.query(q.delete(q.index(fauna_index_name)))
             return True
         except (Exception) as _error:  # pragma: no cover
             print(_error)

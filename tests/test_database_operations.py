@@ -6,12 +6,15 @@ Testing common Database operations. Starting with www.faunadb.com.
 """
 
 import logging
+
 import pytest
 
 # from faunadb.client import FaunaClient, client
 from faunadb.client import FaunaClient
+
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.database_operations import DataBaseOperations
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -108,6 +111,7 @@ class TestDatabaseOperations:
         )
         result = DataBaseOperations(client_token=client_token).fauna_create_document(
             fauna_collection_name=return_database_settings["fauna_collection_name"],
+            fauna_document_data=return_database_settings["fauna_document_data"],
         )
         expected = True
         expected_type = bool
