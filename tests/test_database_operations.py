@@ -9,18 +9,10 @@ import logging
 
 import pytest
 
-# from faunadb.client import FaunaClient, client
 from faunadb.client import FaunaClient
 
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.database_operations import DataBaseOperations
-
-
-# import uuid
-
-
-# import mock
-# from pytest_mock import mocker
 
 
 logging.basicConfig(
@@ -158,7 +150,38 @@ class TestDatabaseOperations:
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
         )
-        result = DataBaseOperations(client_token=client_token).fauna_delete_document()
+        result = DataBaseOperations(client_token=client_token).fauna_delete_document(
+            fauna_collection_name=return_database_settings["fauna_collection_name"],
+            fauna_document_ref=return_database_settings["fauna_document_ref"],
+        )
+        print(result)
+
+        # expected = True
+        # expected_type = bool
+        # assert isinstance(result, expected_type)
+        # assert expected == result
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_delete_document_mock(
+        return_database_settings, _mocked_fauna
+    ):  # pragma: no cover
+        """Test delete document.
+
+        fauna_document_name
+        """
+        client_token = TestDatabaseOperations.get_test_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(client_token=client_token).fauna_delete_document(
+            fauna_collection_name=return_database_settings["fauna_collection_name"],
+            fauna_document_ref=return_database_settings["fauna_document_ref"],
+        )
+
+        # mock below here put back on when finished confirming function works
+        # result = DataBaseOperations(client_token=client_token).fauna_delete_document(
+        #     mock_fauna_delete_document=_mocked_fauna["mock_fauna_delete_document"],
+        # )
         expected = True
         expected_type = bool
         assert isinstance(result, expected_type)
@@ -173,7 +196,9 @@ class TestDatabaseOperations:
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
         )
-        result = DataBaseOperations(client_token=client_token).fauna_delete_collection()
+        result = DataBaseOperations(client_token=client_token).fauna_delete_collection(
+            mock_fauna_delete_collection=_mocked_fauna["mock_fauna_delete_collection"],
+        )
         expected = True
         expected_type = bool
         assert isinstance(result, expected_type)
@@ -183,8 +208,16 @@ class TestDatabaseOperations:
 @pytest.fixture
 def _mocked_fauna(mocker):  # pragma: no cover
     """Use for mocking variables."""
-    mock_fauna = mocker.patch.object(
+    mock_fauna_delete_collection = mocker.patch.object(
         DataBaseOperations, "fauna_delete_collection", autospec=True
     )
-    mock_fauna.return_value = True
-    return mock_fauna
+    mock_fauna_delete_document = mocker.patch.object(
+        DataBaseOperations, "fauna_delete_document", autospec=True
+    )
+    mock_fauna_delete_collection.return_value = True
+    mock_fauna_delete_document.return_value = True
+
+    return dict(
+        mock_fauna_delete_collection=mock_fauna_delete_collection,
+        mock_fauna_delete_document=mock_fauna_delete_document,
+    )
