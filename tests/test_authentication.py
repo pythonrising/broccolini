@@ -9,9 +9,6 @@ import pytest
 from broccolini.authentication_functions import VaultFunctions
 
 
-# from unittest.mock import MagicMock
-
-
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
 )
@@ -109,20 +106,6 @@ class TestVaultFunctions:
         expected_type = bool
         assert isinstance(result, expected_type)
         assert expected == result
-
-    # @staticmethod
-    # def test_unseal_vault():
-    #     """Test unseal vault."""
-    #     expected_mock = True
-    #     expected_type_mock = bool
-    #     result_mock = MagicMock(return_value=True)
-    #     result_mock.return_value = VaultFunctions().unseal_vault(
-
-    #         vault_token="VAULT_TOKEN",
-    #         vault_unseal_token="VAULT_UNSEAL_TOKEN",
-    #     )
-    #     assert result_mock.return_value == expected_mock
-    #     assert isinstance(result_mock.return_value, expected_type_mock)
 
 
 @pytest.fixture
