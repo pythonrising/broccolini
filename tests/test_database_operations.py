@@ -6,7 +6,6 @@ Testing common Database operations. Starting with www.faunadb.com.
 """
 
 import logging
-import uuid
 
 import pytest
 
@@ -15,6 +14,9 @@ from faunadb.client import FaunaClient
 
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.database_operations import DataBaseOperations
+
+
+# import uuid
 
 
 # import mock
@@ -162,14 +164,25 @@ class TestDatabaseOperations:
         assert isinstance(result, expected_type)
         assert expected == result
 
-    #         def test_update_jobs_fleet_capacity(mocker):
-    #   mocker.patch.object(manager, 'sub_method')
-    #   manager.sub_method.return_value = 120
-    #   manager.method_under_test()
-    #   manager.sub_method.assert_called_with('somestring', 1, 120)
-
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_delete_collection_mock(mocked_testing1):
+    def test_fauna_delete_collection_mock(return_database_settings, _mocked_fauna):
         """Test delete collection using mock."""
-        assert uuid.uuid4().hex == "5ecd5827b6ef4067b5ac3ceac07dde9f"
+        client_token = TestDatabaseOperations.get_test_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(client_token=client_token).fauna_delete_collection()
+        expected = True
+        expected_type = bool
+        assert isinstance(result, expected_type)
+        assert expected == result
+
+
+@pytest.fixture
+def _mocked_fauna(mocker):
+    """Use for mocking variables."""
+    mock_fauna = mocker.patch.object(
+        DataBaseOperations, "fauna_delete_collection", autospec=True
+    )
+    mock_fauna.return_value = True
+    return mock_fauna
