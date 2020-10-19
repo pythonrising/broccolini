@@ -57,7 +57,6 @@ def return_database_settings():
         fauna_index_name="index_name_used_for_delete_test",
         fauna_test_bad_database=r"bad_database",
         fauna_document_data={"data": {"name": "tdata", "CtestDkey": ["air", "fire"]}},
-        fauna_document_ref=279785786713309705,
     )
     return input_dict
 

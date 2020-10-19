@@ -84,7 +84,7 @@ class DataBaseOperations:
         fauna_index_name: str = kwargs["fauna_index_name"]
         try:
             # client.query(q.get(q.index(fauna_index_name)))
-            print(client.query(q.get(q.index(fauna_index_name))))
+            client.query(q.get(q.index(fauna_index_name)))
             return True
         except (Exception) as _error:  # pragma: no cover
             print(_error)
@@ -96,10 +96,8 @@ class DataBaseOperations:
         fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_document_data: str = kwargs["fauna_document_data"]
         try:
-            print(
-                client.query(
-                    q.create(q.collection(fauna_collection_name), fauna_document_data)
-                )
+            client.query(
+                q.create(q.collection(fauna_collection_name), fauna_document_data)
             )
             return True
         except (BadRequest, Exception) as _error:  # pragma: no cover
@@ -116,10 +114,13 @@ class DataBaseOperations:
         except (BadRequest, Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    @staticmethod
-    def fauna_read_database():
+    def fauna_read_database(self) -> str:
         """Read from fauna database."""
-        return True
+        client = self.fauna_get_connection()
+        try:
+            return client.query(q.paginate(q.indexes()))
+        except (Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
 
     def fauna_delete_document(self, **kwargs: str) -> bool:  # pragma: no cover
         """Delete document.
