@@ -1,6 +1,10 @@
 
 # CHANGELOG
 
+## 0.1.4
+
+Refactor of database functions. Major cleanup:
+
 ## 0.1.3
 
 Added additional functions including API calls.  Changed CICD steps:
