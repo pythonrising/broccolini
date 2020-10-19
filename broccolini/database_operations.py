@@ -168,10 +168,6 @@ class DataBaseOperations:
         except NotFound as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-        # except (Exception) as _error:  # pragma: no cover
-        #     print(_error)
-        #     raise ValueError("Fauna error.") from _error
-
     def fauna_delete_index(self, **kwargs: str) -> bool:  # pragma: no cover
         """Delete index."""
         client = self.fauna_get_connection()

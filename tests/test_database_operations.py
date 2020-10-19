@@ -161,38 +161,6 @@ class TestDatabaseOperations:
         )
         print(result)
 
-    # @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    # def test_fauna_delete_document(return_database_settings):  # pragma: no cover
-    #     """Test delete document.
-
-    #     generate fauna_document_ref from a query of a record to delete and feed this
-    #     get id from fauna_create_document"""
-    #     client_token = TestDatabaseOperations.get_test_values(
-    #         return_database_settings["fauna_path_srv"]
-    #     )
-    #     # expected = True
-    #     expected_type = bool
-    #     assert isinstance(result, expected_type)
-    #     # assert expected == result
-
-    #     fauna_document_ref = 279785786713309705  # regenerate this from a query
-    #     # _fauna_document_ref_list = DataBaseOperations(
-    #     #     client_token=client_token
-    #     # ).fauna_query_index(
-    #     #     fauna_collection_name=return_database_settings["fauna_collection_name"],
-    #     #     fauna_index_name=return_database_settings["fauna_index_name"],
-    #     # )
-    #     # print(fauna_document_ref_list)
-    #     _result = DataBaseOperations(client_token=client_token).fauna_delete_document(
-    #         fauna_collection_name=return_database_settings["fauna_collection_name"],
-    #         fauna_document_ref=fauna_document_ref,
-    #     )
-    #     # expected = True
-    #     # expected_type = bool
-    #     # assert isinstance(result, expected_type)
-    #     # assert expected == result
-
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_delete_document_mock(
