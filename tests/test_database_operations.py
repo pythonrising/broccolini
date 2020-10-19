@@ -9,18 +9,10 @@ import logging
 
 import pytest
 
-# from faunadb.client import FaunaClient, client
 from faunadb.client import FaunaClient
 
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.database_operations import DataBaseOperations
-
-
-# import uuid
-
-
-# import mock
-# from pytest_mock import mocker
 
 
 logging.basicConfig(
@@ -179,7 +171,7 @@ class TestDatabaseOperations:
 
 
 @pytest.fixture
-def _mocked_fauna(mocker):
+def _mocked_fauna(mocker):  # pragma: no cover
     """Use for mocking variables."""
     mock_fauna = mocker.patch.object(
         DataBaseOperations, "fauna_delete_collection", autospec=True
