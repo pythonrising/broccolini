@@ -3,13 +3,14 @@
 """Testing authentication functions."""
 import logging
 
-# from unittest.mock import MagicMock
-
 import hvac
 import pytest
 
-
 from broccolini.authentication_functions import VaultFunctions
+
+
+# from unittest.mock import MagicMock
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -21,7 +22,7 @@ class TestVaultFunctions:
 
     @staticmethod
     @pytest.mark.dependency(name="test_login_to_vault")
-    def test_login_to_vault():
+    def test_login_to_vault():  # pragma: no cover
         """Test login to vault.
 
         input : vault settings
@@ -37,7 +38,7 @@ class TestVaultFunctions:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_vault"])
-    def test_login_to_vault_exception_bad_vault_url():
+    def test_login_to_vault_exception_bad_vault_url():  # pragma: no cover
         """Test vault login exception.
 
         input : deliberately bad vault settings
@@ -51,7 +52,7 @@ class TestVaultFunctions:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_vault"])
-    def test_query_vault_data(return_data_dict):
+    def test_query_vault_data(return_data_dict):  # pragma: no cover
         """Test query to vault.
 
         input : successful client
@@ -72,7 +73,7 @@ class TestVaultFunctions:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_vault"])
-    def test_add_to_vault(return_data_dict):
+    def test_add_to_vault(return_data_dict):  # pragma: no cover
         """Test add vault data."""
         result = VaultFunctions().add_to_vault(
             vault_url="VAULT_URL",
@@ -88,7 +89,7 @@ class TestVaultFunctions:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_vault"])
-    def test_initialized_vault():
+    def test_initialized_vault():  # pragma: no cover
         """Test that vault is initialized."""
 
         result = VaultFunctions().initialized_vault(
@@ -99,6 +100,15 @@ class TestVaultFunctions:
         expected_type = bool
         assert isinstance(result, expected_type)
         assert result == expected
+
+    @staticmethod
+    def test_unseal_vault_mock(_mocked_vault):  # pragma: no cover
+        """Test unseal vault."""
+        result = VaultFunctions().unseal_vault()
+        expected = True
+        expected_type = bool
+        assert isinstance(result, expected_type)
+        assert expected == result
 
     # @staticmethod
     # def test_unseal_vault():
@@ -113,3 +123,11 @@ class TestVaultFunctions:
     #     )
     #     assert result_mock.return_value == expected_mock
     #     assert isinstance(result_mock.return_value, expected_type_mock)
+
+
+@pytest.fixture
+def _mocked_vault(mocker):  # pragma: no cover
+    """Use for mocking variables."""
+    mock_vault = mocker.patch.object(VaultFunctions, "unseal_vault", autospec=True)
+    mock_vault.return_value = True
+    return mock_vault

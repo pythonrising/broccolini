@@ -4,10 +4,15 @@ Functions such as Hashicorp Vault for authentication.
 """
 import logging
 import os
-from typing import Any, Dict, Tuple
+
+from typing import Any
+from typing import Dict
+from typing import Tuple
 
 import hvac
+
 from hvac.v1 import Client
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -36,7 +41,7 @@ class VaultFunctions:
         """Display function name using str."""
         return str(self)
 
-    def unseal_vault(self, **kwargs: str) -> bool:
+    def unseal_vault(self, **kwargs: str) -> bool:  # pragma: no cover
         """Unseal vault."""
         try:
             _vault_url: str = kwargs["vault_url"]
