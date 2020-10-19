@@ -46,7 +46,7 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(name="test_login_to_fauna")
-    def test_fauna_get_connection(return_database_settings):
+    def test_fauna_get_connection(return_database_settings):  # pragma: no cover
         """Test login to fauna.
 
         input: client_token
@@ -65,7 +65,7 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_create_collection(return_database_settings):
+    def test_fauna_create_collection(return_database_settings):  # pragma: no cover
         """Test create collection."""
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
@@ -87,7 +87,7 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_create_index(return_database_settings):
+    def test_fauna_create_index(return_database_settings):  # pragma: no cover
         """Test create index."""
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
@@ -111,7 +111,7 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_create_document(return_database_settings):
+    def test_fauna_create_document(return_database_settings):  # pragma: no cover
         """Test create document."""
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
@@ -127,7 +127,7 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_paginate_database(return_database_settings):
+    def test_fauna_paginate_database(return_database_settings):  # pragma: no cover
         """Test Fauna paginate database."""
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_secret_path_admin"]
@@ -140,7 +140,7 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_read_database(return_database_settings):
+    def test_fauna_read_database(return_database_settings):  # pragma: no cover
         """Test Fauna DB read."""
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
@@ -153,7 +153,7 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_delete_document(return_database_settings):
+    def test_fauna_delete_document(return_database_settings):  # pragma: no cover
         """Test delete document."""
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
@@ -166,7 +166,9 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_delete_collection_mock(return_database_settings, _mocked_fauna):
+    def test_fauna_delete_collection_mock(
+        return_database_settings, _mocked_fauna
+    ):  # pragma: no cover
         """Test delete collection using mock."""
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
@@ -179,7 +181,7 @@ class TestDatabaseOperations:
 
 
 @pytest.fixture
-def _mocked_fauna(mocker):
+def _mocked_fauna(mocker):  # pragma: no cover
     """Use for mocking variables."""
     mock_fauna = mocker.patch.object(
         DataBaseOperations, "fauna_delete_collection", autospec=True

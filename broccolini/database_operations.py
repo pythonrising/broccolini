@@ -101,7 +101,7 @@ class DataBaseOperations:
         except (BadRequest, Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_paginate_database(self, **kwargs: str) -> bool:  # pragma: no cover
+    def fauna_paginate_database(self) -> bool:
         """Fauna paginate database.
         Requires admin key to paginate databases instead of just server database.
         """
