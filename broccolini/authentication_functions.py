@@ -4,10 +4,15 @@ Functions such as Hashicorp Vault for authentication.
 """
 import logging
 import os
-from typing import Any, Dict, Tuple
+
+from typing import Any
+from typing import Dict
+from typing import Tuple
 
 import hvac
+
 from hvac.v1 import Client
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -36,7 +41,7 @@ class VaultFunctions:
         """Display function name using str."""
         return str(self)
 
-    def unseal_vault(self, **kwargs: str) -> bool:
+    def unseal_vault(self, **kwargs: str) -> bool:  # pragma: no cover
         """Unseal vault."""
         try:
             _vault_url: str = kwargs["vault_url"]
@@ -137,35 +142,3 @@ class VaultFunctions:
             return True
         except (hvac.exceptions.Forbidden) as _error:  # pragma: no cover
             raise ValueError("Vault not ready!") from _error
-
-    # def unseal_vault(self, **kwargs: str) -> bool:
-    #     """Unseal vault if it is sealed.
-
-    #     initialized_vault if not initialized break
-    #     if not unsealed
-    #     input : vault_url
-    #     input : vault_token
-    #     output: is_initialized: bool
-    #     """
-    #     # client.is_sealed()
-    #     _vault_url: str = kwargs["vault_url"]
-    #     _vault_token: str = kwargs["vault_token"]
-    #     is_initialized = self.initialized_vault(
-    #         vault_url=_vault_url, vault_token=_vault_token
-    #     )
-    #     if not is_initialized:
-    #         return False  # pragma: no cover
-
-    #     try:
-    #         client = self.get_vault_credentials(
-    #             vault_url=_vault_url, vault_token=_vault_token
-    #         )
-    #         if client.sys.is_sealed():  # pragma: no cover
-    #             return 'needs to be unsealed'
-    #         else:
-    #             return 'not sealed'
-
-    #     except (hvac.exceptions.Forbidden) as _error:  # pragma: no cover
-    #         raise ValueError(
-    #             "Permission Denied, Check your permissions and the path to the secret"
-    #         ) from _error
