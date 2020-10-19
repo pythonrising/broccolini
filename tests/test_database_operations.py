@@ -6,6 +6,7 @@ Testing common Database operations. Starting with www.faunadb.com.
 """
 
 import logging
+import uuid
 
 import pytest
 
@@ -14,6 +15,10 @@ from faunadb.client import FaunaClient
 
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.database_operations import DataBaseOperations
+
+
+# import mock
+# from pytest_mock import mocker
 
 
 logging.basicConfig(
@@ -156,3 +161,15 @@ class TestDatabaseOperations:
         expected_type = bool
         assert isinstance(result, expected_type)
         assert expected == result
+
+    #         def test_update_jobs_fleet_capacity(mocker):
+    #   mocker.patch.object(manager, 'sub_method')
+    #   manager.sub_method.return_value = 120
+    #   manager.method_under_test()
+    #   manager.sub_method.assert_called_with('somestring', 1, 120)
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_delete_collection_mock(mocked_testing1):
+        """Test delete collection using mock."""
+        assert uuid.uuid4().hex == "5ecd5827b6ef4067b5ac3ceac07dde9f"

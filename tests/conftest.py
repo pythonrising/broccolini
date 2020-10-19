@@ -5,6 +5,7 @@
 Give data in various forms to the test functions.
 """
 import random
+import uuid
 
 import pytest
 import shortuuid
@@ -163,3 +164,17 @@ def create_list_of_filenames_and_directories(tmpdir_factory):
         directory_and_path = str(test_dir_name) + "/" + each
         full_path_including_file.append(directory_and_path)
     return full_path_including_file, test_dir_name
+
+
+@pytest.fixture
+def mocked_testing1(mocker):
+    """Use for mocking variables."""
+    mock_uuid = mocker.patch.object(uuid, "uuid4", autospec=True)
+    mock_uuid.return_value = uuid.UUID(hex="5ecd5827b6ef4067b5ac3ceac07dde9f")
+    return mock_uuid
+    # mock_shortuuid = mocker.patch.object(shortuuid, 'uuid', autospec=True)
+
+    # mock_shortuuid.return_value = shortuuid.uuid()
+    # # shortuuid.uuid('namespaces1')
+    # mock_shortuuid.return_value = 'greg010101'
+    # return mock_shortuuid
