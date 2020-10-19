@@ -77,29 +77,30 @@ class DataBaseOperations:
         except (BadRequest, Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_index(self, **kwargs: str) -> bool:
+    def fauna_query_index(self, **kwargs: str) -> str:
         """query index."""
         client = self.fauna_get_connection()
         # _fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_index_name: str = kwargs["fauna_index_name"]
         try:
             # client.query(q.get(q.index(fauna_index_name)))
-            client.query(q.get(q.index(fauna_index_name)))
-            return True
+            index_list = client.query(q.get(q.index(fauna_index_name)))
+            # print(index_list)
+            return index_list
         except (Exception) as _error:  # pragma: no cover
             print(_error)
             raise ValueError("Fauna error.") from _error
 
-    def fauna_create_document(self, **kwargs: str) -> bool:
+    def fauna_create_document(self, **kwargs: str) -> tuple[bool, str]:
         """Add document."""
         client = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_document_data: str = kwargs["fauna_document_data"]
         try:
-            client.query(
+            create_document_output = client.query(
                 q.create(q.collection(fauna_collection_name), fauna_document_data)
             )
-            return True
+            return True, create_document_output
         except (BadRequest, Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 

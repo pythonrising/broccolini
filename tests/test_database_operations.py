@@ -90,16 +90,18 @@ class TestDatabaseOperations:
                 fauna_collection_name=return_database_settings["fauna_collection_name"],
                 fauna_index_name=return_database_settings["fauna_index_name"],
             )
+            # print(query_result)
             return True
         except ValueError:
             result = this.fauna_create_index(
                 fauna_collection_name=return_database_settings["fauna_collection_name"],
                 fauna_index_name=return_database_settings["fauna_index_name"],
             )
-        expected = True
-        expected_type = bool
+        print(result)
+        # expected = True
+        expected_type = str
         assert isinstance(result, expected_type)
-        assert expected == result
+        # assert expected == output
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
@@ -112,10 +114,10 @@ class TestDatabaseOperations:
             fauna_collection_name=return_database_settings["fauna_collection_name"],
             fauna_document_data=return_database_settings["fauna_document_data"],
         )
-        expected = True
-        expected_type = bool
+        # expected = True
+        expected_type = tuple
         assert isinstance(result, expected_type)
-        assert expected == result
+        # assert expected == result
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
@@ -141,11 +143,8 @@ class TestDatabaseOperations:
             return_database_settings["fauna_secret_path_admin"]
         )
         result = DataBaseOperations(client_token=client_token).fauna_read_database()
-        print(result)
-        # expected =
-        # expected_type = bool
-        # assert isinstance(result, expected_type)
-        # assert expected == result
+        expected_type = dict
+        assert isinstance(result, expected_type)
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
@@ -153,11 +152,19 @@ class TestDatabaseOperations:
         """Test delete document.
 
         generate fauna_document_ref from a query of a record to delete and feed this
+        get id from fauna_create_document
         """
-        fauna_document_ref = 279785786713309705  # regenerate this from a query instead
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
         )
+        fauna_document_ref = 279785786713309705  # regenerate this from a query instead
+        # _fauna_document_ref_list = DataBaseOperations(
+        #     client_token=client_token
+        # ).fauna_query_index(
+        #     fauna_collection_name=return_database_settings["fauna_collection_name"],
+        #     fauna_index_name=return_database_settings["fauna_index_name"],
+        # )
+        # print(fauna_document_ref_list)
         result = DataBaseOperations(client_token=client_token).fauna_delete_document(
             fauna_collection_name=return_database_settings["fauna_collection_name"],
             fauna_document_ref=fauna_document_ref,
