@@ -7,6 +7,7 @@ import logging
 from faunadb import query as q
 from faunadb.client import FaunaClient
 from faunadb.errors import BadRequest
+from faunadb.objects import Ref
 
 
 logging.basicConfig(
@@ -88,9 +89,7 @@ class DataBaseOperations:
             raise ValueError("Fauna error.") from _error
 
     def fauna_create_document(self, **kwargs: str) -> bool:
-        """Add document.
-        {"data": {"name": "Fire Beak", "element": ["air", "fire"]}}
-        """
+        """Add document."""
         client = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_document_data: str = kwargs["fauna_document_data"]
@@ -102,10 +101,16 @@ class DataBaseOperations:
         except (BadRequest, Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    @staticmethod
-    def fauna_paginate_database():
-        """Fauna paginate database."""
-        return True
+    def fauna_paginate_database(self, **kwargs: str) -> bool:  # pragma: no cover
+        """Fauna paginate database.
+        Requires admin key to paginate databases instead of just server database.
+        """
+        client = self.fauna_get_connection()
+        try:
+            client.query(q.paginate(Ref("databases")))
+            return True
+        except (BadRequest, Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
 
     @staticmethod
     def fauna_read_database():

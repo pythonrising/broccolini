@@ -130,7 +130,7 @@ class TestDatabaseOperations:
     def test_fauna_paginate_database(return_database_settings):
         """Test Fauna paginate database."""
         client_token = TestDatabaseOperations.get_test_values(
-            return_database_settings["fauna_path_srv"]
+            return_database_settings["fauna_secret_path_admin"]
         )
         result = DataBaseOperations(client_token=client_token).fauna_paginate_database()
         expected = True
