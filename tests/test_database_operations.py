@@ -6,12 +6,22 @@ Testing common Database operations. Starting with www.faunadb.com.
 """
 
 import logging
+
 import pytest
 
 # from faunadb.client import FaunaClient, client
 from faunadb.client import FaunaClient
+
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.database_operations import DataBaseOperations
+
+
+# import uuid
+
+
+# import mock
+# from pytest_mock import mocker
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -106,7 +116,10 @@ class TestDatabaseOperations:
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
         )
-        result = DataBaseOperations(client_token=client_token).fauna_create_document()
+        result = DataBaseOperations(client_token=client_token).fauna_create_document(
+            fauna_collection_name=return_database_settings["fauna_collection_name"],
+            fauna_document_data=return_database_settings["fauna_document_data"],
+        )
         expected = True
         expected_type = bool
         assert isinstance(result, expected_type)
@@ -150,3 +163,26 @@ class TestDatabaseOperations:
         expected_type = bool
         assert isinstance(result, expected_type)
         assert expected == result
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_delete_collection_mock(return_database_settings, _mocked_fauna):
+        """Test delete collection using mock."""
+        client_token = TestDatabaseOperations.get_test_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(client_token=client_token).fauna_delete_collection()
+        expected = True
+        expected_type = bool
+        assert isinstance(result, expected_type)
+        assert expected == result
+
+
+@pytest.fixture
+def _mocked_fauna(mocker):
+    """Use for mocking variables."""
+    mock_fauna = mocker.patch.object(
+        DataBaseOperations, "fauna_delete_collection", autospec=True
+    )
+    mock_fauna.return_value = True
+    return mock_fauna

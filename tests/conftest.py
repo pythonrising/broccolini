@@ -5,8 +5,10 @@
 Give data in various forms to the test functions.
 """
 import random
-import shortuuid
+
 import pytest
+import shortuuid
+
 from faker import Faker
 
 
@@ -54,6 +56,7 @@ def return_database_settings():
         fauna_collection_name="collection_name_used_for_delete_test",
         fauna_index_name="index_name_used_for_delete_test",
         fauna_test_bad_database=r"bad_database",
+        fauna_document_data={"data": {"name": "tdata", "CtestDkey": ["air", "fire"]}},
     )
     return input_dict
 
