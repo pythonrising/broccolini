@@ -9,11 +9,6 @@ from faunadb.client import FaunaClient
 from faunadb.errors import BadRequest
 
 
-# from typing import Any
-
-
-# from faunadb.objects import Ref
-
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
 )
@@ -122,7 +117,7 @@ class DataBaseOperations:
         """Delete document."""
         return True
 
-    def fauna_delete_index(self, **kwargs: str) -> bool:
+    def fauna_delete_index(self, **kwargs: str) -> bool:  # pragma: no cover
         """Delete index."""
         client = self.fauna_get_connection()
         # _fauna_collection_name: str = kwargs["fauna_collection_name"]
@@ -144,7 +139,7 @@ class DataBaseOperations:
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_delete_collection(self, **kwargs) -> bool:
+    def fauna_delete_collection(self, **kwargs) -> bool:  # pragma: no cover
         """Delete collection."""
         client = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
