@@ -77,30 +77,30 @@ class DataBaseOperations:
         except (BadRequest, Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_index_for_ref(self, **kwargs: str) -> str:
-        """Query index with more specific information.
-                    q.get(q.index("spells_by_element_with_name")))
-                    gives reference but not the id we need
-        q.paginate(q.match(q.index("spells_with_ref_by_element_name"), "fire")
-        q.paginate(q.match(q.index("all_spell_names"))))
-        q.paginate(q.match(q.index("spells_with_ref_by_element_name"), "fire")
-        "data": [["Fire Beak",{ "@ref": "classes/spells/192900707573039616" }
-        """
-        client = self.fauna_get_connection()
-        fauna_index_name: str = kwargs["fauna_index_name"]
-        fauna_extended_term: str = kwargs["fauna_extended_term"]
-        try:
-            # client.query(q.get(q.index(fauna_index_name)))
-            # client.query(q.get(q.index(fauna_index_name)))
-            # q.match(q.index("spells_with_ref_by_element_name"), "fire"
-            index_list = client.query(
-                q.paginate(q.match(q.index(fauna_index_name), fauna_extended_term))
-            )
-            # print(index_list)
-            return index_list
-        except (Exception) as _error:  # pragma: no cover
-            print(_error)
-            raise ValueError("Fauna error.") from _error
+    # def fauna_query_index_for_ref(self, **kwargs: str) -> str:
+    #     """Query index with more specific information.
+    #                 q.get(q.index("spells_by_element_with_name")))
+    #                 gives reference but not the id we need
+    #     q.paginate(q.match(q.index("spells_with_ref_by_element_name"), "fire")
+    #     q.paginate(q.match(q.index("all_spell_names"))))
+    #     q.paginate(q.match(q.index("spells_with_ref_by_element_name"), "fire")
+    #     "data": [["Fire Beak",{ "@ref": "classes/spells/192900707573039616" }
+    #     """
+    #     client = self.fauna_get_connection()
+    #     fauna_index_name: str = kwargs["fauna_index_name"]
+    #     fauna_extended_term: str = kwargs["fauna_extended_term"]
+    #     try:
+    #         # client.query(q.get(q.index(fauna_index_name)))
+    #         # client.query(q.get(q.index(fauna_index_name)))
+    #         # q.match(q.index("spells_with_ref_by_element_name"), "fire"
+    #         index_list = client.query(
+    #             q.paginate(q.match(q.index(fauna_index_name), fauna_extended_term))
+    #         )
+    #         # print(index_list)
+    #         return index_list
+    #     except (Exception) as _error:  # pragma: no cover
+    #         print(_error)
+    #         raise ValueError("Fauna error.") from _error
 
     def fauna_query_index(self, **kwargs: str) -> str:
         """query index."""
@@ -168,6 +168,17 @@ class DataBaseOperations:
         except NotFound as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
+    def fauna_query_index_with_data(self, **kwargs: str) -> bool:  # pragma: no cover
+        """Query index when given the index name."""
+        client = self.fauna_get_connection()
+        fauna_index_name: str = kwargs["fauna_index_name"]
+        try:
+            reference_id = client.query(q.get(q.match(fauna_index_name)))["ref"]
+            return reference_id
+        except (Exception) as _error:  # pragma: no cover
+            print(_error)
+            raise ValueError("Fauna error.") from _error
+
     def fauna_delete_index(self, **kwargs: str) -> bool:  # pragma: no cover
         """Delete index."""
         client = self.fauna_get_connection()
@@ -187,7 +198,7 @@ class DataBaseOperations:
             client.query(q.get(q.collection(fauna_collection_name)))
             return True
         except (Exception) as _error:  # pragma: no cover
-            raise ValueError("Fauna error.") from _error
+            raise ValueError("Fauna error. - fauna_query_collection") from _error
 
     def fauna_delete_collection(self, **kwargs) -> bool:  # pragma: no cover
         """Delete collection."""

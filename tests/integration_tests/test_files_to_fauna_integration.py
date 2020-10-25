@@ -8,12 +8,17 @@ Also used as a basis for testing file async functionality
 """
 
 import logging
+
 import pytest
 
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.fileoperation_functions import FileOperationFunctions
-from broccolini.database_operations import DataBaseOperations
 
+
+# from faunadb.errors import BadRequest
+
+
+# from broccolini.database_operations import DataBaseOperations
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -36,7 +41,7 @@ class TestIntegrationFileToFauna:
         except KeyError as _error:  # pragma: no cover
             raise ValueError("Missing environment variables") from _error
 
-    @pytest.mark.skip(reason="integration testing")
+    # @pytest.mark.skip(reason="integration testing")
     @pytest.fixture()
     def test_get_files_from_folder(self, return_data_dict):
         """Get list of files from the directory.
@@ -52,29 +57,39 @@ class TestIntegrationFileToFauna:
         )
         return result
 
-    @pytest.mark.skip(reason="integration testing")
-    def test_write_files_to_fauna_db(
-        self, return_database_settings, return_random_uuid, test_get_files_from_folder
-    ):
-        """Put list of files into fauna database.
+    # self, return_database_settings, return_random_uuid, test_get_files_from_folder,
+    # @pytest.mark.skip(reason="integration testing")
 
-        input: list
-        output or side effect: fauna database
-        """
-        collection_name = f"collection_{return_random_uuid}"
+    def test_integration_conftest_to_fauna(self, return_database_settings):
+        """Full fauna test with existing collection and database."""
         client_token = TestIntegrationFileToFauna.get_test_values(
-            return_database_settings["fauna_path_srv"]
+            return_database_settings["fauna_path_srv"],
         )
-        records_to_add = []
-        result = test_get_files_from_folder
-        # for each in result:
-        #     records_to_add.append(str(each["folders_and_files"]))
+        return f"client token is :{client_token}"
 
-        DataBaseOperations(client_token=client_token).fauna_create_collection(
-            collection_name=collection_name,
-        )
-        result = DataBaseOperations(client_token=client_token).fauna_add_records(
-            collection_name=collection_name,
-            records_to_add=records_to_add,
-        )
-        return result
+        # result = DataBaseOperations(client_token=client_token).fauna_create_document(
+        #     fauna_collection_name=return_database_settings["fauna_collection_name"],
+        #     fauna_document_data=return_database_settings["fauna_document_data"],
+        # )
+
+        # print(f"result is {result}")
+
+        # # client_token = TestDatabaseOperations.get_test_values(
+        #     return_database_settings["fauna_path_srv"],
+        # )
+
+        # client_token = TestIntegrationFileToFauna.get_test_values(
+        #     return_database_settings["fauna_path_srv"],
+        #     )
+
+        # # client_token = TestDatabaseOperations.get_test_values(
+        #     return_database_settings["fauna_path_srv"]
+        # )
+        # result = DataBaseOperations(client_token=client_token).fauna_create_document(
+        #     fauna_collection_name=return_database_settings["fauna_collection_name"],
+        #     fauna_document_data=return_database_settings["fauna_document_data"],
+        # )
+        # expected = True
+        # expected_type = bool
+        # assert isinstance(result, expected_type)
+        # assert expected == result
