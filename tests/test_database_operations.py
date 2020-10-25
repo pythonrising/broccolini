@@ -149,21 +149,6 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_query_index_for_ref(return_database_settings):  # pragma: no cover
-        """Test query with more info."""
-        client_token = TestDatabaseOperations.get_test_values(
-            return_database_settings["fauna_path_srv"]
-        )
-        result = DataBaseOperations(
-            client_token=client_token
-        ).fauna_query_index_for_ref(
-            fauna_index_name=return_database_settings["fauna_index_name"],
-            fauna_extended_term=return_database_settings["fauna_extended_term"],
-        )
-        print(result)
-
-    @staticmethod
-    @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_delete_document_mock(
         return_database_settings, _mocked_fauna
     ):  # pragma: no cover
@@ -208,7 +193,7 @@ class TestDatabaseOperations:
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_query_index_with_data(return_database_settings):  # pragma: no cover
-        """Test delete document."""
+        """Test query index with data from conftest."""
         client_token = TestDatabaseOperations.get_test_values(
             return_database_settings["fauna_path_srv"]
         )
