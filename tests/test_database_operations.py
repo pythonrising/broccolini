@@ -10,6 +10,7 @@ import logging
 import pytest
 
 from faunadb.client import FaunaClient
+from faunadb.objects import Ref
 
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.database_operations import DataBaseOperations
@@ -203,6 +204,23 @@ class TestDatabaseOperations:
         expected_type = bool
         assert isinstance(result, expected_type)
         assert expected == result
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_query_index_with_data(return_database_settings):  # pragma: no cover
+        """Test delete document."""
+        client_token = TestDatabaseOperations.get_test_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(
+            client_token=client_token
+        ).fauna_query_index_with_data(
+            fauna_index_name=return_database_settings["fauna_index_name"],
+        )
+        expected = "Ref(id="
+        expected_type = Ref
+        assert isinstance(result, expected_type)
+        assert expected in str(result)
 
 
 @pytest.fixture

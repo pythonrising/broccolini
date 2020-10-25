@@ -168,6 +168,25 @@ class DataBaseOperations:
         except NotFound as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
+    def fauna_query_index_with_data(self, **kwargs: str) -> bool:  # pragma: no cover
+        """Query index when given the index name and a record id."""
+        client = self.fauna_get_connection()
+        fauna_index_name: str = kwargs["fauna_index_name"]
+        # print(fauna_index_name)
+        try:
+            # result = client.query(q.get(q.match(fauna_index_name)))
+            reference_id = client.query(q.get(q.match(fauna_index_name)))["ref"]
+            # print(reference_id)
+            #  = result['ref']
+            # print(type(ref))  # <class 'faunadb.objects.Ref'>
+            # print(type(result))
+            # print(result['ref'])
+            # print(result['data']['name'])
+            return reference_id
+        except (Exception) as _error:  # pragma: no cover
+            print(_error)
+            raise ValueError("Fauna error.") from _error
+
     def fauna_delete_index(self, **kwargs: str) -> bool:  # pragma: no cover
         """Delete index."""
         client = self.fauna_get_connection()
@@ -187,7 +206,7 @@ class DataBaseOperations:
             client.query(q.get(q.collection(fauna_collection_name)))
             return True
         except (Exception) as _error:  # pragma: no cover
-            raise ValueError("Fauna error.") from _error
+            raise ValueError("Fauna error. - fauna_query_collection") from _error
 
     def fauna_delete_collection(self, **kwargs) -> bool:  # pragma: no cover
         """Delete collection."""
