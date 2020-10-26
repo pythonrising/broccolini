@@ -48,9 +48,9 @@ class AWSOperations:
         This function uses vault to get the variables and returns to function
         try:
         """
-        # return dict(
-        #     AWS_ACCESS_KEY_ID='MISSING_ACCESS_KEY_ID',
-        #     AWS_SECRET_ACCESS_KEY='MISSING_ACCESS_KEY',
-        #     AWS_DEFAULT_REGION='MISSING_REGION',
-        # )
-        return "valuefromfunction"
+        return dict(
+            AWS_ACCESS_KEY_ID="MISSING_ACCESS_KEY_ID",
+            AWS_SECRET_ACCESS_KEY="MISSING_ACCESS_KEY",
+            AWS_DEFAULT_REGION="MISSING_REGION",
+        )
+        # return "valuefromfunction"

@@ -64,6 +64,12 @@ class TestAWSOperations:
         print(type(result))
         print(type(result2))
 
+        # expected = "valuefromfunction"
+        expected = "MISSING_ACCESS_KEY_ID"
+        expected_type = dict
+        assert expected == result["AWS_ACCESS_KEY_ID"]
+        assert isinstance(result, expected_type)
+
     # @staticmethod
     # @pytest.mark.dependency(depends=["test_login_to_aws"])
     # def test_create_bucket(return_aws_settings):  # pragma: no cover
