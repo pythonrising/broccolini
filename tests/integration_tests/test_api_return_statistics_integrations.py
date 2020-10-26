@@ -3,9 +3,11 @@
 """Testing integration of api access."""
 
 import logging
+
 import pytest
 
 from broccolini.api_access import ApiAccess
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"

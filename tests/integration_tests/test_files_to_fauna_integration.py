@@ -9,16 +9,26 @@ Also used as a basis for testing file async functionality
 
 import logging
 
+from dataclasses import dataclass
+
 import pytest
 
 from broccolini.authentication_functions import VaultFunctions
+from broccolini.database_operations import DataBaseOperations
 from broccolini.fileoperation_functions import FileOperationFunctions
 
 
-# from faunadb.errors import BadRequest
+@dataclass
+class FileAndFolderInformation:
+    """File and folder storage"""
+
+    file_name: str
+    path: str
+    subject: str = None
 
 
-# from broccolini.database_operations import DataBaseOperations
+FAUNA_COLLECTION_NAME = "training_collection"
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -41,13 +51,12 @@ class TestIntegrationFileToFauna:
         except KeyError as _error:  # pragma: no cover
             raise ValueError("Missing environment variables") from _error
 
-    # @pytest.mark.skip(reason="integration testing")
+    @staticmethod
     @pytest.fixture()
-    def test_get_files_from_folder(self, return_data_dict):
+    def test_get_files_from_folder(return_data_dict):
         """Get list of files from the directory.
 
         input: folder_name
-
         output: list_of_files
         output_type: List[Dict['folders_and_files'][pathlib.WindowsPath]]
         """
@@ -57,39 +66,33 @@ class TestIntegrationFileToFauna:
         )
         return result
 
-    # self, return_database_settings, return_random_uuid, test_get_files_from_folder,
-    # @pytest.mark.skip(reason="integration testing")
-
-    def test_integration_conftest_to_fauna(self, return_database_settings):
-        """Full fauna test with existing collection and database."""
+    @staticmethod
+    def test_integration_sample_training_data_to_fauna(
+        return_database_settings, test_get_files_from_folder
+    ):
+        """Create document using data created in other function."""
         client_token = TestIntegrationFileToFauna.get_test_values(
             return_database_settings["fauna_path_srv"],
         )
-        return f"client token is :{client_token}"
 
-        # result = DataBaseOperations(client_token=client_token).fauna_create_document(
-        #     fauna_collection_name=return_database_settings["fauna_collection_name"],
-        #     fauna_document_data=return_database_settings["fauna_document_data"],
-        # )
+        list_of_dataclasses = []
 
-        # print(f"result is {result}")
+        for each in test_get_files_from_folder:
+            file_name = each["folders_and_files"][0].name
+            path = str(each["folders_and_files"][0].parent)
+            subject = "subject_needed"
+            dataclass_ = FileAndFolderInformation(file_name, path, subject)
+            list_of_dataclasses.append(dataclass_)
 
-        # # client_token = TestDatabaseOperations.get_test_values(
-        #     return_database_settings["fauna_path_srv"],
-        # )
-
-        # client_token = TestIntegrationFileToFauna.get_test_values(
-        #     return_database_settings["fauna_path_srv"],
-        #     )
-
-        # # client_token = TestDatabaseOperations.get_test_values(
-        #     return_database_settings["fauna_path_srv"]
-        # )
-        # result = DataBaseOperations(client_token=client_token).fauna_create_document(
-        #     fauna_collection_name=return_database_settings["fauna_collection_name"],
-        #     fauna_document_data=return_database_settings["fauna_document_data"],
-        # )
-        # expected = True
-        # expected_type = bool
-        # assert isinstance(result, expected_type)
-        # assert expected == result
+        for each in list_of_dataclasses:
+            records_to_add = {
+                "data": {
+                    "file_name": each.file_name,
+                    "path": each.path,
+                    "subject": each.subject,
+                }
+            }
+            DataBaseOperations(client_token=client_token).fauna_create_document(
+                fauna_collection_name=FAUNA_COLLECTION_NAME,
+                fauna_document_data=records_to_add,
+            )

@@ -8,6 +8,7 @@ from faunadb import query as q
 from faunadb.client import FaunaClient
 from faunadb.errors import BadRequest
 from faunadb.errors import NotFound
+from faunadb.errors import UnexpectedError
 from faunadb.objects import Ref
 
 
@@ -126,7 +127,18 @@ class DataBaseOperations:
                 q.create(q.collection(fauna_collection_name), fauna_document_data)
             )
             return True
-        except (BadRequest, Exception) as _error:  # pragma: no cover
+            # faunadb.errors.UnexpectedError:
+        except UnexpectedError as _error:  # pragma: no cover
+            # for debugging only print statement
+            print(f"data load error\n{_error}")
+            # raise ValueError("Unexpected error with data load.") from _error
+
+        except BadRequest as _error:  # pragma: no cover
+            # except (BadRequest, Exception) as _error:  # pragma: no cover
+            # for debugging only print statement
+            print(f"data load error\n{_error}")
+            # raise ValueError("BadRequest.") from _error
+        except Exception as _error:
             raise ValueError("Fauna error.") from _error
 
     def fauna_paginate_database(self) -> bool:
