@@ -63,7 +63,28 @@ class TestAWSOperations:
         result2 = AWSOperations(client_token=aws_secret_access_key).aws_get_connection()
         print(type(result))
         print(type(result2))
-        # expected = "valuefromfunction"
-        # expected_type = str
-        # assert expected == result
-        # assert isinstance(result, expected_type)
+
+    # @staticmethod
+    # @pytest.mark.dependency(depends=["test_login_to_aws"])
+    # def test_create_bucket(return_aws_settings):  # pragma: no cover
+    #     """Test create aws S3 bucket.
+
+    #     what creds are needed to create the s3 bucket
+    #     need region from conftest
+    #     """
+
+    #     result = AWSOperations(client_token=aws_secret_access_key).create_bucket(
+    #         aws_region=return_aws_settings['aws_region'],
+    #         creds1='creds1',
+    #         creds2='creds2',
+    #     )
+
+    #     expected = True
+    #     expected_type = bool
+    #     assert isinstance(result, expected_type)
+    #     assert expected == result
+
+    # expected = "valuefromfunction"
+    # expected_type = str
+    # assert expected == result
+    # assert isinstance(result, expected_type)
