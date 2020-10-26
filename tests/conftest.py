@@ -43,10 +43,9 @@ def return_data_dict():
 
 @pytest.fixture(scope="session")
 def return_database_settings():
-    """Provide dictionary values to functions.
+    """Provide values for Fauna.
 
-    Note Fauna has admin keys and server keys.
-    Most of our testing uses server keys locked to the database
+    Note Fauna uses admin keys and server keys.  Server mapped to databases.
     """
     input_dict = dict(
         fauna_secret_path_admin="python_rising/dev/faunadb/admin/api_token",
@@ -58,6 +57,16 @@ def return_database_settings():
         fauna_test_bad_database=r"bad_database",
         fauna_document_data={"data": {"name": "tdata", "CtestDkey": ["air", "fire"]}},
         fauna_extended_term="fire",
+    )
+    return input_dict
+
+
+@pytest.fixture(scope="session")
+def return_aws_settings():
+    """Provide values for AWS."""
+    input_dict = dict(
+        aws_secret_path="python_rising/dev/aws/admin/api_token",
+        aws_secret_path2="python_rising/dev/aws/admin/api_token2",
     )
     return input_dict
 
