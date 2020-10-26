@@ -28,11 +28,6 @@ class FileAndFolderInformation:
 
 
 FAUNA_COLLECTION_NAME = "training_collection"
-FAUNA_DOCUMENT_DATA = {
-    "data": {
-        "name": "tests\\fake_data_from_conftest\\training\\javascript\\behavior.pdf"
-    }
-}
 
 
 logging.basicConfig(
@@ -56,7 +51,6 @@ class TestIntegrationFileToFauna:
         except KeyError as _error:  # pragma: no cover
             raise ValueError("Missing environment variables") from _error
 
-    # @pytest.mark.skip(reason="integration testing")
     @staticmethod
     @pytest.fixture()
     def test_get_files_from_folder(return_data_dict):
@@ -81,10 +75,6 @@ class TestIntegrationFileToFauna:
             return_database_settings["fauna_path_srv"],
         )
 
-        # run this if you manually delete the collection
-        # DataBaseOperations(client_token=client_token).fauna_create_collection(
-        #     fauna_collection_name=FAUNA_COLLECTION_NAME,
-        # )
         list_of_dataclasses = []
 
         for each in test_get_files_from_folder:
@@ -93,9 +83,7 @@ class TestIntegrationFileToFauna:
             subject = "subject_needed"
             dataclass_ = FileAndFolderInformation(file_name, path, subject)
             list_of_dataclasses.append(dataclass_)
-            # file_data2 = FileAndFolderInformation(file_name, path, subject)
 
-        # print(list_of_dataclasses)
         for each in list_of_dataclasses:
             records_to_add = {
                 "data": {
@@ -104,21 +92,7 @@ class TestIntegrationFileToFauna:
                     "subject": each.subject,
                 }
             }
-            print(records_to_add)
             DataBaseOperations(client_token=client_token).fauna_create_document(
                 fauna_collection_name=FAUNA_COLLECTION_NAME,
                 fauna_document_data=records_to_add,
             )
-
-        # records_to_add = {"data": {
-        #     "file_name": file_data2.file_name,
-        #     "path": file_data2.path,
-        #     "subject": file_data2.subject,
-        #     }
-        # }
-
-        # result = DataBaseOperations(client_token=client_token).fauna_create_document(
-        #     fauna_collection_name=FAUNA_COLLECTION_NAME,
-        #     fauna_document_data=records_to_add,
-        # )
-        # return result
