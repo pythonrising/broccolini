@@ -5,6 +5,7 @@
 Testing common file operations including use of pathlib..
 """
 import logging
+
 from pathlib import Path
 
 # from typing import Pattern
@@ -14,6 +15,7 @@ from faker import Faker
 
 from broccolini.fileoperation_functions import FileOperationFunctions
 from broccolini.json_functions import JsonFunctions
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
