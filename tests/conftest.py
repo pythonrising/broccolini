@@ -65,8 +65,9 @@ def return_database_settings():
 def return_aws_settings():
     """Provide values for AWS."""
     input_dict = dict(
-        aws_secret_path="python_rising/dev/aws/admin/api_token",
-        aws_secret_path2="python_rising/dev/aws/admin/api_token2",
+        aws_access_key_id_path="python_rising/dev/aws_data/AWS_ACCESS_KEY_ID",
+        aws_secret_access_key_path="python_rising/dev/aws_data/AWS_SECRET_ACCESS_KEY",
+        aws_region="us-east-1",
     )
     return input_dict
 
