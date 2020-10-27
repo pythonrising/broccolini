@@ -13,6 +13,8 @@ from broccolini.authentication_functions import VaultFunctions
 from broccolini.aws_operations import AWSOperations
 
 
+OTHER_SETTINGS = "other settings"
+
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
 )
@@ -33,12 +35,12 @@ class TestAWSOperations:
     def get_test_values(cls, secret_path):
         """Build values for the test."""
         try:
-            secret_key = VaultFunctions().query_vault_data(
+            aws_secret_key = VaultFunctions().query_vault_data(
                 vault_url="VAULT_URL",
                 vault_token="VAULT_TOKEN",
                 secret_path=secret_path,
             )
-            return secret_key["data"]["data"]["_key"]
+            return aws_secret_key["data"]["data"]["_key"]
         except KeyError as _error:  # pragma: no cover
             raise ValueError("Missing environment variables") from _error
 
@@ -64,6 +66,7 @@ class TestAWSOperations:
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_default_region=aws_default_region,
+            # other_setings=OTHER_SETTINGS,
         )
 
         # note returning region to avoid any logging of credentials
@@ -72,27 +75,28 @@ class TestAWSOperations:
         assert expected == result["AWS_DEFAULT_REGION"]
         assert isinstance(result, expected_type)
 
-    # @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_aws"])
-    # def test_create_bucket(return_aws_settings):  # pragma: no cover
-    #     """Test create aws S3 bucket.
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_aws"])
+    def test_aws_create_s3_bucket(return_aws_settings):  # pragma: no cover
+        """Test create aws S3 bucket.
 
-    #     what creds are needed to create the s3 bucket
-    #     need region from conftest
-    #     """
+        Get data from aws_get_connection
+        Put in as environment VARIABLES
+        Then run create bucket script
+        """
+        aws_access_key_id = TestAWSOperations.get_test_values(
+            secret_path=return_aws_settings["aws_access_key_id_path"]
+        )
+        aws_secret_access_key = TestAWSOperations.get_test_values(
+            secret_path=return_aws_settings["aws_secret_access_key_path"]
+        )
+        aws_default_region = return_aws_settings["aws_default_region"]
 
-    #     result = AWSOperations(client_token=aws_secret_access_key).create_bucket(
-    #         aws_region=return_aws_settings['aws_region'],
-    #         creds1='creds1',
-    #         creds2='creds2',
-    #     )
-
-    #     expected = True
-    #     expected_type = bool
-    #     assert isinstance(result, expected_type)
-    #     assert expected == result
-
-    # expected = "valuefromfunction"
-    # expected_type = str
-    # assert expected == result
-    # assert isinstance(result, expected_type)
+        AWSOperations().aws_create_s3_bucket(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_default_region=aws_default_region,
+            other_setings=OTHER_SETTINGS,
+        )
+        # expected_type = bool
+        # assert isinstance(result, expected_type)
