@@ -21,9 +21,9 @@ class AWSOperations:
     input_type: str
     """
 
-    def __init__(self, client_token: str) -> None:
+    def __init__(self) -> None:
         """Init class - vars are called in the function as needed."""
-        self.client_token = client_token
+        # self.client_token = client_token
 
     def __repr__(self) -> str:  # pragma: no cover
         """Display function name using repr."""
@@ -31,26 +31,25 @@ class AWSOperations:
         return f"{class_name}"
 
     @staticmethod
-    def aws_get_connection() -> str:
+    def aws_get_connection(**kwargs: str) -> dict[str, str]:
         """Get AWS Connection.
 
-        input: str  inputdata
-        output: str outputdata
-        # get creds from vault
-        # set env variable
-        # if not import os
-        >>> 'HOME' in os.environ  # Check an existing env. variable
-        True
-        have functions just use env vars
-        from os import environ
-        'SYSTEMDRIVE' in environ
-        AWS_DEFAULT_REGION=us-east-1
-        This function uses vault to get the variables and returns to function
-        try:
+        Provide credentials and settings to other methods.
+        Arguments:
+        aws_access_key_id: str AWS creds key id
+        aws_secret_key: str AWS cred secret key
+        aws_default_region: str AWS region
+
+        Returns:
+        output: dict[str, str] Dictionary of login values
         """
+        aws_access_key_id: str = kwargs["aws_access_key_id"]
+        aws_secret_access_key: str = kwargs["aws_secret_access_key"]
+        aws_default_region: str = kwargs["aws_default_region"]
+
         return dict(
-            AWS_ACCESS_KEY_ID="MISSING_ACCESS_KEY_ID",
-            AWS_SECRET_ACCESS_KEY="MISSING_ACCESS_KEY",
-            AWS_DEFAULT_REGION="MISSING_REGION",
+            AWS_ACCESS_KEY_ID=aws_access_key_id,
+            AWS_SECRET_ACCESS_KEY=aws_secret_access_key,
+            AWS_DEFAULT_REGION=aws_default_region,
+            # aws_region="us-east-1",
         )
-        # return "valuefromfunction"

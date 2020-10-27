@@ -33,12 +33,12 @@ class TestAWSOperations:
     def get_test_values(cls, secret_path):
         """Build values for the test."""
         try:
-            aws_secret_key = VaultFunctions().query_vault_data(
+            secret_key = VaultFunctions().query_vault_data(
                 vault_url="VAULT_URL",
                 vault_token="VAULT_TOKEN",
                 secret_path=secret_path,
             )
-            return aws_secret_key["data"]["data"]["_key"]
+            return secret_key["data"]["data"]["_key"]
         except KeyError as _error:  # pragma: no cover
             raise ValueError("Missing environment variables") from _error
 
@@ -50,24 +50,26 @@ class TestAWSOperations:
         input: str TBD
         output: str TBD
         aws_secret_access_key_path
-        aws_region
+        aws_region: str TBD
         """
         aws_access_key_id = TestAWSOperations.get_test_values(
-            return_aws_settings["aws_access_key_id_path"]
+            secret_path=return_aws_settings["aws_access_key_id_path"]
         )
         aws_secret_access_key = TestAWSOperations.get_test_values(
-            return_aws_settings["aws_secret_access_key_path"]
+            secret_path=return_aws_settings["aws_secret_access_key_path"]
+        )
+        aws_default_region = return_aws_settings["aws_default_region"]
+
+        result = AWSOperations().aws_get_connection(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_default_region=aws_default_region,
         )
 
-        result = AWSOperations(client_token=aws_access_key_id).aws_get_connection()
-        result2 = AWSOperations(client_token=aws_secret_access_key).aws_get_connection()
-        print(type(result))
-        print(type(result2))
-
-        # expected = "valuefromfunction"
-        expected = "MISSING_ACCESS_KEY_ID"
+        # note returning region to avoid any logging of credentials
+        expected = return_aws_settings["aws_default_region"]
         expected_type = dict
-        assert expected == result["AWS_ACCESS_KEY_ID"]
+        assert expected == result["AWS_DEFAULT_REGION"]
         assert isinstance(result, expected_type)
 
     # @staticmethod
