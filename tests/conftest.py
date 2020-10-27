@@ -67,7 +67,7 @@ def return_aws_settings():
     input_dict = dict(
         aws_access_key_id_path="python_rising/dev/aws_data/AWS_ACCESS_KEY_ID",
         aws_secret_access_key_path="python_rising/dev/aws_data/AWS_SECRET_ACCESS_KEY",
-        aws_region="us-east-1",
+        aws_default_region="us-east-1",
     )
     return input_dict
 
