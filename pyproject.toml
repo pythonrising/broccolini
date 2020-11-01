@@ -32,7 +32,7 @@ boto3 = "^1.16.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"
-pre-commit = "^2.7.1"
+pre-commit = "^2.8.2"
 pylama = "^7.7.1"
 pytest-dependency = "^0.5.1"
 coverage = "^5.2"
