@@ -3,17 +3,19 @@
 AWS operations.
 """
 import logging
-import random
 
 from os import environ
 
 import boto3
 
+from botocore.exceptions import ClientError
+
+
+# import random
+
 
 # from botocore.exceptions import ClientError
 
-
-TEMP_BUCKET_NAME = "gdw" + str(random.randint(0, 88888))
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -65,12 +67,11 @@ class AWSOperations:
         """Create S3 bucket.
 
         Raises:
-            ValueError: [description]
+            ValueError: AWS error.
 
         Returns:
             bool: True if successfully created bucket.
         """
-
         aws_client = self.aws_get_connection(
             aws_access_key_id=kwargs["aws_access_key_id"],
             aws_secret_access_key=kwargs["aws_secret_access_key"],
@@ -91,23 +92,18 @@ class AWSOperations:
             if _aws_default_region not in environ:
                 environ["AWS_DEFAULT_REGION"] = _aws_default_region
 
-            # session = boto3.Session(
-            #     aws_access_key_id=_aws_access_key_id,
-            #     aws_secret_access_key=_aws_secret_access_key,
-            # )
-
             s3_client = boto3.client(
                 "s3",
                 aws_access_key_id=_aws_access_key_id,
                 aws_secret_access_key=_aws_secret_access_key,
                 region_name=_aws_default_region,
             )
+            s3_client.create_bucket(Bucket=kwargs["aws_s3_bucket_name"])
 
-            s3_client.create_bucket(Bucket=TEMP_BUCKET_NAME)
-            return True
-
-        except (Exception) as _error:  # pragma: no cover
+        except ClientError as _error:
             raise ValueError("AWS error.") from _error
+            # return False
+        return True
 
     def aws_list_s3_buckets(self, **kwargs: str) -> list[str]:
         """List S3 buckets.
@@ -116,7 +112,7 @@ class AWSOperations:
             bucket_name (str): [description]
 
         Raises:
-            ValueError: [description]
+            ValueError: AWS error.
 
         Returns:
             list[str]: List of buckets
@@ -145,47 +141,8 @@ class AWSOperations:
                 aws_access_key_id=_aws_access_key_id,
                 aws_secret_access_key=_aws_secret_access_key,
                 region_name=_aws_default_region,
+                # region_name='missing',
             )
-            # s3_client.create_bucket(Bucket=TEMP_BUCKET_NAME)
-            # s3_client.list_buckets()
             return s3_client.list_buckets()
-
-            # list_of_buckets: list[str] = s3_client = boto3.list_buckets()
-            # list_of_buckets: list[str] = []
-            # list_of_buckets.append(TEMP_BUCKET_NAME)
-            # return list_of_buckets
-
-        except (Exception) as _error:  # pragma: no cover
+        except (ClientError) as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error
-
-
-# >>> s3_client = boto3.client('s3',
-# ...                       aws_access_key_id=AWSID,
-# ...                       aws_secret_access_key=AWSKEY,
-# ...                       region_name='us-east-1'
-# ...                       )
-
-# try:
-#     if _aws_default_region is None:
-#         s3_client = boto3.client(
-#             "s3",
-#             aws_access_key_id=_aws_access_key_id,
-#             aws_secret_access_key=_aws_secret_access_key,
-#         )
-#         # print(s3_client)
-#         s3_client.create_bucket(Bucket=TEMP_BUCKET_NAME)
-
-#     else:
-#         s3_client = boto3.client("s3", region_name=_aws_default_region)
-#         location = {"LocationConstraint": _aws_default_region}
-#         try:
-#             s3_client.create_bucket(
-#                 Bucket=TEMP_BUCKET_NAME, CreateBucketConfiguration=location
-#             )
-#             print("bucket created")
-#         except:
-#             print("bucket not created")
-
-# except ClientError as _error:
-#     logging.error(_error)
-#     return False

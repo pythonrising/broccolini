@@ -64,9 +64,15 @@ def return_database_settings():
 @pytest.fixture(scope="session")
 def return_aws_settings():
     """Provide values for AWS."""
+    short_uuid_conftest = shortuuid.ShortUUID(alphabet="01345678")
+    aws_s3_bucket_name = short_uuid_conftest.uuid()
+    aws_s3_bad_bucket_name = "badbucketname_with_underscorecharacter"
+
     input_dict = dict(
         aws_access_key_id_path="python_rising/dev/aws_data/AWS_ACCESS_KEY_ID",
         aws_secret_access_key_path="python_rising/dev/aws_data/AWS_SECRET_ACCESS_KEY",
+        aws_s3_bucket_name=aws_s3_bucket_name,
+        aws_s3_bad_bucket_name=aws_s3_bad_bucket_name,
         aws_default_region="us-east-1",
     )
     return input_dict

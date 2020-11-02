@@ -66,10 +66,8 @@ class TestAWSOperations:
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_default_region=aws_default_region,
-            # other_setings=OTHER_SETTINGS,
         )
 
-        # note returning region to avoid any logging of credentials
         expected = return_aws_settings["aws_default_region"]
         expected_type = dict
         assert expected == result["AWS_DEFAULT_REGION"]
@@ -90,20 +88,41 @@ class TestAWSOperations:
         aws_secret_access_key = TestAWSOperations.get_test_values(
             secret_path=return_aws_settings["aws_secret_access_key_path"]
         )
+        aws_secret_access_key = TestAWSOperations.get_test_values(
+            secret_path=return_aws_settings["aws_secret_access_key_path"]
+        )
         aws_default_region = return_aws_settings["aws_default_region"]
 
-        # AWSOperations().aws_create_s3_bucket(
-        #     aws_access_key_id=aws_access_key_id,
-        #     aws_secret_access_key=aws_secret_access_key,
-        #     aws_default_region=aws_default_region,
-        # )
         result = AWSOperations().aws_create_s3_bucket(
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_default_region=aws_default_region,
+            aws_s3_bucket_name=return_aws_settings["aws_s3_bucket_name"],
         )
         expected_type = bool
         assert isinstance(result, expected_type)
+
+        with pytest.raises(ValueError):
+            assert AWSOperations().aws_create_s3_bucket(
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_secret_access_key,
+                aws_default_region=return_aws_settings["aws_default_region"],
+                aws_s3_bucket_name=return_aws_settings["aws_s3_bad_bucket_name"],
+            )
+
+    # @staticmethod
+    # @pytest.mark.dependency(depends=["test_login_to_aws"])
+    # def test_aws_create_s3_bucket_bad_bucket(return_aws_settings):  # pragma: no cover
+    #     """Test create aws S3 bucket with bad bucket name
+
+    #     Ensure bad bucket raises clienterrror.
+    #     """
+    #     aws_access_key_id = TestAWSOperations.get_test_values(
+    #         secret_path=return_aws_settings["aws_access_key_id_path"]
+    #     )
+    #     aws_secret_access_key = TestAWSOperations.get_test_values(
+    #         secret_path=return_aws_settings["aws_secret_access_key_path"]
+    #     )
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_aws"])
@@ -125,5 +144,3 @@ class TestAWSOperations:
         )
         expected_type = dict
         assert isinstance(result, expected_type)
-        # print(type(result))
-        # print(result)
