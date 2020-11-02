@@ -123,5 +123,7 @@ class TestAWSOperations:
             aws_default_region=aws_default_region,
             other_setings=OTHER_SETTINGS,
         )
-        expected_type = list
+        expected_type = dict
         assert isinstance(result, expected_type)
+        # print(type(result))
+        # print(result)

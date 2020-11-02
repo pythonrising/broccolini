@@ -146,10 +146,14 @@ class AWSOperations:
                 aws_secret_access_key=_aws_secret_access_key,
                 region_name=_aws_default_region,
             )
-            s3_client.create_bucket(Bucket=TEMP_BUCKET_NAME)
-            list_of_buckets: list[str] = []
-            list_of_buckets.append(TEMP_BUCKET_NAME)
-            return list_of_buckets
+            # s3_client.create_bucket(Bucket=TEMP_BUCKET_NAME)
+            # s3_client.list_buckets()
+            return s3_client.list_buckets()
+
+            # list_of_buckets: list[str] = s3_client = boto3.list_buckets()
+            # list_of_buckets: list[str] = []
+            # list_of_buckets.append(TEMP_BUCKET_NAME)
+            # return list_of_buckets
 
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error
