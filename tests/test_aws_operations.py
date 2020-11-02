@@ -128,7 +128,7 @@ class TestAWSOperations:
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_aws"])
     def test_aws_sqs_send_message(return_aws_settings):  # pragma: no cover
-        """Test AWS SQS send message."""
+        """Test AWS SQS send and list messages."""
         aws_access_key_id = TestAWSOperations.get_test_values(
             secret_path=return_aws_settings["aws_sqs_key_id_path"]
         )
@@ -156,4 +156,21 @@ class TestAWSOperations:
                 sqs_queue_url="MISSING_SQS_URL",
                 sqs_message_body=return_aws_settings["sqs_message_body"],
                 sqs_message_attributes=return_aws_settings["sqs_message_attributes"],
+            )
+
+        result_list_sqs = AWSOperations().aws_sqs_list_messages(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_default_region=aws_default_region,
+            sqs_queue_url=return_aws_settings["sqs_queue_url"],
+        )
+        expected_type_result_list = bool
+        assert isinstance(result_list_sqs, expected_type_result_list)
+
+        with pytest.raises(ValueError):
+            assert AWSOperations().aws_sqs_list_messages(
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_secret_access_key,
+                aws_default_region=aws_default_region,
+                sqs_queue_url="MISSING_SQS_URL",
             )
