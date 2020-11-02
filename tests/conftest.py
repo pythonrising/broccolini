@@ -69,11 +69,22 @@ def return_aws_settings():
     aws_s3_bad_bucket_name = "badbucketname_with_underscorecharacter"
 
     input_dict = dict(
-        aws_access_key_id_path="python_rising/dev/aws_data/AWS_ACCESS_KEY_ID",
-        aws_secret_access_key_path="python_rising/dev/aws_data/AWS_SECRET_ACCESS_KEY",
+        aws_s3_key_id_path="python_rising/dev/aws_data/AWS_ACCESS_KEY_ID",
+        aws_s3_secret_key_path="python_rising/dev/aws_data/AWS_SECRET_ACCESS_KEY",
         aws_s3_bucket_name=aws_s3_bucket_name,
         aws_s3_bad_bucket_name=aws_s3_bad_bucket_name,
         aws_default_region="us-east-1",
+        aws_sqs_key_id_path="python_rising/dev/aws_data/sqs/AWS_ACCESS_KEY_ID",
+        aws_sqs_secret_key_path="python_rising/dev/aws_data/sqs/AWS_SECRET_ACCESS_KEY",
+        sqs_queue_url=(
+            "https://sqs.us-east-1.amazonaws.com/568639476002/directories_to_process"
+        ),
+        sqs_message_attributes={
+            "Title": {"DataType": "String", "StringValue": "The Whistler"},
+            "Author": {"DataType": "String", "StringValue": "John Grisham"},
+            "WeeksOn": {"DataType": "Number", "StringValue": "6"},
+        },
+        sqs_message_body=("Information about bestseller for week of 12/11/2016."),
     )
     return input_dict
 

@@ -13,8 +13,6 @@ from broccolini.authentication_functions import VaultFunctions
 from broccolini.aws_operations import AWSOperations
 
 
-OTHER_SETTINGS = "other settings"
-
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
 )
@@ -55,10 +53,10 @@ class TestAWSOperations:
         aws_region: str TBD
         """
         aws_access_key_id = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_access_key_id_path"]
+            secret_path=return_aws_settings["aws_s3_key_id_path"]
         )
         aws_secret_access_key = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_secret_access_key_path"]
+            secret_path=return_aws_settings["aws_s3_secret_key_path"]
         )
         aws_default_region = return_aws_settings["aws_default_region"]
 
@@ -83,13 +81,10 @@ class TestAWSOperations:
         Then run create bucket script
         """
         aws_access_key_id = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_access_key_id_path"]
+            secret_path=return_aws_settings["aws_s3_key_id_path"]
         )
         aws_secret_access_key = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_secret_access_key_path"]
-        )
-        aws_secret_access_key = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_secret_access_key_path"]
+            secret_path=return_aws_settings["aws_s3_secret_key_path"]
         )
         aws_default_region = return_aws_settings["aws_default_region"]
 
@@ -110,29 +105,15 @@ class TestAWSOperations:
                 aws_s3_bucket_name=return_aws_settings["aws_s3_bad_bucket_name"],
             )
 
-    # @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_aws"])
-    # def test_aws_create_s3_bucket_bad_bucket(return_aws_settings):  # pragma: no cover
-    #     """Test create aws S3 bucket with bad bucket name
-
-    #     Ensure bad bucket raises clienterrror.
-    #     """
-    #     aws_access_key_id = TestAWSOperations.get_test_values(
-    #         secret_path=return_aws_settings["aws_access_key_id_path"]
-    #     )
-    #     aws_secret_access_key = TestAWSOperations.get_test_values(
-    #         secret_path=return_aws_settings["aws_secret_access_key_path"]
-    #     )
-
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_aws"])
     def test_aws_list_s3_buckets(return_aws_settings):  # pragma: no cover
         """Test list AWS S3 buckets."""
         aws_access_key_id = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_access_key_id_path"]
+            secret_path=return_aws_settings["aws_s3_key_id_path"]
         )
         aws_secret_access_key = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_secret_access_key_path"]
+            secret_path=return_aws_settings["aws_s3_secret_key_path"]
         )
         aws_default_region = return_aws_settings["aws_default_region"]
 
@@ -140,7 +121,75 @@ class TestAWSOperations:
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_default_region=aws_default_region,
-            other_setings=OTHER_SETTINGS,
         )
         expected_type = dict
         assert isinstance(result, expected_type)
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_aws"])
+    def test_aws_sqs_send_message(return_aws_settings):  # pragma: no cover
+        """Test AWS SQS send and list messages."""
+        aws_access_key_id = TestAWSOperations.get_test_values(
+            secret_path=return_aws_settings["aws_sqs_key_id_path"]
+        )
+        aws_secret_access_key = TestAWSOperations.get_test_values(
+            secret_path=return_aws_settings["aws_sqs_secret_key_path"]
+        )
+        aws_default_region = return_aws_settings["aws_default_region"]
+
+        result = AWSOperations().aws_sqs_send_message(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_default_region=aws_default_region,
+            sqs_queue_url=return_aws_settings["sqs_queue_url"],
+            sqs_message_body=return_aws_settings["sqs_message_body"],
+            sqs_message_attributes=return_aws_settings["sqs_message_attributes"],
+        )
+        expected_type = bool
+        assert isinstance(result, expected_type)
+
+        with pytest.raises(ValueError):
+            assert AWSOperations().aws_sqs_send_message(
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_secret_access_key,
+                aws_default_region=aws_default_region,
+                sqs_queue_url="MISSING_SQS_URL",
+                sqs_message_body=return_aws_settings["sqs_message_body"],
+                sqs_message_attributes=return_aws_settings["sqs_message_attributes"],
+            )
+
+        result_list_sqs = AWSOperations().aws_sqs_list_messages(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_default_region=aws_default_region,
+            sqs_queue_url=return_aws_settings["sqs_queue_url"],
+        )
+        expected_type_result_list = bool
+        assert isinstance(result_list_sqs, expected_type_result_list)
+
+        with pytest.raises(ValueError):
+            assert AWSOperations().aws_sqs_list_messages(
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_secret_access_key,
+                aws_default_region=aws_default_region,
+                sqs_queue_url="MISSING_SQS_URL",
+            )
+
+        result_delete_sqs = AWSOperations().aws_sqs_read_and_delete_messages(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_default_region=aws_default_region,
+            sqs_queue_url=return_aws_settings["sqs_queue_url"],
+        )
+        expected_type_result_delete = str
+        assert isinstance(result_delete_sqs, expected_type_result_delete)
+
+        with pytest.raises(ValueError):
+            assert AWSOperations().aws_sqs_read_and_delete_messages(
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_secret_access_key,
+                aws_default_region=aws_default_region,
+                sqs_queue_url="MISSING_SQS_URL",
+                sqs_message_body=return_aws_settings["sqs_message_body"],
+                sqs_message_attributes=return_aws_settings["sqs_message_attributes"],
+            )
