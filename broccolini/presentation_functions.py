@@ -22,7 +22,7 @@ class PresentationOperations:
         return f"{class_name}"
 
     @staticmethod
-    def prepare_template(self, **kwargs: str) -> str:
+    def prepare_template(**kwargs: str) -> str:
         """Create template.
         input_Data: json_file build dictionary from file in json format
         input_data: dict - dictionary of values to build template
