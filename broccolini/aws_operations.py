@@ -62,7 +62,15 @@ class AWSOperations:
         )
 
     def aws_create_s3_bucket(self, **kwargs: str) -> bool:
-        """Create S3 bucket."""
+        """Create S3 bucket.
+
+        Raises:
+            ValueError: [description]
+
+        Returns:
+            bool: True if successfully created bucket.
+        """
+
         aws_client = self.aws_get_connection(
             aws_access_key_id=kwargs["aws_access_key_id"],
             aws_secret_access_key=kwargs["aws_secret_access_key"],
@@ -96,6 +104,52 @@ class AWSOperations:
             )
 
             s3_client.create_bucket(Bucket=TEMP_BUCKET_NAME)
+            return True
+
+        except (Exception) as _error:  # pragma: no cover
+            raise ValueError("AWS error.") from _error
+
+    def aws_list_s3_buckets(self, **kwargs: str) -> list[str]:
+        """List S3 buckets.
+
+        Args:
+            bucket_name (str): [description]
+
+        Raises:
+            ValueError: [description]
+
+        Returns:
+            list[str]: List of buckets
+        """
+        aws_client = self.aws_get_connection(
+            aws_access_key_id=kwargs["aws_access_key_id"],
+            aws_secret_access_key=kwargs["aws_secret_access_key"],
+            aws_default_region=kwargs["aws_default_region"],
+        )
+        _aws_access_key_id: str = aws_client["AWS_ACCESS_KEY_ID"]
+        _aws_secret_access_key: str = aws_client["AWS_SECRET_ACCESS_KEY"]
+        _aws_default_region: str = aws_client["AWS_DEFAULT_REGION"]
+
+        try:
+            if _aws_access_key_id not in environ:
+                environ["AWS_ACCESS_KEY_ID"] = _aws_access_key_id
+
+            if _aws_secret_access_key not in environ:
+                environ["AWS_SECRET_ACCESS_KEY"] = _aws_secret_access_key
+
+            if _aws_default_region not in environ:
+                environ["AWS_DEFAULT_REGION"] = _aws_default_region
+
+            s3_client = boto3.client(
+                "s3",
+                aws_access_key_id=_aws_access_key_id,
+                aws_secret_access_key=_aws_secret_access_key,
+                region_name=_aws_default_region,
+            )
+            s3_client.create_bucket(Bucket=TEMP_BUCKET_NAME)
+            list_of_buckets: list[str] = []
+            list_of_buckets.append(TEMP_BUCKET_NAME)
+            return list_of_buckets
 
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error

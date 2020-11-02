@@ -92,11 +92,36 @@ class TestAWSOperations:
         )
         aws_default_region = return_aws_settings["aws_default_region"]
 
-        AWSOperations().aws_create_s3_bucket(
+        # AWSOperations().aws_create_s3_bucket(
+        #     aws_access_key_id=aws_access_key_id,
+        #     aws_secret_access_key=aws_secret_access_key,
+        #     aws_default_region=aws_default_region,
+        # )
+        result = AWSOperations().aws_create_s3_bucket(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_default_region=aws_default_region,
+        )
+        expected_type = bool
+        assert isinstance(result, expected_type)
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_aws"])
+    def test_aws_list_s3_buckets(return_aws_settings):  # pragma: no cover
+        """Test list AWS S3 buckets."""
+        aws_access_key_id = TestAWSOperations.get_test_values(
+            secret_path=return_aws_settings["aws_access_key_id_path"]
+        )
+        aws_secret_access_key = TestAWSOperations.get_test_values(
+            secret_path=return_aws_settings["aws_secret_access_key_path"]
+        )
+        aws_default_region = return_aws_settings["aws_default_region"]
+
+        result = AWSOperations().aws_list_s3_buckets(
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_default_region=aws_default_region,
             other_setings=OTHER_SETTINGS,
         )
-        # expected_type = bool
-        # assert isinstance(result, expected_type)
+        expected_type = list
+        assert isinstance(result, expected_type)
