@@ -227,3 +227,56 @@ class AWSOperations:
         except (ClientError) as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error
         return True
+
+    def aws_sqs_read_and_delete_messages(self, **kwargs: str) -> bool:
+        """Read messages and delete them.
+
+        Returns:
+            bool: Is delete successful.
+        """
+        aws_client = self.aws_get_connection(
+            aws_access_key_id=kwargs["aws_access_key_id"],
+            aws_secret_access_key=kwargs["aws_secret_access_key"],
+            aws_default_region=kwargs["aws_default_region"],
+        )
+        _aws_access_key_id: str = aws_client["AWS_ACCESS_KEY_ID"]
+        _aws_secret_access_key: str = aws_client["AWS_SECRET_ACCESS_KEY"]
+        _aws_default_region: str = aws_client["AWS_DEFAULT_REGION"]
+        try:
+            if _aws_access_key_id not in environ:
+                environ["AWS_ACCESS_KEY_ID"] = _aws_access_key_id
+
+            if _aws_secret_access_key not in environ:
+                environ["AWS_SECRET_ACCESS_KEY"] = _aws_secret_access_key
+
+            if _aws_default_region not in environ:
+                environ["AWS_DEFAULT_REGION"] = _aws_default_region
+
+            sqs_client = boto3.client(
+                "sqs",
+                aws_access_key_id=_aws_access_key_id,
+                aws_secret_access_key=_aws_secret_access_key,
+                region_name=_aws_default_region,
+            )
+            sqs_queue_url = kwargs["sqs_queue_url"]
+
+            response = sqs_client.receive_message(
+                QueueUrl=sqs_queue_url,
+                AttributeNames=["SentTimestamp"],
+                MaxNumberOfMessages=1,
+                WaitTimeSeconds=1,
+                MessageAttributeNames=["All"],
+                VisibilityTimeout=0,
+            )
+            message = response["Messages"][0]
+            receipt_handle = message["ReceiptHandle"]
+            body_of_message_1 = message["Body"]
+
+            sqs_client.delete_message(
+                QueueUrl=sqs_queue_url, ReceiptHandle=receipt_handle
+            )
+            return (
+                f"received and deleted message {message} with body:{body_of_message_1}"
+            )
+        except (ClientError, KeyError) as _error:  # pragma: no cover
+            raise ValueError("AWS error.") from _error

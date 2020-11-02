@@ -174,3 +174,22 @@ class TestAWSOperations:
                 aws_default_region=aws_default_region,
                 sqs_queue_url="MISSING_SQS_URL",
             )
+
+        result_delete_sqs = AWSOperations().aws_sqs_read_and_delete_messages(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_default_region=aws_default_region,
+            sqs_queue_url=return_aws_settings["sqs_queue_url"],
+        )
+        expected_type_result_delete = str
+        assert isinstance(result_delete_sqs, expected_type_result_delete)
+
+        with pytest.raises(ValueError):
+            assert AWSOperations().aws_sqs_read_and_delete_messages(
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_secret_access_key,
+                aws_default_region=aws_default_region,
+                sqs_queue_url="MISSING_SQS_URL",
+                sqs_message_body=return_aws_settings["sqs_message_body"],
+                sqs_message_attributes=return_aws_settings["sqs_message_attributes"],
+            )
