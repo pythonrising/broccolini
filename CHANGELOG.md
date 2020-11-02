@@ -1,6 +1,10 @@
 
 # CHANGELOG
 
+## 0.1.6
+
+Added AWS S3 functions:
+
 ## 0.1.5
 
 Added integration tests.  Improved coverage and mocking.  Added use of dataclasses:

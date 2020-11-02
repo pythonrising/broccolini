@@ -5,7 +5,7 @@
 ![CodeQL](https://github.com/pythonrising/broccolini/workflows/CodeQL/badge.svg)
 [![codecov](https://codecov.io/gh/pythonrising/broccolini/branch/main/graph/badge.svg)](https://codecov.io/gh/pythonrising/broccolini)
 
-## Python Version Warning
+## Note On Python Versioning
 
 This library will always only support the latest version of python.  Expect breaking changes always.  If you are looking for stability please plan on forking and maintaining yourself.
 
