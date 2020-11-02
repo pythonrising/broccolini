@@ -145,4 +145,15 @@ class TestAWSOperations:
             sqs_message_body=return_aws_settings["sqs_message_body"],
             sqs_message_attributes=return_aws_settings["sqs_message_attributes"],
         )
-        print(result)
+        expected_type = bool
+        assert isinstance(result, expected_type)
+
+        with pytest.raises(ValueError):
+            assert AWSOperations().aws_sqs_send_message(
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_secret_access_key,
+                aws_default_region=aws_default_region,
+                sqs_queue_url="MISSING_SQS_URL",
+                sqs_message_body=return_aws_settings["sqs_message_body"],
+                sqs_message_attributes=return_aws_settings["sqs_message_attributes"],
+            )

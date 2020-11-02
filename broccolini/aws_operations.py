@@ -178,13 +178,12 @@ class AWSOperations:
                 region_name=_aws_default_region,
             )
 
-            response = sqs_client.send_message(
+            sqs_client.send_message(
                 QueueUrl=kwargs["sqs_queue_url"],
                 DelaySeconds=10,
                 MessageAttributes=kwargs["sqs_message_attributes"],
                 MessageBody=kwargs["sqs_message_body"],
             )
-            return response["MessageId"]
-
         except (ClientError) as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error
+        return True
