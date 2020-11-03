@@ -45,14 +45,14 @@ def return_data_dict():
 def presentation_settings():
     """Provide values for presentation functions."""
     input_dict = dict(
-        input_data_file="input_data.csv",
-        input_template_name="template_from_conftest.jinja2",
-        output_file_name_jinja2=r"__output_files/output_jinja2.txt",
-        template_folder="templates",
+        input_template_name="new_python_script.jinja2",
         trim_blocks=True,
         lstrip_blocks=True,
         keep_trailing_newline=False,
         autoescape_formats=["html", "xml"],
+        template_dict_values=dict(
+            long_description="long_description_from_conftest", title="title"
+        ),
     )
     return input_dict
 
