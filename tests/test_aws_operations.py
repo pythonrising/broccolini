@@ -71,6 +71,32 @@ class TestAWSOperations:
         assert expected == result["AWS_DEFAULT_REGION"]
         assert isinstance(result, expected_type)
 
+    # leave here - needs mock
+    # @staticmethod
+    # @pytest.mark.dependency(depends=["test_login_to_aws"])
+    # def test_aws_delete_s3_bucket(return_aws_settings):  # pragma: no cover
+    #     """Delete S3 bucket.
+
+    #     Args:
+    #         bucket_name (str): bucket name to delete
+    #     """
+    #     aws_access_key_id = TestAWSOperations.get_test_values(
+    #         secret_path=return_aws_settings["aws_s3_key_id_path"]
+    #     )
+    #     aws_secret_access_key = TestAWSOperations.get_test_values(
+    #         secret_path=return_aws_settings["aws_s3_secret_key_path"]
+    #     )
+    #     aws_default_region = return_aws_settings["aws_default_region"]
+
+    #     result = AWSOperations().aws_delete_s3_bucket(
+    #         aws_access_key_id=aws_access_key_id,
+    #         aws_secret_access_key=aws_secret_access_key,
+    #         aws_default_region=aws_default_region,
+    #         aws_s3_bucket_name=return_aws_settings["aws_s3_bucket_name"],
+    #     )
+    #     expected_type = bool
+    #     assert isinstance(result, expected_type)
+
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_aws"])
     def test_aws_create_s3_bucket(return_aws_settings):  # pragma: no cover

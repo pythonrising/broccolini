@@ -28,7 +28,12 @@ class TestPresentationOperations:
 
     @staticmethod
     def test_prepare_template():
-        """Get test input, template and output and print."""
+        """Get test input, template and output and print.
+
+        Args:
+            Get test input, template and output and print. (str):
+            get input tempalate output adn prep
+        """
         result = PresentationOperations().prepare_template(
             output_file_name="rilaefsdf.txt",
         )

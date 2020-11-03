@@ -63,6 +63,65 @@ class AWSOperations:
             # aws_region="us-east-1",
         )
 
+    def aws_delete_s3_bucket(self, **kwargs: str) -> bool:
+        """Delete S3 bucket.
+
+        Args:
+            bucket_name (str): bucket name to delete
+
+        Raises:
+            ValueError: AWS error.
+
+        Returns:
+            bool: True if successfully deleted bucket.
+        """
+        aws_client = self.aws_get_connection(
+            aws_access_key_id=kwargs["aws_access_key_id"],
+            aws_secret_access_key=kwargs["aws_secret_access_key"],
+            aws_default_region=kwargs["aws_default_region"],
+        )
+        _aws_access_key_id: str = aws_client["AWS_ACCESS_KEY_ID"]
+        _aws_secret_access_key: str = aws_client["AWS_SECRET_ACCESS_KEY"]
+        _aws_default_region: str = aws_client["AWS_DEFAULT_REGION"]
+
+        # try:
+        if _aws_access_key_id not in environ:
+            environ["AWS_ACCESS_KEY_ID"] = _aws_access_key_id
+
+        if _aws_secret_access_key not in environ:
+            environ["AWS_SECRET_ACCESS_KEY"] = _aws_secret_access_key
+
+        if _aws_default_region not in environ:
+            environ["AWS_DEFAULT_REGION"] = _aws_default_region
+
+        aws_s3_bucket_name = kwargs["aws_s3_bucket_name"]
+
+        # s3_resource = boto3.resource('s3')
+        # s3_client = boto3.client(
+        #     "s3",
+        #     aws_access_key_id=_aws_access_key_id,
+        #     aws_secret_access_key=_aws_secret_access_key,
+        #     region_name=_aws_default_region,
+        # )
+        s3_resource = boto3.resource(
+            "s3",
+            aws_access_key_id=_aws_access_key_id,
+            aws_secret_access_key=_aws_secret_access_key,
+            region_name=_aws_default_region,
+        )
+        try:
+            return s3_resource.Bucket(aws_s3_bucket_name).delete()
+
+        except Exception as _error:  # pragma: no cover
+            raise ValueError("AWS error.") from _error
+        # except ClientError as _error:
+        #     raise ValueError("AWS error.") from _error
+        #     # return s3_client.Bucket(bucket_name).delete()
+
+        # except ClientError as _error:
+        #     raise ValueError("AWS error.") from _error
+        # # return True
+
     def aws_create_s3_bucket(self, **kwargs: str) -> bool:
         """Create S3 bucket.
 
@@ -80,7 +139,6 @@ class AWSOperations:
         _aws_access_key_id: str = aws_client["AWS_ACCESS_KEY_ID"]
         _aws_secret_access_key: str = aws_client["AWS_SECRET_ACCESS_KEY"]
         _aws_default_region: str = aws_client["AWS_DEFAULT_REGION"]
-        # _other_setings: str = kwargs["other_setings"]
 
         try:
             if _aws_access_key_id not in environ:
