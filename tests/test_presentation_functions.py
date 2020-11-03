@@ -36,6 +36,6 @@ class TestPresentationOperations:
             keep_trailing_newline=presentation_settings["keep_trailing_newline"],
             autoescape_formats=presentation_settings["autoescape_formats"],
         )
-        expected_type = bool
-        print(result)
+        expected_type = tuple
+        # print(result)
         assert isinstance(result, expected_type)

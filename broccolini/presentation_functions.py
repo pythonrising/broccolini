@@ -26,7 +26,7 @@ class PresentationOperations:
         return f"{class_name}"
 
     @staticmethod
-    def prepare_template(**kwargs: str) -> str:
+    def prepare_template(**kwargs: str) -> tuple[bool, str]:
         """Create template.
         input_data_file: file to build dictionary from
         input_template_name: str name of the template file
@@ -34,7 +34,7 @@ class PresentationOperations:
         """
         input_data_file: str = kwargs["input_data_file"]
         input_template_name: str = kwargs["input_template_name"]
-        output_file_name_jinja2: str = kwargs["output_file_name_jinja2"]
+        # output_file_name_jinja2: str = kwargs["output_file_name_jinja2"]
         template_folder: str = kwargs["template_folder"]
         file_loader: str = FileSystemLoader(template_folder)
         trim_blocks: str = kwargs["trim_blocks"]
@@ -49,18 +49,8 @@ class PresentationOperations:
             keep_trailing_newline=keep_trailing_newline,
             autoescape=select_autoescape(autoescape_formats),
         )
-        print(type(env))
         template = env.get_template(input_template_name)
-        # template = env.get_template(input_template_name.get_template_data())
-        # output = template.render(jinja_var=input_data_file.input_data_file)
         output = template.render(jinja_var=input_data_file)
-        # print(output)
-        with open(output_file_name_jinja2, "w") as file_handle:
-            file_handle.write(output)
-        return True
-
-        # return dict(
-        #     input_template_name=input_template_name,
-        #     input_data_file=input_data_file,
-        #     output_file_name_jinja2=output_file_name_jinja2,
-        # )
+        # with open(output_file_name_jinja2, "w") as file_handle:
+        #     file_handle.write(output)
+        return True, output
