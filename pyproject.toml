@@ -30,6 +30,7 @@ faunadb = "^3.0.0"
 shortuuid = "^1.0.1"
 boto3 = "^1.16.4"
 Jinja2 = "^2.11.2"
+todoist = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1"
