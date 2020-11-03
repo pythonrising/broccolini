@@ -30,30 +30,31 @@ class PresentationOperations:
     @staticmethod
     def prepare_template_with_pathlib(
         **kwargs: str,
-    ) -> tuple[bool, str]:
-        """Given a path to templates, a file name and a dictionary
+    ) -> str:
+        """Prepare output using a template and dictionary.
 
-        Prepare a final template
-        examples input_dictionary: dict[str, object], input_template: str,
+        This function takes a dictionary and a template file and produces
+        output combining the data and variables.
 
         Args: (called from *kwargs)
             input_dictionary (dict[str, object]): [description]
-            input_template_file_name (str): template used to build the output
-            output_text (str): output text
+            input_template_name (str): template used to build the output
+            trim_blocks: bool - jinja 2 options
+            lstrip_blocks: bool - jinja 2 options
+            keep_trailing_newline: bool - jinja 2 options
+            autoescape_formats: list[str] = kwargs["autoescape_formats"]
 
         Returns:
-            tuple[bool, str]: true for success, and the name of the output_file_name
-
+            output_text (str): output text
         """
         input_dictionary = kwargs["input_dictionary"]
         input_template_name = kwargs["input_template_name"]
-        # file_loader: str = FileSystemLoader(template_folder)
-        trim_blocks: str = kwargs["trim_blocks"]
-        lstrip_blocks: str = kwargs["lstrip_blocks"]
-        keep_trailing_newline: str = kwargs["keep_trailing_newline"]
-        autoescape_formats: str = kwargs["autoescape_formats"]
+        trim_blocks: bool = kwargs["trim_blocks"]
+        lstrip_blocks: bool = kwargs["lstrip_blocks"]
+        keep_trailing_newline: bool = kwargs["keep_trailing_newline"]
+        autoescape_formats: list[str] = kwargs["autoescape_formats"]
 
-        path_obj = Path(__file__).parent.parent / "templates"  # sample relative path
+        path_obj: Path = Path(__file__).parent.parent / "templates"
         env = Environment(
             loader=FileSystemLoader(Path(path_obj)),
             trim_blocks=trim_blocks,
@@ -62,5 +63,4 @@ class PresentationOperations:
             autoescape=select_autoescape(autoescape_formats),
         )
         template = env.get_template(input_template_name)
-        output = template.render(jinja_var=input_dictionary)
-        return True, output
+        return template.render(jinja_var=input_dictionary)

@@ -46,7 +46,6 @@ def presentation_settings():
     """Provide values for presentation functions."""
     input_dict = dict(
         input_template_name="new_python_script.jinja2",
-        # template_folder="templates",
         trim_blocks=True,
         lstrip_blocks=True,
         keep_trailing_newline=False,

@@ -34,6 +34,7 @@ class TestPresentationOperations:
             keep_trailing_newline=presentation_settings["keep_trailing_newline"],
             autoescape_formats=presentation_settings["autoescape_formats"],
         )
-        print(result)
-        expected_type = tuple
+        expected = "long_description_from_conftest"
+        expected_type = str
         assert isinstance(result, expected_type)
+        assert expected in result
