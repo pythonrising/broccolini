@@ -27,7 +27,7 @@ class TestPresentationOperations:
     """
 
     @staticmethod
-    def test_prepare_template():
+    def test_prepare_template(return_data_dict):
         """Get test input, template and output and print.
 
         Args:
@@ -35,7 +35,10 @@ class TestPresentationOperations:
             get input tempalate output adn prep
         """
         result = PresentationOperations().prepare_template(
-            output_file_name="rilaefsdf.txt",
+            input_data_file=return_data_dict["input_data_file"],
+            input_template_name=return_data_dict["input_template_name"],
+            output_file_name_jinja2=return_data_dict["output_file_name_jinja2"],
         )
-        expected_type = str
+        expected_type = dict
+        print(result)
         assert isinstance(result, expected_type)

@@ -37,6 +37,9 @@ def return_data_dict():
         input_directory_path=r"",
         api_url=r"python_rising/dev/python_rising/dev/api_data/API_URL",
         api_key=r"python_rising/dev/python_rising/dev/api_data/API_KEY",
+        input_data_file="input_data.csv",
+        input_template_name="template_from_conftest.jinja2",
+        output_file_name_jinja2=r"./tests/__output_files/output_jinja2.txt",
     )
     return input_dict
 

@@ -24,10 +24,16 @@ class PresentationOperations:
     @staticmethod
     def prepare_template(**kwargs: str) -> str:
         """Create template.
-        input_Data: json_file build dictionary from file in json format
-        input_data: dict - dictionary of values to build template
+        input_data_file: file to build dictionary from
         input_template_name: str name of the template file
-        output_file_name: str - output file name
+        output_file_name_jinja2: str - output_file_name_jinja2
         """
-        output_file_name: str = kwargs["output_file_name"]
-        return output_file_name
+        input_data_file: str = kwargs["input_data_file"]
+        input_template_name: str = kwargs["input_template_name"]
+        output_file_name_jinja2: str = kwargs["output_file_name_jinja2"]
+
+        return dict(
+            input_template_name=input_template_name,
+            input_data_file=input_data_file,
+            output_file_name_jinja2=output_file_name_jinja2,
+        )
