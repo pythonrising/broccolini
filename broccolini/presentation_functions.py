@@ -25,8 +25,8 @@ class PresentationOperations:
         class_name = self.__class__.__name__
         return f"{class_name}"
 
-    # @staticmethod
-    def prepare_template(self, **kwargs: str) -> str:
+    @staticmethod
+    def prepare_template(**kwargs: str) -> str:
         """Create template.
         input_data_file: file to build dictionary from
         input_template_name: str name of the template file
