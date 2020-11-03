@@ -4,6 +4,10 @@ Presentation operations.
 """
 import logging
 
+from jinja2 import Environment
+from jinja2 import FileSystemLoader
+from jinja2 import select_autoescape
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -21,8 +25,8 @@ class PresentationOperations:
         class_name = self.__class__.__name__
         return f"{class_name}"
 
-    @staticmethod
-    def prepare_template(**kwargs: str) -> str:
+    # @staticmethod
+    def prepare_template(self, **kwargs: str) -> str:
         """Create template.
         input_data_file: file to build dictionary from
         input_template_name: str name of the template file
@@ -31,9 +35,32 @@ class PresentationOperations:
         input_data_file: str = kwargs["input_data_file"]
         input_template_name: str = kwargs["input_template_name"]
         output_file_name_jinja2: str = kwargs["output_file_name_jinja2"]
+        template_folder: str = kwargs["template_folder"]
+        file_loader: str = FileSystemLoader(template_folder)
+        trim_blocks: str = kwargs["trim_blocks"]
+        lstrip_blocks: str = kwargs["lstrip_blocks"]
+        keep_trailing_newline: str = kwargs["keep_trailing_newline"]
+        autoescape_formats: str = kwargs["autoescape_formats"]
 
-        return dict(
-            input_template_name=input_template_name,
-            input_data_file=input_data_file,
-            output_file_name_jinja2=output_file_name_jinja2,
+        env = Environment(
+            loader=file_loader,
+            trim_blocks=trim_blocks,
+            lstrip_blocks=lstrip_blocks,
+            keep_trailing_newline=keep_trailing_newline,
+            autoescape=select_autoescape(autoescape_formats),
         )
+        print(type(env))
+        template = env.get_template(input_template_name)
+        # template = env.get_template(input_template_name.get_template_data())
+        # output = template.render(jinja_var=input_data_file.input_data_file)
+        output = template.render(jinja_var=input_data_file)
+        # print(output)
+        with open(output_file_name_jinja2, "w") as file_handle:
+            file_handle.write(output)
+        return True
+
+        # return dict(
+        #     input_template_name=input_template_name,
+        #     input_data_file=input_data_file,
+        #     output_file_name_jinja2=output_file_name_jinja2,
+        # )

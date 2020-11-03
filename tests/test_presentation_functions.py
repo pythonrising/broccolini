@@ -16,18 +16,10 @@ logging.basicConfig(
 
 
 class TestPresentationOperations:
-    """Test Presentation Functions.
-
-    plan
-    jinja template
-    input template
-    input data
-    output text
-    then output pdfs.
-    """
+    """Test Presentation Functions."""
 
     @staticmethod
-    def test_prepare_template(return_data_dict):
+    def test_prepare_template(presentation_settings):
         """Get test input, template and output and print.
 
         Args:
@@ -35,10 +27,15 @@ class TestPresentationOperations:
             get input tempalate output adn prep
         """
         result = PresentationOperations().prepare_template(
-            input_data_file=return_data_dict["input_data_file"],
-            input_template_name=return_data_dict["input_template_name"],
-            output_file_name_jinja2=return_data_dict["output_file_name_jinja2"],
+            input_data_file=presentation_settings["input_data_file"],
+            input_template_name=presentation_settings["input_template_name"],
+            output_file_name_jinja2=presentation_settings["output_file_name_jinja2"],
+            template_folder=presentation_settings["template_folder"],
+            trim_blocks=presentation_settings["trim_blocks"],
+            lstrip_blocks=presentation_settings["lstrip_blocks"],
+            keep_trailing_newline=presentation_settings["keep_trailing_newline"],
+            autoescape_formats=presentation_settings["autoescape_formats"],
         )
-        expected_type = dict
+        expected_type = bool
         print(result)
         assert isinstance(result, expected_type)
