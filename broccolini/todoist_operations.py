@@ -24,7 +24,8 @@ class TodoIstOperations:
         return f"{class_name}"
 
     @staticmethod
-    def todoist_get_connection(**kwargs: str) -> str:
+    def todoist_get_connection(**kwargs: str) -> TodoistAPI:
+        # def todoist_get_connection(**kwargs: str) -> str:
         """[summary]
 
         Returns:
@@ -34,12 +35,21 @@ class TodoIstOperations:
         try:
             api = TodoistAPI(todoist_api_token)
             api.sync()
+            print(type(api))
             return api
 
         except Exception as _error:  # pragma: no cover
             raise ValueError("Todoist error.") from _error
 
-    def list_all_items(self) -> list[str]:  # pragma: no cover
+    def list_all_items(self, **kwargs: str) -> TodoistAPI:
         """List todoist items."""
-        api = self.todoist_get_connection()
-        return api.state["items"]
+        try:
+
+            todoist_api_token: str = kwargs["todoist_api_token"]
+            api: TodoistAPI = self.todoist_get_connection(
+                todoist_api_token=todoist_api_token,
+            )
+            return api.state["items"]
+
+        except Exception as _error:  # pragma: no cover
+            raise ValueError("Todoist error.") from _error

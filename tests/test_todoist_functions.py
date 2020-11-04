@@ -9,6 +9,8 @@ import logging
 
 import pytest
 
+from todoist import TodoistAPI
+
 from broccolini.authentication_functions import VaultFunctions
 from broccolini.todoist_operations import TodoIstOperations
 
@@ -45,13 +47,22 @@ class TestTodoIstOperations:
         result = TodoIstOperations().todoist_get_connection(
             todoist_api_token=todoist_api_token,
         )
-        print(result)
-        # expected_type = int
-        # assert isinstance(result, expected_type)
+        # print(result)
+        expected_type = TodoistAPI
+        assert isinstance(result, expected_type)
 
     @staticmethod
     def test_todoist_list_items(return_data_dict):
         """Test todoist list tasks."""
+        todoist_api_token = TestTodoIstOperations.get_test_values(
+            secret_path=return_data_dict["todoist_secret_path"]
+        )
+
+        result = TodoIstOperations().list_all_items(
+            todoist_api_token=todoist_api_token,
+        )
+        expected_type = list
+        assert isinstance(result, expected_type)
 
 
 # @staticmethod
