@@ -37,6 +37,8 @@ def return_data_dict():
         input_directory_path=r"",
         api_url=r"python_rising/dev/python_rising/dev/api_data/API_URL",
         api_key=r"python_rising/dev/python_rising/dev/api_data/API_KEY",
+        # fix duplicate above
+        todoist_secret_path="python_rising/dev/todoist_data/TODOIST_API_TOKEN",
     )
     return input_dict
 
