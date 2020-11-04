@@ -47,7 +47,6 @@ class TestTodoIstOperations:
         result = TodoIstOperations().todoist_get_connection(
             todoist_api_token=todoist_api_token,
         )
-        # print(result)
         expected_type = TodoistAPI
         assert isinstance(result, expected_type)
 
@@ -58,11 +57,52 @@ class TestTodoIstOperations:
             secret_path=return_data_dict["todoist_secret_path"]
         )
 
-        result = TodoIstOperations().list_all_items(
+        result = TodoIstOperations().list_items(
             todoist_api_token=todoist_api_token,
         )
         expected_type = list
         assert isinstance(result, expected_type)
+
+    @staticmethod
+    def test_todoist_list_projects(return_data_dict):
+        """Test todoist list projects."""
+        todoist_api_token = TestTodoIstOperations.get_test_values(
+            secret_path=return_data_dict["todoist_secret_path"]
+        )
+
+        result = TodoIstOperations().list_projects(
+            todoist_api_token=todoist_api_token,
+        )
+        expected_type = list
+        assert isinstance(result, expected_type)
+
+    @staticmethod
+    def test_filter_items(return_data_dict):
+        """Test todoist filter items."""
+        todoist_api_token = TestTodoIstOperations.get_test_values(
+            secret_path=return_data_dict["todoist_secret_path"]
+        )
+
+        result = TodoIstOperations().list_projects(
+            todoist_api_token=todoist_api_token,
+        )
+        expected_type = list
+        assert isinstance(result, expected_type)
+
+        # def filter_items(self):
+        # """Filter todoist specific item."""
+        # api = self.connect_to_todoist()
+        # data = self.list_all_items()
+        # # project = 'getprojectname_placeholder'
+        # item_list = []
+        # for each in data:
+        #     item_list.append(each["content"])
+
+        # JsonFunctions(
+        #     input_data=item_list,
+        #     output_file=self.OUTPUT_FILE,
+        # ).write_list_to_json()
+        # return item_list
 
 
 # @staticmethod
