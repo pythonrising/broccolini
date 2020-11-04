@@ -86,8 +86,9 @@ class TestTodoIstOperations:
         result = TodoIstOperations().filter_items(
             todoist_api_token=todoist_api_token,
         )
-        print(type(result))
-        # print(result)
+        # print(type(result))
+        # returns list of lists
+        # print(f'result is {result[0]} \n')
         expected_type = list
         assert isinstance(result, expected_type)
 
