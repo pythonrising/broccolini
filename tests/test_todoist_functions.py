@@ -83,11 +83,13 @@ class TestTodoIstOperations:
             secret_path=return_data_dict["todoist_secret_path"]
         )
 
-        result = TodoIstOperations().list_projects(
+        result = TodoIstOperations().filter_items(
             todoist_api_token=todoist_api_token,
         )
-        expected_type = list
-        assert isinstance(result, expected_type)
+        print(type(result))
+        print(result)
+        # expected_type = list
+        # assert isinstance(result, expected_type)
 
         # def filter_items(self):
         # """Filter todoist specific item."""

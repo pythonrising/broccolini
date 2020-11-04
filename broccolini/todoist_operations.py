@@ -56,7 +56,6 @@ class TodoIstOperations:
     def list_projects(self, **kwargs: str) -> TodoistAPI:
         """List todoist items."""
         try:
-
             todoist_api_token: str = kwargs["todoist_api_token"]
             api: TodoistAPI = self.todoist_get_connection(
                 todoist_api_token=todoist_api_token,
@@ -69,13 +68,20 @@ class TodoIstOperations:
     def filter_items(self, **kwargs: str) -> list[str]:
         """List todoist items."""
         try:
-
-            # todoist_api_token: str = kwargs["todoist_api_token"]
+            todoist_api_token: str = kwargs["todoist_api_token"]
             # api: TodoistAPI = self.todoist_get_connection(
             #     todoist_api_token=todoist_api_token,
             # )
-            data = self.list_items()
-            return data
+            # print(self.list_items())
+            all_items = self.list_items(
+                todoist_api_token=todoist_api_token,
+            )
+            print(all_items)
+
+            # item_list = []
+            # for each in data:
+            #     item_list.append(each["content"])
+            # return item_list
 
         except Exception as _error:  # pragma: no cover
             raise ValueError("Todoist error.") from _error
