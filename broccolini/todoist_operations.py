@@ -76,7 +76,8 @@ class TodoIstOperations:
             all_items = self.list_items(
                 todoist_api_token=todoist_api_token,
             )
-            print(all_items)
+            # print(all_items)
+            return all_items
 
             # item_list = []
             # for each in data:

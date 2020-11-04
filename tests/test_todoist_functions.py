@@ -87,9 +87,9 @@ class TestTodoIstOperations:
             todoist_api_token=todoist_api_token,
         )
         print(type(result))
-        print(result)
-        # expected_type = list
-        # assert isinstance(result, expected_type)
+        # print(result)
+        expected_type = list
+        assert isinstance(result, expected_type)
 
         # def filter_items(self):
         # """Filter todoist specific item."""
