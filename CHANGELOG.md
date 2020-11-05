@@ -1,6 +1,10 @@
 
 # CHANGELOG
 
+## 0.1.7
+
+Added Todoist Functions:
+
 ## 0.1.6
 
 Added AWS S3 functions:
