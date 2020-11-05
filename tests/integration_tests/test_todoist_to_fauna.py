@@ -51,10 +51,10 @@ class TestIntegrationTodoistFauna:
         todoist_items = TodoIstOperations().list_items(
             todoist_api_token=todoist_api_token,
         )
-        # add todoist items content to new list_items
         list_of_items = []
-        # todays_date = (datetime.date(2019, 10, 20)).strftime("%Y-%m-%d")
-        # dt.strftime("%d-%m-%Y")
         print(TODAYS_DATE)
         for each in todoist_items:
             list_of_items.append(len(each["content"]))
+        dict_to_export = {"data": {"TODAYS_DATE": list_of_items}}
+        print(dict_to_export)
+        # {'data': {'TODAYS_DATE': [3, 5, 9, 23, 23, 34, 18, 17, 9, 9, 39]}}
