@@ -15,9 +15,19 @@ logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
 )
 
+# use as example for how to do variables to template
+# from django example
+# jinja examples add to jinja templating
+# class BasicListView(View):
+# def get(self, request, *args, **kwargs):
+#     countries = Country.objects.all()
+#     context = {"country_list": countries}
+#     return render(request, "list.html", context)
+
 
 class PresentationOperations:
-    """Presentation Operation Functions."""
+    """Presentation
+    Operation Functions."""
 
     def __init__(self) -> None:
         """Init class - vars are called in the function as needed."""
