@@ -11,12 +11,15 @@ import datetime
 import logging
 
 from broccolini.authentication_functions import VaultFunctions
+from broccolini.database_operations import DataBaseOperations
 from broccolini.todoist_operations import TodoIstOperations
 
 
+FAUNA_SECRET_PATH = "python_rising/dev/todoist_data/TODOIST_API_TOKEN"
 SECRET_PATH = "python_rising/dev/todoist_data/TODOIST_API_TOKEN"
 FAUNA_DATABASE_NAME = "todoist_archives"
 TODAYS_DATE = (datetime.date(2019, 10, 20)).strftime("%Y%m%d")
+FAUNA_COLLECTION_NAME = "todoist_data_nov_2020"
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -42,7 +45,7 @@ class TestIntegrationTodoistFauna:
 
     @staticmethod
     # @pytest.mark.skip(reason="integration testing")
-    def test_integration_todoist_to_fauna():
+    def test_integration_todoist_to_fauna(return_database_settings):
         """Test the integration from todoist to fauna."""
 
         todoist_api_token = TestIntegrationTodoistFauna.get_test_values(
@@ -55,6 +58,16 @@ class TestIntegrationTodoistFauna:
         print(TODAYS_DATE)
         for each in todoist_items:
             list_of_items.append(len(each["content"]))
-        dict_to_export = {"data": {"TODAYS_DATE": list_of_items}}
-        print(dict_to_export)
-        # {'data': {'TODAYS_DATE': [3, 5, 9, 23, 23, 34, 18, 17, 9, 9, 39]}}
+        records_to_add = {"data": {TODAYS_DATE: list_of_items}}
+
+        fauna_api_token = TestIntegrationTodoistFauna.get_test_values(
+            return_database_settings["fauna_path_srv"],
+        )
+        print(len(fauna_api_token))
+        result_of_db_add = DataBaseOperations(
+            client_token=fauna_api_token
+        ).fauna_create_document(
+            fauna_collection_name=FAUNA_COLLECTION_NAME,
+            fauna_document_data=records_to_add,
+        )
+        print(result_of_db_add)
