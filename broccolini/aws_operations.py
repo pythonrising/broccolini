@@ -440,17 +440,17 @@ class AWSOperations:
             except Exception as _error:  # pragma: no cover
                 raise ValueError("AWS error add user to group.") from _error
 
-            # create new access key to feed to create the s3 buckets
-            # try:
+            # # create new access key to feed to create the s3 buckets
+            try:
+                iam_client = boto3.client("iam")
+                response_s3_key = iam_client.create_access_key(UserName=user_name)
 
-            #     response_s3_key = iam_resource.create_access_key(
-            #         UserName=user_name
-            #     )
-            #     s3_access_key_new = response_s3_key['AccessKey']
-            #     print(s3_access_key_new)
+                # print(response_s3_key)
+                s3_access_key_new = response_s3_key["AccessKey"]
+                print(s3_access_key_new)
 
-            # except Exception as _error:  # pragma: no cover
-            #     raise ValueError("AWS error add user to group.") from _error
+            except (AttributeError, Exception) as _error:  # pragma: no cover
+                raise ValueError("AWS error adding access key.") from _error
 
         except Exception as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error
