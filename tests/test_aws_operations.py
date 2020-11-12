@@ -256,31 +256,37 @@ class TestAWSOperations:
 
         # call s3 function from here
 
-    @staticmethod
-    def test_aws_iam_delete_user(return_aws_settings):  # pragma: no cover
-        """[summary]"""
-        aws_access_key_id = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_iam_key_id_path"]
-        )
-        aws_secret_access_key = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_iam_secret_key_path"]
-        )
-        aws_default_region = return_aws_settings["aws_default_region"]
-        user_name = return_aws_settings["aws_iam_user"]
-        group_name = return_aws_settings["aws_iam_group"]
+    # @staticmethod
+    # def test_aws_iam_delete_user(return_aws_settings):  # pragma: no cover
+    #     """[summary]"""
+    #     aws_access_key_id = TestAWSOperations.get_test_values(
+    #         secret_path=return_aws_settings["aws_iam_key_id_path"]
+    #     )
+    #     aws_secret_access_key = TestAWSOperations.get_test_values(
+    #         secret_path=return_aws_settings["aws_iam_secret_key_path"]
+    #     )
+    #     aws_default_region = return_aws_settings["aws_default_region"]
+    #     user_name = return_aws_settings["aws_iam_user"]
+    #     group_name = return_aws_settings["aws_iam_group"]
 
-        result = AWSOperations().aws_iam_delete_user(
-            aws_access_key_id=aws_access_key_id,
-            aws_secret_access_key=aws_secret_access_key,
-            aws_default_region=aws_default_region,
-            user_name=user_name,
-            group_name=group_name,
-        )
-        print(result)
+    #     result = AWSOperations().aws_iam_delete_user(
+    #         aws_access_key_id=aws_access_key_id,
+    #         aws_secret_access_key=aws_secret_access_key,
+    #         aws_default_region=aws_default_region,
+    #         user_name=user_name,
+    #         group_name=group_name,
+    #     )
+    #     print(result)
 
     @staticmethod
     def test_aws_create_s3_bucket_refactor(return_aws_settings):  # pragma: no cover
-        """[summary]"""
+        """Need this one to use the credentials created in the create user step above.
+        iam_client = boto3.client("iam")
+        response_s3_key = iam_client.create_access_key(UserName=user_name)
+        #     # print(len(s3_access_key_new['SecretAccessKey']))
+        #     # print(len(s3_access_key_new['AccessKeyId']))
+
+        """
         user_name = return_aws_settings["aws_iam_user"]
         result = AWSOperations().aws_create_s3_bucket_refactor(
             user_name=user_name,

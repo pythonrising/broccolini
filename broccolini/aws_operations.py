@@ -484,6 +484,21 @@ class AWSOperations:
         """Create S3 bucket. Using user created in earlier steps."""
         user_name: str = kwargs["user_name"]
         print(user_name)
+        try:
+            iam_client = boto3.client("iam")
+            response_s3_key = iam_client.create_access_key(UserName=user_name)
+            # print('\n')
+            # print(response_s3_key)
+            s3_access_key_new = response_s3_key["AccessKey"]
+            secret_key_s3_generated = s3_access_key_new["SecretAccessKey"]
+            access_key_id_s3_generated = s3_access_key_new["AccessKeyId"]
+            print(f"{len(secret_key_s3_generated)} + {len(access_key_id_s3_generated)}")
+
+            print("worked\n\n")
+
+        except (ClientError, ParamValidationError) as _error:
+            raise ValueError("AWS error.") from _error
+
         # aws_client = self.aws_get_connection(
         #     aws_access_key_id=kwargs["aws_access_key_id"],
         #     aws_secret_access_key=kwargs["aws_secret_access_key"],
