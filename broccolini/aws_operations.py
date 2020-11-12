@@ -479,8 +479,11 @@ class AWSOperations:
             raise ValueError("AWS error.") from _error
         return True
 
-    def aws_create_s3_bucket_refactor(self, **kwargs: str) -> bool:
+    @staticmethod
+    def aws_create_s3_bucket_refactor(**kwargs: str) -> bool:
         """Create S3 bucket. Using user created in earlier steps."""
+        user_name: str = kwargs["user_name"]
+        print(user_name)
         # aws_client = self.aws_get_connection(
         #     aws_access_key_id=kwargs["aws_access_key_id"],
         #     aws_secret_access_key=kwargs["aws_secret_access_key"],
