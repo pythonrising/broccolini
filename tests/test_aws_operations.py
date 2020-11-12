@@ -241,8 +241,9 @@ class TestAWSOperations:
             aws_default_region=aws_default_region,
             user_name=user_name,
         )
-        expected_type_create_user = bool
-        assert isinstance(result_create_user, expected_type_create_user)
+        print(result_create_user)
+        # expected_type_create_user = bool
+        # assert isinstance(result_create_user, expected_type_create_user)
 
         result_add_user_to_group = AWSOperations().aws_iam_add_user_to_group(
             aws_access_key_id=aws_access_key_id,
@@ -279,17 +280,56 @@ class TestAWSOperations:
     #     print(result)
 
     @staticmethod
-    def test_aws_create_s3_bucket_refactor(return_aws_settings):  # pragma: no cover
-        """Need this one to use the credentials created in the create user step above.
-        iam_client = boto3.client("iam")
-        response_s3_key = iam_client.create_access_key(UserName=user_name)
-        #     # print(len(s3_access_key_new['SecretAccessKey']))
-        #     # print(len(s3_access_key_new['AccessKeyId']))
+    def test_aws_iam_list_users(return_aws_settings):  # pragma: no cover
+        """[summary]
 
+        Args:
+            return_aws_settings ([type]): [description]
         """
+        aws_access_key_id = TestAWSOperations.get_test_values(
+            secret_path=return_aws_settings["aws_iam_key_id_path"]
+        )
+        aws_secret_access_key = TestAWSOperations.get_test_values(
+            secret_path=return_aws_settings["aws_iam_secret_key_path"]
+        )
+        aws_default_region = return_aws_settings["aws_default_region"]
+
         user_name = return_aws_settings["aws_iam_user"]
-        result = AWSOperations().aws_create_s3_bucket_refactor(
+        # group_name = return_aws_settings["aws_iam_group"]
+
+        result_list_users = AWSOperations().aws_iam_list_users(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            aws_default_region=aws_default_region,
             user_name=user_name,
         )
-        expected_type = bool
-        assert isinstance(result, expected_type)
+
+        assert result_list_users
+
+    # @staticmethod
+    # def test_aws_create_s3_bucket_refactor(return_aws_settings):  # pragma: no cover
+    #     """Need this one to use the credentials created in the create user step above.
+    #     iam_client = boto3.client("iam")
+    #     response_s3_key = iam_client.create_access_key(UserName=user_name)
+    #     #     # print(len(s3_access_key_new['SecretAccessKey']))
+    #     #     # print(len(s3_access_key_new['AccessKeyId']))
+
+    #     """
+    #     aws_access_key_id = TestAWSOperations.get_test_values(
+    #         secret_path=return_aws_settings["aws_iam_key_id_path"]
+    #     )
+    #     aws_secret_access_key = TestAWSOperations.get_test_values(
+    #         secret_path=return_aws_settings["aws_iam_secret_key_path"]
+    #     )
+    #     aws_default_region = return_aws_settings["aws_default_region"]
+
+    #     user_name = return_aws_settings["aws_iam_user"]
+    #     result = AWSOperations().aws_create_s3_bucket_refactor(
+    #         aws_access_key_id=aws_access_key_id,
+    #         aws_secret_access_key=aws_secret_access_key,
+    #         aws_default_region=aws_default_region,
+    #         user_name=user_name,
+    #     )
+    #     print(result)
+    # #     expected_type = bool
+    # #     assert isinstance(result, expected_type)
