@@ -277,3 +277,10 @@ class TestAWSOperations:
             group_name=group_name,
         )
         print(result)
+
+    @staticmethod
+    def test_aws_create_s3_bucket_refactor(return_aws_settings):  # pragma: no cover
+        """[summary]"""
+        result = AWSOperations().aws_create_s3_bucket_refactor()
+        expected_type = bool
+        assert isinstance(result, expected_type)

@@ -112,8 +112,6 @@ def return_aws_settings():
         sqs_message_body=("Information about bestseller for week of 12/11/2016."),
         aws_iam_key_id_path="python_rising/dev/aws_data/iam/AWS_ACCESS_KEY_ID",
         aws_iam_secret_key_path="python_rising/dev/aws_data/iam/AWS_SECRET_ACCESS_KEY",
-        # aws_iam_user_name=f'user-{dir(faker)}',
-        # aws_iam_user=f'user-{faker.random_lowercase_letter()}{str(faker.random_int())}',
         aws_iam_user=f"user-conftest-{time.time_ns()}",
         aws_iam_group="s3_users",
         aws_iam_group_arn="arn:aws:iam::568639476002:group/s3_users",
