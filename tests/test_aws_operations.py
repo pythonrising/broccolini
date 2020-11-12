@@ -295,7 +295,6 @@ class TestAWSOperations:
         aws_default_region = return_aws_settings["aws_default_region"]
 
         user_name = return_aws_settings["aws_iam_user"]
-        # group_name = return_aws_settings["aws_iam_group"]
 
         result_list_users = AWSOperations().aws_iam_list_users(
             aws_access_key_id=aws_access_key_id,

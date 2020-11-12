@@ -317,6 +317,8 @@ class AWSOperations:
                 region_name=_aws_default_region,
             )
             client = boto3.client("iam")
+            # print(client.list_users()["Users"][0]['UserName'])
+            # print(f'users {client.list_users()}')
             return client.list_users()["Users"]
 
         except Exception as _error:  # pragma: no cover
@@ -326,16 +328,7 @@ class AWSOperations:
         """IAM create user.
 
         Returns:
-            success[bool]: succes of creation
-                    # result_list_iam = AWSOperations().aws_iam_create_user(
-        #     sqs_queue_url=return_aws_settings["sqs_queue_url"],
-        # )
-
-
-            # print('\n')
-            # print(response_s3_key)
-
-
+            success[bool]: success of creation
         """
         aws_client = self.aws_get_connection(
             aws_access_key_id=kwargs["aws_access_key_id"],
@@ -345,62 +338,33 @@ class AWSOperations:
         _aws_access_key_id: str = aws_client["AWS_ACCESS_KEY_ID"]
         _aws_secret_access_key: str = aws_client["AWS_SECRET_ACCESS_KEY"]
         _aws_default_region: str = aws_client["AWS_DEFAULT_REGION"]
+
+        if _aws_access_key_id not in environ:
+            environ["AWS_ACCESS_KEY_ID"] = _aws_access_key_id
+
+        if _aws_secret_access_key not in environ:
+            environ["AWS_SECRET_ACCESS_KEY"] = _aws_secret_access_key
+
+        if _aws_default_region not in environ:
+            environ["AWS_DEFAULT_REGION"] = _aws_default_region
+
+        user_name: str = kwargs["user_name"]
+
+        iam_resource = boto3.resource(
+            "iam",
+            aws_access_key_id=_aws_access_key_id,
+            aws_secret_access_key=_aws_secret_access_key,
+            region_name=_aws_default_region,
+        )
+
         try:
-            if _aws_access_key_id not in environ:
-                environ["AWS_ACCESS_KEY_ID"] = _aws_access_key_id
-
-            if _aws_secret_access_key not in environ:
-                environ["AWS_SECRET_ACCESS_KEY"] = _aws_secret_access_key
-
-            if _aws_default_region not in environ:
-                environ["AWS_DEFAULT_REGION"] = _aws_default_region
-
-            user_name: str = kwargs["user_name"]
-
-            iam_resource = boto3.resource(
-                "iam",
-                aws_access_key_id=_aws_access_key_id,
-                aws_secret_access_key=_aws_secret_access_key,
-                region_name=_aws_default_region,
-            )
-
             iam_resource.create_user(UserName=user_name)
             client = boto3.client("iam")
-            access_key_all = client.create_access_key(UserName=user_name)
-            # iam_client = boto3.client("iam")
-            access_keys = access_key_all["AccessKey"]
-            secret_access_key = access_keys["SecretAccessKey"]
-            access_key_id = access_keys["AccessKeyId"]
-            s3_test_user = AWSUser(user_name, secret_access_key, access_key_id)
-
-            list_of_users = self.aws_iam_list_users(
-                aws_access_key_id=kwargs["aws_access_key_id"],
-                aws_secret_access_key=kwargs["aws_secret_access_key"],
-                aws_default_region=kwargs["aws_default_region"],
-            )
-            for each in list_of_users:
-                for key, value in each.items():
-                    if user_name in each["UserName"]:
-                        print(f"found it:{user_name}:")
-                    else:
-                        print(f"not found {user_name}")
-
-            # print(list_of_users[0])
-            # if user_name in list_of_users:
-            #     # username is a dictionary
-            #     for key, value in user_name.iteritems():
-            #         print(key, value)
-            #     print(f'username:{user_name}: FOUND')
-
-            # else:
-            #     print(user_name)
-            #     print(f'username:{user_name}: not found')
+            client.create_access_key(UserName=user_name)
+            return True
 
         except Exception as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error
-
-        return s3_test_user
-        # return True
 
     def aws_iam_add_user_to_group(self, **kwargs: str) -> bool:
         """IAM add user to group."""
@@ -436,8 +400,7 @@ class AWSOperations:
 
             try:
                 group = iam_resource.Group(group_name)
-                response2 = group.add_user(UserName=user_name)
-                print(f"add to group using{response2}")
+                group.add_user(UserName=user_name)
 
             except Exception as _error:  # pragma: no cover
                 raise ValueError("AWS error add user to group.") from _error
@@ -491,65 +454,65 @@ class AWSOperations:
             raise ValueError("AWS error.") from _error
         return True
 
-    # @staticmethod
-    def aws_create_s3_bucket_refactor(self, **kwargs: str) -> bool:
-        """Create S3 bucket. Using user created in earlier steps.
+    # # @staticmethod
+    # def aws_create_s3_bucket_refactor(self, **kwargs: str) -> bool:
+    #     """Create S3 bucket. Using user created in earlier steps.
 
-        Access via dataclass
-        """
+    #     Access via dataclass
+    #     """
 
-        user_name: str = kwargs["user_name"]
+    #     user_name: str = kwargs["user_name"]
 
-        print(user_name)
-        data = self.aws_iam_create_user(
-            aws_access_key_id=kwargs["aws_access_key_id"],
-            aws_secret_access_key=kwargs["aws_secret_access_key"],
-            aws_default_region=kwargs["aws_default_region"],
-            user_name=user_name,
-        )
-        return data
+    # print(user_name)
+    # data = self.aws_iam_create_user(
+    #     aws_access_key_id=kwargs["aws_access_key_id"],
+    #     aws_secret_access_key=kwargs["aws_secret_access_key"],
+    #     aws_default_region=kwargs["aws_default_region"],
+    #     user_name=user_name,
+    # )
+    # return data
 
-        # try:
-        #     iam_client = boto3.client("iam")
-        #     response_s3_key = iam_client.create_access_key(UserName=user_name)
-        #     # print('\n')
-        #     # print(response_s3_key)
-        #     s3_access_key_new = response_s3_key["AccessKey"]
-        #     secret_key_s3_generated = s3_access_key_new["SecretAccessKey"]
-        #     access_key_id_s3_generated = s3_access_key_new["AccessKeyId"]
-        #     # aws_default_region=kwargs["aws_default_region"],
-        #     bucket_name=kwargs["aws_s3_bucket_name"]
+    # try:
+    #     iam_client = boto3.client("iam")
+    #     response_s3_key = iam_client.create_access_key(UserName=user_name)
+    #     # print('\n')
+    #     # print(response_s3_key)
+    #     s3_access_key_new = response_s3_key["AccessKey"]
+    #     secret_key_s3_generated = s3_access_key_new["SecretAccessKey"]
+    #     access_key_id_s3_generated = s3_access_key_new["AccessKeyId"]
+    #     # aws_default_region=kwargs["aws_default_region"],
+    #     bucket_name=kwargs["aws_s3_bucket_name"]
 
-        #     # print(secret_key_s3_generated)
-        #     session = boto3.Session(
-        #         # profile_name='devs3',
-        #         aws_access_key_id=secret_key_s3_generated,
-        #         aws_secret_access_key=access_key_id_s3_generated,
-        #     )
-        #     dev_s3_client = session.client('s3')
-        #     dev_s3_client.create_bucket(Bucket=bucket_name)
+    #     # print(secret_key_s3_generated)
+    #     session = boto3.Session(
+    #         # profile_name='devs3',
+    #         aws_access_key_id=secret_key_s3_generated,
+    #         aws_secret_access_key=access_key_id_s3_generated,
+    #     )
+    #     dev_s3_client = session.client('s3')
+    #     dev_s3_client.create_bucket(Bucket=bucket_name)
 
-        # {print(len(access_key_id_s3_generated)}\n\n"))
-        # print("worked\n\n")
+    # {print(len(access_key_id_s3_generated)}\n\n"))
+    # print("worked\n\n")
 
-        # session = boto3.Session(
-        #     aws_secret_access_key=secret_key_s3_generated,
-        #     aws_access_key_id=access_key_id_s3_generated,
-        #     # aws_default_region=aws_default_region,
-        # )
-        # bucket=kwargs["aws_s3_bucket_name"]
-        # s3 = session.resource('s3')
-        # s3_client = boto3.client("s3")
-        # s3_client.create_bucket(Bucket=kwargs["aws_s3_bucket_name"])
+    # session = boto3.Session(
+    #     aws_secret_access_key=secret_key_s3_generated,
+    #     aws_access_key_id=access_key_id_s3_generated,
+    #     # aws_default_region=aws_default_region,
+    # )
+    # bucket=kwargs["aws_s3_bucket_name"]
+    # s3 = session.resource('s3')
+    # s3_client = boto3.client("s3")
+    # s3_client.create_bucket(Bucket=kwargs["aws_s3_bucket_name"])
 
-        # s3_client = boto3.client(
-        #     "s3",
-        #     aws_access_key_id=secret_key_s3_generated,
-        #     aws_secret_access_key=_aws_secret_access_key,
-        #     region_name=_aws_default_region,
-        # )
+    # s3_client = boto3.client(
+    #     "s3",
+    #     aws_access_key_id=secret_key_s3_generated,
+    #     aws_secret_access_key=_aws_secret_access_key,
+    #     region_name=_aws_default_region,
+    # )
 
-        # return s3_client.list_buckets()
+    # return s3_client.list_buckets()
 
 
 #     s3_client = boto3.client(
