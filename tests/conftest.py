@@ -5,6 +5,7 @@
 Give data in various forms to the test functions.
 """
 import random
+import time
 
 import pytest
 import shortuuid
@@ -82,8 +83,14 @@ def return_database_settings():
 @pytest.fixture(scope="session")
 def return_aws_settings():
     """Provide values for AWS."""
-    short_uuid_conftest = shortuuid.ShortUUID(alphabet="01345678")
-    aws_s3_bucket_name = short_uuid_conftest.uuid()
+    # faker = Faker("en_US")
+    # short_uuid_conftest = shortuuid.ShortUUID(alphabet="01345678")
+    # aws_s3_bucket_name = short_uuid_conftest.uuid()
+    # aws_s3_bucket_name = f's3Bucket{faker.name()}'
+    # aws_s3_bucket_name = f's3-bucket{faker.name()}'
+    # {faker.random_lowercase_letter()}-{faker.random_int()}
+    # aws_s3_bucket_name = f's3-{faker.random_lowercase_letter()}{faker.random_int()}'
+    aws_s3_bucket_name = f"s3-conftest-{time.time_ns()}"
     aws_s3_bad_bucket_name = "badbucketname_with_underscorecharacter"
 
     input_dict = dict(
@@ -103,6 +110,13 @@ def return_aws_settings():
             "WeeksOn": {"DataType": "Number", "StringValue": "6"},
         },
         sqs_message_body=("Information about bestseller for week of 12/11/2016."),
+        aws_iam_key_id_path="python_rising/dev/aws_data/iam/AWS_ACCESS_KEY_ID",
+        aws_iam_secret_key_path="python_rising/dev/aws_data/iam/AWS_SECRET_ACCESS_KEY",
+        # aws_iam_user_name=f'user-{dir(faker)}',
+        # aws_iam_user=f'user-{faker.random_lowercase_letter()}{str(faker.random_int())}',
+        aws_iam_user=f"user-conftest-{time.time_ns()}",
+        aws_iam_group="s3_users",
+        aws_iam_group_arn="arn:aws:iam::568639476002:group/s3_users",
     )
     return input_dict
 
@@ -171,7 +185,7 @@ def create_list_of_filenames_and_directories(tmpdir_factory):
     # test_dir_name = tmpdir_factory.mktemp(base_file_name)
     # test_dir_name = tmpdir_factory.mktemp()
     # print(f"testdirname {test_dir_name}")
-    fake = Faker("en_US")
+    faker = Faker("en_US")
     # base_file_name = "training/"
     folder_list = ["python", "javascript", "network", "ml_ai"]
     sub_directory_name_list = ["subdir_1", "subdir_2", "subdir_3"]
@@ -180,7 +194,7 @@ def create_list_of_filenames_and_directories(tmpdir_factory):
         base_file_name
         + folder_type
         + "/"
-        + fake.file_name(extension="txt", category="office")
+        + faker.file_name(extension="txt", category="office")
     )
     file_path_and_name_list = []
     for _ in range(5):
@@ -190,7 +204,7 @@ def create_list_of_filenames_and_directories(tmpdir_factory):
             base_file_name
             + folder_type
             + "/"
-            + fake.file_name(extension="txt", category="office")
+            + faker.file_name(extension="txt", category="office")
         )
         full_path_subdir = (
             base_file_name
@@ -198,7 +212,7 @@ def create_list_of_filenames_and_directories(tmpdir_factory):
             + "/"
             + subdirectory
             + "/"
-            + fake.file_name(extension="txt", category="office")
+            + faker.file_name(extension="txt", category="office")
         )
         file_path_and_name_list.append(full_path)
         file_path_and_name_list.append(full_path_subdir)
