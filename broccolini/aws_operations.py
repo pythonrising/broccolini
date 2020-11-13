@@ -6,6 +6,7 @@ import logging
 
 from os import environ
 from typing import Dict
+from typing import List
 
 import boto3
 
@@ -102,7 +103,7 @@ class AWSOperations:
         except Exception as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error
 
-    def aws_list_s3_buckets(self, **kwargs: str) -> list[str]:
+    def aws_list_s3_buckets(self, **kwargs: str) -> List[str]:
         """List S3 buckets.
 
         Args:
@@ -140,7 +141,9 @@ class AWSOperations:
                 region_name=_aws_default_region,
                 # region_name='missing',
             )
-            return s3_client.list_buckets()
+            list_of_buckets: List[object] = s3_client.list_buckets()
+            return list_of_buckets
+
         except (ClientError) as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error
 
@@ -397,11 +400,7 @@ class AWSOperations:
         return True
 
     def aws_iam_delete_user(self, **kwargs: str) -> bool:
-        """IAM delete user.
-
-        Returns:
-            success[bool]: success of deletion
-        """
+        """IAM delete user."""
         aws_client = self.aws_get_connection(
             aws_access_key_id=kwargs["aws_access_key_id"],
             aws_secret_access_key=kwargs["aws_secret_access_key"],
@@ -420,8 +419,9 @@ class AWSOperations:
             if _aws_default_region not in environ:
                 environ["AWS_DEFAULT_REGION"] = _aws_default_region
 
-            user_name: str = kwargs["user_name"]
-            group_name: str = kwargs["group_name"]
+            # user_name: str = kwargs["user_name"]
+            # group_name: str = kwargs["group_name"]
+
             iam_resource = boto3.resource(
                 "iam",
                 aws_access_key_id=_aws_access_key_id,
@@ -429,14 +429,13 @@ class AWSOperations:
                 region_name=_aws_default_region,
             )
 
-            try:
-                group = iam_resource.Group(group_name)
-                group.remove_user(UserName=user_name)
-                iam_resource.User(user_name).delete()
-
-            except Exception as _error:  # pragma: no cover
-                raise ValueError("AWS error.") from _error
+            # KEY = 'LastUsedDate'
+            client = boto3.client("iam")
+            # all_users = iam_resource.users.all()
+            for user in iam_resource.users.all():
+                Metadata = client.list_access_keys(UserName=user.user_name)
+                if Metadata["AccessKeyMetadata"]:
+                    print(user)
 
         except Exception as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error
-        return True
