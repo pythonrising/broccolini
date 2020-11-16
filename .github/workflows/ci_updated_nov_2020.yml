@@ -75,6 +75,13 @@ jobs:
       #   run: |
       #     source .venv/bin/activate
       #     pip install "Django==${{ matrix.django-version }}"
+
+      - name: Set env variables
+        run: |
+          echo "GITHUB_TOKEN=${{secrets.GITHUB_TOKEN}}" >> $GITHUB_ENV
+          echo "VAULT_URL=${{secrets.VAULT_URL}}" >> $GITHUB_ENV
+          echo "VAULT_TOKEN=${{secrets.VAULT_TOKEN}}" >> $GITHUB_ENV
+
       - name: Run tests
         run: |
           source .venv/bin/activate
