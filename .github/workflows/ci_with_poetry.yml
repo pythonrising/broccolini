@@ -18,7 +18,7 @@ jobs:
           architecture: x64
 
       - name: Install Poetry
-        uses: dschep/install-poetry-action@v1.2
+        uses: dschep/install-poetry-action@v1.3
         with:
           create_virtualenvs: true
 
@@ -48,7 +48,6 @@ jobs:
           echo "GITHUB_TOKEN=${{secrets.GITHUB_TOKEN}}" >> $GITHUB_ENV
           echo "VAULT_URL=${{secrets.VAULT_URL}}" >> $GITHUB_ENV
           echo "VAULT_TOKEN=${{secrets.VAULT_TOKEN}}" >> $GITHUB_ENV
-          echo "ACTIONS_ALLOW_UNSECURE_COMMANDS="true" >> $GITHUB_ENV
 
       - name: Test with pytest - address CVE and deprecation.
         # env:
