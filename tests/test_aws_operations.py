@@ -270,14 +270,13 @@ class TestAWSOperations:
         user_name = return_aws_settings["aws_iam_user"]
         group_name = return_aws_settings["aws_iam_group"]
 
-        result = AWSOperations().aws_iam_delete_user(
+        AWSOperations().aws_iam_delete_user(
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
             aws_default_region=aws_default_region,
             user_name=user_name,
             group_name=group_name,
         )
-        print(result)
 
     @staticmethod
     def test_aws_iam_list_users(return_aws_settings):  # pragma: no cover

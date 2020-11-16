@@ -435,7 +435,8 @@ class AWSOperations:
             for user in iam_resource.users.all():
                 meta_data = client.list_access_keys(UserName=user.user_name)
                 if meta_data["AccessKeyMetadata"]:
-                    print(user)
+                    # _user_placeholder = user
+                    return user
 
         except Exception as _error:  # pragma: no cover
             raise ValueError("AWS error.") from _error
