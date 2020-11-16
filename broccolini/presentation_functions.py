@@ -5,6 +5,7 @@ Presentation operations.
 import logging
 
 from pathlib import Path
+from typing import Dict
 from typing import List
 
 from jinja2 import Environment
@@ -40,13 +41,12 @@ class PresentationOperations:
         return f"{class_name}"
 
     @staticmethod
-    def prepare_template_with_pathlib(
-        **kwargs,
-    ) -> str:
+    def prepare_template_with_pathlib(**kwargs):  # type: ignore
+
         """Prepare output using a template and dictionary.
 
-        This function takes a dictionary and a template file and produces
-        output combining the data and variables.
+        Take dictionary and a template file.  Combine to create
+        template output.
 
         Args: (called from *kwargs)
             input_dictionary (dict[str, object]): [description]
@@ -59,7 +59,7 @@ class PresentationOperations:
         Returns:
             output_text (str): output text
         """
-        input_dictionary: str = kwargs["input_dictionary"]
+        input_dictionary: Dict[str, str] = kwargs["input_dictionary"]
         input_template_name: str = kwargs["input_template_name"]
         trim_blocks: bool = kwargs["trim_blocks"]
         lstrip_blocks: bool = kwargs["lstrip_blocks"]
