@@ -4,6 +4,7 @@ DataBase operations.
 """
 import logging
 
+from typing import Any
 from typing import Dict
 
 import faunadb
@@ -185,7 +186,7 @@ class DataBaseOperations:
         except NotFound as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_index_with_data(self, **kwargs: str) -> bool:  # pragma: no cover
+    def fauna_query_index_with_data(self, **kwargs: str) -> Any:  # pragma: no cover
         """Query index when given the index name."""
         client = self.fauna_get_connection()
         fauna_index_name: str = kwargs["fauna_index_name"]
