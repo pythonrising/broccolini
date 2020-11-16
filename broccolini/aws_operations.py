@@ -433,8 +433,8 @@ class AWSOperations:
             client = boto3.client("iam")
             # all_users = iam_resource.users.all()
             for user in iam_resource.users.all():
-                Metadata = client.list_access_keys(UserName=user.user_name)
-                if Metadata["AccessKeyMetadata"]:
+                meta_data = client.list_access_keys(UserName=user.user_name)
+                if meta_data["AccessKeyMetadata"]:
                     print(user)
 
         except Exception as _error:  # pragma: no cover
