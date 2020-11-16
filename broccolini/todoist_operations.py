@@ -4,6 +4,8 @@ Todoist is a todo list application.
 """
 import logging
 
+from typing import List
+
 from todoist import TodoistAPI
 
 
@@ -25,6 +27,7 @@ class TodoIstOperations:
 
     @staticmethod
     def todoist_get_connection(**kwargs: str) -> TodoistAPI:
+        # def todoist_get_connection(**kwargs):
         # def todoist_get_connection(**kwargs: str) -> str:
         """[summary]
 
@@ -48,6 +51,7 @@ class TodoIstOperations:
             api: TodoistAPI = self.todoist_get_connection(
                 todoist_api_token=todoist_api_token,
             )
+            print(type(api))
             return api.state["items"]
 
         except Exception as _error:  # pragma: no cover
@@ -65,7 +69,7 @@ class TodoIstOperations:
         except Exception as _error:  # pragma: no cover
             raise ValueError("Todoist error.") from _error
 
-    def filter_items(self, **kwargs: str) -> list[list[str]]:
+    def filter_items(self, **kwargs: str) -> List[TodoistAPI]:
         """Filter todoist items.
 
         Returns:
@@ -73,10 +77,11 @@ class TodoIstOperations:
         """
         try:
             todoist_api_token: str = kwargs["todoist_api_token"]
-            data: list[str] = self.list_items(
+            data = self.list_items(
                 todoist_api_token=todoist_api_token,
             )
-            item_list = []
+
+            item_list: List[TodoistAPI] = []
             for each in data:
                 item_list.append(each["content"])
             return item_list
