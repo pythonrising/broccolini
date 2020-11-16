@@ -2,6 +2,8 @@
 
 import logging
 
+from typing import Any
+
 from broccolini.authentication_functions import VaultFunctions
 
 
@@ -13,7 +15,7 @@ logging.basicConfig(
 )
 
 
-def get_authentication_values(secret_path: str) -> str:
+def get_authentication_values(secret_path: str) -> Any:
     """Authenticate and get authentication data."""
     try:
         secret_key = VaultFunctions().query_vault_data(
@@ -22,6 +24,7 @@ def get_authentication_values(secret_path: str) -> str:
             secret_path=secret_path,
         )
         return secret_key["data"]["data"]["_key"]
+
     except KeyError as _error:  # pragma: no cover
         raise ValueError("Missing environment variables") from _error
 
