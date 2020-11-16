@@ -15,7 +15,7 @@ logging.basicConfig(
 
 
 class TodoIstOperations:
-    """T Operation Functions."""
+    """Test Todoist functions."""
 
     def __init__(self) -> None:
         """Init class - vars are called in the function as needed."""
