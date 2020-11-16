@@ -210,7 +210,7 @@ class DataBaseOperations:
             print(_error)
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_collection(self, **kwargs) -> bool:  # pragma: no cover
+    def fauna_query_collection(self, **kwargs: str) -> bool:  # pragma: no cover
         """Query collection."""
         client: FaunaClient = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
@@ -220,7 +220,7 @@ class DataBaseOperations:
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error. - fauna_query_collection") from _error
 
-    def fauna_delete_collection(self, **kwargs) -> bool:  # pragma: no cover
+    def fauna_delete_collection(self, **kwargs: str) -> bool:  # pragma: no cover
         """Delete collection."""
         client = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
