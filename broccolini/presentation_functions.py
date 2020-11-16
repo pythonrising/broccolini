@@ -48,14 +48,6 @@ class PresentationOperations:
         Take dictionary and a template file.  Combine to create
         template output.
 
-        Args: (called from *kwargs)
-            input_dictionary (dict[str, object]): [description]
-            input_template_name (str): template used to build the output
-            trim_blocks: bool - jinja 2 options
-            lstrip_blocks: bool - jinja 2 options
-            keep_trailing_newline: bool - jinja 2 options
-            autoescape_formats: list[str] = kwargs["autoescape_formats"]
-
         Returns:
             output_text (str): output text
         """
