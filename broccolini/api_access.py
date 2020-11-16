@@ -5,7 +5,9 @@ API Access functions.
 import logging
 
 import requests
+
 from requests.models import Response
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
