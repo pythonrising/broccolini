@@ -5,9 +5,11 @@ Presentation operations.
 import logging
 
 from pathlib import Path
+from typing import List
 
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
+from jinja2 import Template
 from jinja2 import select_autoescape
 
 
@@ -39,7 +41,7 @@ class PresentationOperations:
 
     @staticmethod
     def prepare_template_with_pathlib(
-        **kwargs: str,
+        **kwargs,
     ) -> str:
         """Prepare output using a template and dictionary.
 
@@ -57,20 +59,21 @@ class PresentationOperations:
         Returns:
             output_text (str): output text
         """
-        input_dictionary = kwargs["input_dictionary"]
-        input_template_name = kwargs["input_template_name"]
+        input_dictionary: str = kwargs["input_dictionary"]
+        input_template_name: str = kwargs["input_template_name"]
         trim_blocks: bool = kwargs["trim_blocks"]
         lstrip_blocks: bool = kwargs["lstrip_blocks"]
         keep_trailing_newline: bool = kwargs["keep_trailing_newline"]
-        autoescape_formats: list[str] = kwargs["autoescape_formats"]
+        autoescape_formats: List[str] = kwargs["autoescape_formats"]
 
         path_obj: Path = Path(__file__).parent.parent / "templates"
-        env = Environment(
+        env: Environment = Environment(
             loader=FileSystemLoader(Path(path_obj)),
             trim_blocks=trim_blocks,
             lstrip_blocks=lstrip_blocks,
             keep_trailing_newline=keep_trailing_newline,
             autoescape=select_autoescape(autoescape_formats),
         )
-        template = env.get_template(input_template_name)
+        template: Template = env.get_template(input_template_name)
+
         return template.render(jinja_var=input_dictionary)
