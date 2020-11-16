@@ -4,6 +4,12 @@ DataBase operations.
 """
 import logging
 
+from typing import Dict
+from typing import Optional
+from typing import Union
+
+import faunadb
+
 from faunadb import query as q
 from faunadb.client import FaunaClient
 from faunadb.errors import BadRequest
@@ -103,35 +109,30 @@ class DataBaseOperations:
     #         print(_error)
     #         raise ValueError("Fauna error.") from _error
 
-    def fauna_query_index(self, **kwargs: str) -> str:
+    def fauna_query_index(self, **kwargs: str) -> Dict[str, str]:
         """query index."""
         client = self.fauna_get_connection()
-        # _fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_index_name: str = kwargs["fauna_index_name"]
         try:
-            # client.query(q.get(q.index(fauna_index_name)))
-            index_list = client.query(q.get(q.index(fauna_index_name)))
-            # print(index_list)
+            index_list: Dict[str, str] = client.query(q.get(q.index(fauna_index_name)))
             return index_list
         except (Exception) as _error:  # pragma: no cover
-            print(_error)
+            # print(_error)
             raise ValueError("Fauna error.") from _error
 
-    def fauna_create_document(self, **kwargs: str) -> bool:
+    def fauna_create_document(self, **kwargs: str) -> Optional[bool]:
         """Add document."""
-        client = self.fauna_get_connection()
+        client: FaunaClient = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_document_data: str = kwargs["fauna_document_data"]
         try:
             client.query(
                 q.create(q.collection(fauna_collection_name), fauna_document_data)
             )
-            return True
-            # faunadb.errors.UnexpectedError:
+            #
+
         except UnexpectedError as _error:  # pragma: no cover
-            # for debugging only print statement
-            print(f"data load error\n{_error}")
-            # raise ValueError("Unexpected error with data load.") from _error
+            raise ValueError("Unexpected error with data load.") from _error
 
         except BadRequest as _error:  # pragma: no cover
             # except (BadRequest, Exception) as _error:  # pragma: no cover
@@ -140,6 +141,8 @@ class DataBaseOperations:
             # raise ValueError("BadRequest.") from _error
         except Exception as _error:
             raise ValueError("Fauna error.") from _error
+
+        return True
 
     def fauna_paginate_database(self) -> bool:
         """Fauna paginate database.
@@ -152,7 +155,7 @@ class DataBaseOperations:
         except (BadRequest, Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_read_database(self) -> str:
+    def fauna_read_database(self) -> FaunaClient:
         """Read from fauna database."""
         client = self.fauna_get_connection()
         try:
@@ -180,13 +183,18 @@ class DataBaseOperations:
         except NotFound as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_index_with_data(self, **kwargs: str) -> bool:  # pragma: no cover
+    def fauna_query_index_with_data(
+        self, **kwargs: str
+    ) -> Union[bool, Ref]:  # pragma: no cover
         """Query index when given the index name."""
         client = self.fauna_get_connection()
         fauna_index_name: str = kwargs["fauna_index_name"]
         try:
-            reference_id = client.query(q.get(q.match(fauna_index_name)))["ref"]
+            reference_id: faunadb.Ref = client.query(q.get(q.match(fauna_index_name)))[
+                "ref"
+            ]
             return reference_id
+
         except (Exception) as _error:  # pragma: no cover
             print(_error)
             raise ValueError("Fauna error.") from _error
@@ -202,9 +210,9 @@ class DataBaseOperations:
             print(_error)
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_collection(self, **kwargs) -> bool:
+    def fauna_query_collection(self, **kwargs) -> bool:  # pragma: no cover
         """Query collection."""
-        client = self.fauna_get_connection()
+        client: FaunaClient = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
         try:
             client.query(q.get(q.collection(fauna_collection_name)))
