@@ -26,5 +26,3 @@ def test_get_authentication_values(return_data_dict):
     expected_type = str
     assert isinstance(result, expected_type)
     assert expected == result
-
-    print(result)

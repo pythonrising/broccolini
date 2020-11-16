@@ -21,26 +21,6 @@ logging.basicConfig(
 class TestApiAccess:
     """Test API Access functions."""
 
-    # @classmethod
-    # def get_test_values(cls, secret_path):  # pragma: no cover
-    #     """[Get values for use in other test functions.]
-    #     Args:
-    #         api_url [str]): [path to grab from vault to return url]
-    #         api_key [str]): [path to grab from vault to return key]
-
-    #     Returns:
-    #         secret_key ([str]): [returns data from vault]
-    #     """
-    #     try:
-    #         secret_key = VaultFunctions().query_vault_data(
-    #             vault_url="VAULT_URL",
-    #             vault_token="VAULT_TOKEN",
-    #             secret_path=secret_path,
-    #         )
-    #         return secret_key["data"]["data"]["_key"]
-    #     except KeyError as _error:  # pragma: no cover
-    #         raise ValueError("Missing environment variables") from _error
-
     @staticmethod
     @pytest.fixture
     @pytest.mark.dependency(name="test_get_api_settings")
@@ -55,9 +35,6 @@ class TestApiAccess:
         output: my_dict
         output_type: Dict[str, str]
         """
-        # api_url = TestApiAccess.get_test_values(return_data_dict["api_url"])
-        # api_key = TestApiAccess.get_test_values(return_data_dict["api_key"])
-
         api_url = get_authentication_values(return_data_dict["api_url"])
         api_key = get_authentication_values(return_data_dict["api_key"])
 

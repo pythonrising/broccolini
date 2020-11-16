@@ -5,8 +5,6 @@ DataBase operations.
 import logging
 
 from typing import Dict
-from typing import Optional
-from typing import Union
 
 import faunadb
 
@@ -16,6 +14,10 @@ from faunadb.errors import BadRequest
 from faunadb.errors import NotFound
 from faunadb.errors import UnexpectedError
 from faunadb.objects import Ref
+
+
+# from typing import Optional
+# from typing import Union
 
 
 logging.basicConfig(
@@ -120,7 +122,7 @@ class DataBaseOperations:
             # print(_error)
             raise ValueError("Fauna error.") from _error
 
-    def fauna_create_document(self, **kwargs: str) -> Optional[bool]:
+    def fauna_create_document(self, **kwargs: str) -> bool:
         """Add document."""
         client: FaunaClient = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
@@ -183,14 +185,12 @@ class DataBaseOperations:
         except NotFound as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_index_with_data(
-        self, **kwargs: str
-    ) -> Union[bool, Ref]:  # pragma: no cover
+    def fauna_query_index_with_data(self, **kwargs: str) -> bool:  # pragma: no cover
         """Query index when given the index name."""
         client = self.fauna_get_connection()
         fauna_index_name: str = kwargs["fauna_index_name"]
         try:
-            reference_id: faunadb.Ref = client.query(q.get(q.match(fauna_index_name)))[
+            reference_id: faunadb = client.query(q.get(q.match(fauna_index_name)))[
                 "ref"
             ]
             return reference_id

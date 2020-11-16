@@ -257,26 +257,26 @@ class TestAWSOperations:
 
         # call s3 function from here
 
-    @staticmethod
-    def test_aws_iam_delete_user(return_aws_settings):  # pragma: no cover
-        """[summary]"""
-        aws_access_key_id = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_iam_key_id_path"]
-        )
-        aws_secret_access_key = TestAWSOperations.get_test_values(
-            secret_path=return_aws_settings["aws_iam_secret_key_path"]
-        )
-        aws_default_region = return_aws_settings["aws_default_region"]
-        user_name = return_aws_settings["aws_iam_user"]
-        group_name = return_aws_settings["aws_iam_group"]
+    # @staticmethod
+    # def test_aws_iam_delete_user(return_aws_settings):  # pragma: no cover
+    #     """[summary]"""
+    #     aws_access_key_id = TestAWSOperations.get_test_values(
+    #         secret_path=return_aws_settings["aws_iam_key_id_path"]
+    #     )
+    #     aws_secret_access_key = TestAWSOperations.get_test_values(
+    #         secret_path=return_aws_settings["aws_iam_secret_key_path"]
+    #     )
+    #     aws_default_region = return_aws_settings["aws_default_region"]
+    #     user_name = return_aws_settings["aws_iam_user"]
+    #     group_name = return_aws_settings["aws_iam_group"]
 
-        AWSOperations().aws_iam_delete_user(
-            aws_access_key_id=aws_access_key_id,
-            aws_secret_access_key=aws_secret_access_key,
-            aws_default_region=aws_default_region,
-            user_name=user_name,
-            group_name=group_name,
-        )
+    #     AWSOperations().aws_iam_delete_user(
+    #         aws_access_key_id=aws_access_key_id,
+    #         aws_secret_access_key=aws_secret_access_key,
+    #         aws_default_region=aws_default_region,
+    #         user_name=user_name,
+    #         group_name=group_name,
+    #     )
 
     @staticmethod
     def test_aws_iam_list_users(return_aws_settings):  # pragma: no cover
