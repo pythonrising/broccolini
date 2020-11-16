@@ -12,7 +12,7 @@ import logging
 
 import pytest
 
-from broccolini.authentication_functions import VaultFunctions
+# from broccolini.authentication_functions import VaultFunctions
 from broccolini.database_operations import DataBaseOperations
 from broccolini.todoist_operations import TodoIstOperations
 
@@ -31,19 +31,19 @@ logging.basicConfig(
 class TestIntegrationTodoistFauna:
     """Test the integration from files to fauna database."""
 
-    @classmethod
-    def get_test_values(cls, secret_path):
-        """Build values needed for the test."""
-        try:
-            todoist_secret_key = VaultFunctions().query_vault_data(
-                vault_url="VAULT_URL",
-                vault_token="VAULT_TOKEN",
-                secret_path=secret_path,
-            )
+    # @classmethod
+    # def get_test_values(cls, secret_path):
+    #     """Build values needed for the test."""
+    #     try:
+    #         todoist_secret_key = VaultFunctions().query_vault_data(
+    #             vault_url="VAULT_URL",
+    #             vault_token="VAULT_TOKEN",
+    #             secret_path=secret_path,
+    #         )
 
-            return todoist_secret_key["data"]["data"]["_key"]
-        except KeyError as _error:  # pragma: no cover
-            raise ValueError("Missing environment variables") from _error
+    #         return todoist_secret_key["data"]["data"]["_key"]
+    #     except KeyError as _error:  # pragma: no cover
+    #         raise ValueError("Missing environment variables") from _error
 
     @staticmethod
     @pytest.mark.skip(reason="integration testing")
@@ -57,7 +57,7 @@ class TestIntegrationTodoistFauna:
             todoist_api_token=todoist_api_token,
         )
         list_of_items = []
-        print(TODAYS_DATE)
+        # print(TODAYS_DATE)
         for each in todoist_items:
             list_of_items.append(len(each["content"]))
         records_to_add = {"data": {TODAYS_DATE: list_of_items}}
@@ -65,11 +65,9 @@ class TestIntegrationTodoistFauna:
         fauna_api_token = TestIntegrationTodoistFauna.get_test_values(
             return_database_settings["fauna_path_srv"],
         )
-        print(len(fauna_api_token))
-        result_of_db_add = DataBaseOperations(
-            client_token=fauna_api_token
-        ).fauna_create_document(
+        # print(len(fauna_api_token))
+        DataBaseOperations(client_token=fauna_api_token).fauna_create_document(
             fauna_collection_name=FAUNA_COLLECTION_NAME,
             fauna_document_data=records_to_add,
         )
-        print(result_of_db_add)
+        # print(result_of_db_add)

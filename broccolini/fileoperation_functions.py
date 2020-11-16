@@ -4,7 +4,11 @@ File operations, eg, open close read write.
 """
 import logging
 import re
+
 from pathlib import Path
+from typing import Dict
+from typing import List
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
@@ -23,7 +27,7 @@ class FileOperationFunctions:
         return f"{class_name}"
 
     @staticmethod
-    def build_dictionary(**kwargs: Path) -> dict[str, object]:
+    def build_dictionary(**kwargs: Path) -> Dict[str, object]:
         """Builds dictionary of values.
 
         input: pathlib path object from the file system
@@ -41,7 +45,7 @@ class FileOperationFunctions:
             modification date - from pathlib
         """
         input_dict: Path = kwargs["input_dict"]
-        output_dict: dict[str, object] = dict(
+        output_dict: Dict[str, object] = dict(
             folders_and_files=list(input_dict.rglob("*.*")),
         )
         return output_dict
@@ -49,7 +53,7 @@ class FileOperationFunctions:
     @staticmethod
     def get_file_information_build(
         **kwargs: str,
-    ) -> list[dict[str, object]]:
+    ) -> List[Dict[str, object]]:
         """Build data about file structure.
 
         input: input_directory
@@ -59,13 +63,13 @@ class FileOperationFunctions:
         """
         input_directory: str = kwargs["input_directory"]
         path = Path(input_directory)
-        folder_list: list[Path] = []
+        folder_list: List[Path] = []
         for each in path.iterdir():
             folder_list.append(each)
 
-        output_listing: list[dict[str, object]] = []
+        output_listing: List[Dict[str, object]] = []
         for each in folder_list:
-            write_to_json: dict[str, object] = FileOperationFunctions.build_dictionary(
+            write_to_json: Dict[str, object] = FileOperationFunctions.build_dictionary(
                 input_dict=each
             )
             output_listing.append(write_to_json)
@@ -98,11 +102,12 @@ class FileOperationFunctions:
         return subject
 
     @staticmethod
-    def filter_file_data(**kwargs):
+    def filter_file_data(**kwargs: Dict[str, List[Path]]) -> List[Dict[str, object]]:
         """Filter data.
 
         input: dictionary_of_paths_in_pathlib_format
         input_type = input_directory
+
         output: output_dictionary
         output_type = TBD
         # to get the subject
@@ -114,6 +119,8 @@ class FileOperationFunctions:
         """
         # input_path: Dict[List[str], Dict[str, object]] = kwargs["input_path"]
         input_dict = kwargs["input_dict"]
+        # print(input_dict)
+        # print(type(input_dict))
         records_to_add = []
         for each in input_dict["folders_and_files"]:
             records_to_add.append(
