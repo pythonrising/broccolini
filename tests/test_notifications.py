@@ -10,7 +10,6 @@ import pytest
 
 from twilio.rest import Client
 
-from broccolini.authentication_functions import VaultFunctions
 from broccolini.common import get_authentication_values
 from broccolini.notifications import TwilioFunctions
 
@@ -23,20 +22,6 @@ logging.basicConfig(
 class TestTwilioFunctions:
     """Test Twilio Functions."""
 
-    @classmethod
-    def get_test_values(cls, secret_path):
-        """Build values needed for the test."""
-        try:
-            twilio_path_auth_token_key = VaultFunctions().query_vault_data(
-                vault_url="VAULT_URL",
-                vault_token="VAULT_TOKEN",
-                secret_path=secret_path,
-            )
-            auth_token = twilio_path_auth_token_key["data"]["data"]["_key"]
-            return auth_token
-        except KeyError as _error:
-            raise ValueError("Missing environment variables") from _error
-
     @staticmethod
     @pytest.mark.dependency(name="test_login_to_twilio")
     def test_get_twilio_connection(return_data_dict):
@@ -47,12 +32,6 @@ class TestTwilioFunctions:
         twilio_path_auth_token="greg_production/twilio_data/TWILIO_AUTH_TOKEN",
         output: twilio client
         """
-        # account_sid = TestTwilioFunctions.get_test_values(
-        #     return_data_dict["twilio_account_sid"]
-        # )
-        # auth_token = TestTwilioFunctions.get_test_values(
-        #     return_data_dict["twilio_auth_token"]
-        # )
         account_sid = get_authentication_values(
             secret_path=return_data_dict["twilio_account_sid"]
         )
@@ -79,18 +58,6 @@ class TestTwilioFunctions:
             return_data_dict["twilio_notify_number"]
         )
 
-        # auth_token = TestTwilioFunctions.get_test_values(
-        #     return_data_dict["twilio_auth_token"]
-        # )
-        # twilio_phone_number = TestTwilioFunctions.get_test_values(
-        #     return_data_dict["twilio_phone_number"]
-        # )
-        # account_sid = TestTwilioFunctions.get_test_values(
-        #     return_data_dict["twilio_account_sid"]
-        # )
-        # twilio_notify_number = TestTwilioFunctions.get_test_values(
-        #     return_data_dict["twilio_notify_number"]
-        # )
         this = TwilioFunctions(account_sid, auth_token)
         result = this.send_twilio_notification(
             written_directories=return_data_dict["written_directories"],
