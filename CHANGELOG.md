@@ -1,6 +1,10 @@
 
 # CHANGELOG
 
+## 0.1.8
+
+Update type hinting. Cleanup test files:
+
 ## 0.1.7
 
 Added Todoist Functions:
