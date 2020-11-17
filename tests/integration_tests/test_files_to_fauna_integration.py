@@ -13,7 +13,7 @@ from dataclasses import dataclass
 
 import pytest
 
-from broccolini.authentication_functions import VaultFunctions
+from broccolini.common import get_authentication_values
 from broccolini.database_operations import DataBaseOperations
 from broccolini.fileoperation_functions import FileOperationFunctions
 
@@ -38,18 +38,18 @@ logging.basicConfig(
 class TestIntegrationFileToFauna:
     """Test the integration from files to fauna database."""
 
-    @classmethod
-    def get_test_values(cls, secret_path):
-        """Build values needed for the test."""
-        try:
-            fauna_secret_key = VaultFunctions().query_vault_data(
-                vault_url="VAULT_URL",
-                vault_token="VAULT_TOKEN",
-                secret_path=secret_path,
-            )
-            return fauna_secret_key["data"]["data"]["_key"]
-        except KeyError as _error:  # pragma: no cover
-            raise ValueError("Missing environment variables") from _error
+    # @classmethod
+    # def get_test_values(cls, secret_path):
+    #     """Build values needed for the test."""
+    #     try:
+    #         fauna_secret_key = get_authentication_values().query_vault_data(
+    #             vault_url="VAULT_URL",
+    #             vault_token="VAULT_TOKEN",
+    #             secret_path=secret_path,
+    #         )
+    #         return fauna_secret_key["data"]["data"]["_key"]
+    #     except KeyError as _error:  # pragma: no cover
+    #         raise ValueError("Missing environment variables") from _error
 
     @staticmethod
     @pytest.fixture()
@@ -71,7 +71,7 @@ class TestIntegrationFileToFauna:
         return_database_settings, test_get_files_from_folder
     ):
         """Create document using data created in other function."""
-        client_token = TestIntegrationFileToFauna.get_test_values(
+        client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"],
         )
 

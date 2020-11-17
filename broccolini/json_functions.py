@@ -5,7 +5,10 @@ Json functions.  Mostly wrappers.
 
 import json
 import logging
-from typing import Dict, Tuple
+
+from typing import Dict
+from typing import Tuple
+
 
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"

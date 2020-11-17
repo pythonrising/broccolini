@@ -46,12 +46,10 @@ class TodoIstOperations:
     def list_items(self, **kwargs: str) -> TodoistAPI:
         """List todoist items."""
         try:
-
             todoist_api_token: str = kwargs["todoist_api_token"]
             api: TodoistAPI = self.todoist_get_connection(
                 todoist_api_token=todoist_api_token,
             )
-            print(type(api))
             return api.state["items"]
 
         except Exception as _error:  # pragma: no cover
