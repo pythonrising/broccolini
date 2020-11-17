@@ -12,7 +12,7 @@ import pytest
 from faunadb.client import FaunaClient
 from faunadb.objects import Ref
 
-from broccolini.authentication_functions import VaultFunctions
+from broccolini.common import get_authentication_values
 from broccolini.database_operations import DataBaseOperations
 
 
@@ -24,19 +24,6 @@ logging.basicConfig(
 class TestDatabaseOperations:
     """Test Database Operation Functions."""
 
-    @classmethod
-    def get_test_values(cls, secret_path):
-        """Build values for the test."""
-        try:
-            fauna_secret_key = VaultFunctions().query_vault_data(
-                vault_url="VAULT_URL",
-                vault_token="VAULT_TOKEN",
-                secret_path=secret_path,
-            )
-            return fauna_secret_key["data"]["data"]["_key"]
-        except KeyError as _error:  # pragma: no cover
-            raise ValueError("Missing environment variables") from _error
-
     @staticmethod
     @pytest.mark.dependency(name="test_login_to_fauna")
     def test_fauna_get_connection(return_database_settings):  # pragma: no cover
@@ -47,9 +34,11 @@ class TestDatabaseOperations:
         output_type: FaunaClient
         output example: <faunadb.client.FaunaClient object at 0x000002439xxxxx>
         """
-        client_token = TestDatabaseOperations.get_test_values(
+
+        client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"]
         )
+
         result = DataBaseOperations(client_token=client_token).fauna_get_connection()
         expected = "faunadb.client.FaunaClient"
         expected_type = FaunaClient
@@ -60,9 +49,10 @@ class TestDatabaseOperations:
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_create_collection(return_database_settings):  # pragma: no cover
         """Test create collection."""
-        client_token = TestDatabaseOperations.get_test_values(
+        client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"]
         )
+
         this = DataBaseOperations(client_token=client_token)
         try:
             this.fauna_query_collection(
@@ -82,7 +72,7 @@ class TestDatabaseOperations:
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_create_index(return_database_settings):  # pragma: no cover
         """Test create index."""
-        client_token = TestDatabaseOperations.get_test_values(
+        client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"]
         )
         this = DataBaseOperations(client_token=client_token)
@@ -91,24 +81,20 @@ class TestDatabaseOperations:
                 fauna_collection_name=return_database_settings["fauna_collection_name"],
                 fauna_index_name=return_database_settings["fauna_index_name"],
             )
-            # print(query_result)
             return True
         except ValueError:
             result = this.fauna_create_index(
                 fauna_collection_name=return_database_settings["fauna_collection_name"],
                 fauna_index_name=return_database_settings["fauna_index_name"],
             )
-        print(result)
-        # expected = True
         expected_type = str
         assert isinstance(result, expected_type)
-        # assert expected == output
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_create_document(return_database_settings):  # pragma: no cover
         """Test create document."""
-        client_token = TestDatabaseOperations.get_test_values(
+        client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"]
         )
         result = DataBaseOperations(client_token=client_token).fauna_create_document(
@@ -124,7 +110,7 @@ class TestDatabaseOperations:
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_paginate_database(return_database_settings):  # pragma: no cover
         """Test Fauna paginate database."""
-        client_token = TestDatabaseOperations.get_test_values(
+        client_token = get_authentication_values(
             return_database_settings["fauna_secret_path_admin"]
         )
         result = DataBaseOperations(client_token=client_token).fauna_paginate_database()
@@ -140,7 +126,7 @@ class TestDatabaseOperations:
 
         needs admin key since working on all database_operations
         """
-        client_token = TestDatabaseOperations.get_test_values(
+        client_token = get_authentication_values(
             return_database_settings["fauna_secret_path_admin"]
         )
         result = DataBaseOperations(client_token=client_token).fauna_read_database()
@@ -156,18 +142,13 @@ class TestDatabaseOperations:
 
         fauna_document_name
         """
-        client_token = TestDatabaseOperations.get_test_values(
+        client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"]
         )
         result = DataBaseOperations(client_token=client_token).fauna_delete_document(
             fauna_collection_name=return_database_settings["fauna_collection_name"],
-            # fauna_document_ref=return_database_settings["fauna_document_ref"],
         )
 
-        # mock below here put back on when finished confirming function works
-        # result = DataBaseOperations(client_token=client_token).fauna_delete_document(
-        #     mock_fauna_delete_document=_mocked_fauna["mock_fauna_delete_document"],
-        # )
         expected = True
         expected_type = bool
         assert isinstance(result, expected_type)
@@ -179,7 +160,7 @@ class TestDatabaseOperations:
         return_database_settings, _mocked_fauna
     ):  # pragma: no cover
         """Test delete collection using mock."""
-        client_token = TestDatabaseOperations.get_test_values(
+        client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"]
         )
         result = DataBaseOperations(client_token=client_token).fauna_delete_collection(
@@ -194,7 +175,7 @@ class TestDatabaseOperations:
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_query_index_with_data(return_database_settings):  # pragma: no cover
         """Test query index with data from conftest."""
-        client_token = TestDatabaseOperations.get_test_values(
+        client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"]
         )
         result = DataBaseOperations(

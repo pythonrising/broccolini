@@ -31,20 +31,6 @@ logging.basicConfig(
 class TestIntegrationTodoistFauna:
     """Test the integration from files to fauna database."""
 
-    # @classmethod
-    # def get_test_values(cls, secret_path):
-    #     """Build values needed for the test."""
-    #     try:
-    #         todoist_secret_key = VaultFunctions().query_vault_data(
-    #             vault_url="VAULT_URL",
-    #             vault_token="VAULT_TOKEN",
-    #             secret_path=secret_path,
-    #         )
-
-    #         return todoist_secret_key["data"]["data"]["_key"]
-    #     except KeyError as _error:  # pragma: no cover
-    #         raise ValueError("Missing environment variables") from _error
-
     @staticmethod
     @pytest.mark.skip(reason="integration testing")
     def test_integration_todoist_to_fauna(return_database_settings):
