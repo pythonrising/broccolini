@@ -17,51 +17,21 @@ jobs:
           python-version: ${{ matrix.python-version }}
           architecture: x64
 
-      - name: Install and configure Poetry
+      - name: Install Poetry
+        # uses: dschep/install-poetry-action@v1.2
         uses: snok/install-poetry@v1.1.1
+
         with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-          version: 1.1.4
-          # virtualenvs-in-project: false
-          # virtualenvs-path: ~/my-custom-path
+          create_virtualenvs: true
 
-        #   - name: Run tests
-        # run: |
-        #   source .venv/bin/activate
-        #   pytest tests/
-        #   coverage report
-
-      # - name: Install Poetry
-      #   uses: dschep/install-poetry-action@v1.3
-      #   with:
-      #     create_virtualenvs: true
-
-      #----------------------------------------------
-      #       load cached venv if cache exists
-      #----------------------------------------------
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v2
+      - name: Cache Poetry virtualenv
+        uses: actions/cache@v1
+        id: cache
         with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-
-      #----------------------------------------------
-      # install dependencies if cache does not exist
-      #----------------------------------------------
-      - name: Install dependencies
-        run: poetry install
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-
-      # - name: Cache Poetry virtualenv
-      #   uses: actions/cache@v1
-      #   id: cache
-      #   with:
-      #     path: ~/.virtualenvs
-      #     key: poetry-${{ hashFiles('**/poetry.lock') }}
-      #     restore-keys: |
-      #       poetry-${{ hashFiles('**/poetry.lock') }}
+          path: ~/.virtualenvs
+          key: poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            poetry-${{ hashFiles('**/poetry.lock') }}
 
       # - name: Set Poetry config 2
       #   run: ls ~/.virtualenvs
@@ -75,32 +45,22 @@ jobs:
         run: poetry install
         if: steps.cache.outputs.cache-hit != 'true'
 
-      #----------------------------------------------
-      #              run test suite
-      #----------------------------------------------
-      - name: Run tests
-        run: |
-          source .venv/bin/activate
-          pytest tests/
-          coverage report
-
-
       - name: Set env variables
         run: |
           echo "GITHUB_TOKEN=${{secrets.GITHUB_TOKEN}}" >> $GITHUB_ENV
           echo "VAULT_URL=${{secrets.VAULT_URL}}" >> $GITHUB_ENV
           echo "VAULT_TOKEN=${{secrets.VAULT_TOKEN}}" >> $GITHUB_ENV
 
-      # - name: Test with pytest
-      #   # env:
-      #   #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   #     VAULT_URL: ${{ secrets.VAULT_URL }}
-      #   #     VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
-      #   run: |
-      #     # echo "GITHUB_TOKEN=${{secrets.GITHUB_TOKEN}}" >> $GITHUB_ENV
-      #     # echo "VAULT_URL=${{secrets.VAULT_URL}}" >> $GITHUB_ENV
-      #     # echo "VAULT_TOKEN=${{secrets.VAULT_TOKEN}}" >> $GITHUB_ENV
-      #     poetry run pytest --cov . --cov-report=xml
+      - name: Test with pytest - address CVE and deprecation.
+        # env:
+        #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #     VAULT_URL: ${{ secrets.VAULT_URL }}
+        #     VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+        run: |
+          # echo "GITHUB_TOKEN=${{secrets.GITHUB_TOKEN}}" >> $GITHUB_ENV
+          # echo "VAULT_URL=${{secrets.VAULT_URL}}" >> $GITHUB_ENV
+          # echo "VAULT_TOKEN=${{secrets.VAULT_TOKEN}}" >> $GITHUB_ENV
+          poetry run pytest --cov . --cov-report=xml
 
       - name: Upload pytest test results
         uses: actions/upload-artifact@v2
@@ -113,5 +73,3 @@ jobs:
         uses: codecov/codecov-action@v1.0.13
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
-          fail_ci_if_error: true
