@@ -38,19 +38,6 @@ logging.basicConfig(
 class TestIntegrationFileToFauna:
     """Test the integration from files to fauna database."""
 
-    # @classmethod
-    # def get_test_values(cls, secret_path):
-    #     """Build values needed for the test."""
-    #     try:
-    #         fauna_secret_key = get_authentication_values().query_vault_data(
-    #             vault_url="VAULT_URL",
-    #             vault_token="VAULT_TOKEN",
-    #             secret_path=secret_path,
-    #         )
-    #         return fauna_secret_key["data"]["data"]["_key"]
-    #     except KeyError as _error:  # pragma: no cover
-    #         raise ValueError("Missing environment variables") from _error
-
     @staticmethod
     @pytest.fixture()
     def test_get_files_from_folder(return_data_dict):
