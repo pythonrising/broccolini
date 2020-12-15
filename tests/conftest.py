@@ -78,6 +78,7 @@ def return_database_settings():
         fauna_extended_term="fire",
         fauna_new_collection_name="Conftest_db_items",
         fauna_new_index_name="items_search_by_name",
+        fauna_new_search_term="Name_conftest_101",
     )
     return input_dict
 

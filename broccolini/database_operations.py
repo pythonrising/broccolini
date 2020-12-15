@@ -234,9 +234,27 @@ class DataBaseOperations:
 
     def fauna_query_updated_login(self, **kwargs: str) -> Tuple[str, str]:
         """Query data updated."""
-        # client = self.fauna_get_connection()
+        client = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_index_name: str = kwargs["fauna_index_name"]
+        fauna_search_term: str = kwargs["fauna_search_term"]
+        try:
+            result = client.query(
+                q.paginate(q.match(q.index(fauna_index_name), fauna_search_term))
+            )
+            # print(result)
+            return result
+        except (Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
+        #  Map(
+        #               Paginate(
+        #                 Match(Index("items_search_by_name"), "Name_conftest_101")
+        #               ),
+        #               Lambda(
+        #                 "device",
+        #                 Get(Var("device"))
+        #               )
+        #             )
 
         return fauna_collection_name, fauna_index_name
 

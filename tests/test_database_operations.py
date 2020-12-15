@@ -264,8 +264,15 @@ class TestDatabaseOperations:
         ).fauna_query_updated_login(
             fauna_collection_name=return_database_settings["fauna_new_collection_name"],
             fauna_index_name=return_database_settings["fauna_new_index_name"],
+            fauna_search_term=return_database_settings["fauna_new_search_term"],
         )
-        print(result)
+        # assert result
+
+        # print(result)
+        expected = "id=101"
+        # expected = True
+        # assert
+        assert expected in str(result)
 
 
 @pytest.fixture
