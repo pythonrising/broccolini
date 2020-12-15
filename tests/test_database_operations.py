@@ -272,7 +272,10 @@ class TestDatabaseOperations:
         expected = "id=101"
         # expected = True
         # assert
+        # print(type(result))
+        expected_type = dict
         assert expected in str(result)
+        assert isinstance(result, expected_type)
 
 
 @pytest.fixture

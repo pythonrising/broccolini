@@ -6,7 +6,6 @@ import logging
 
 from typing import Any
 from typing import Dict
-from typing import Tuple
 
 import faunadb
 
@@ -232,17 +231,18 @@ class DataBaseOperations:
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_updated_login(self, **kwargs: str) -> Tuple[str, str]:
+    def fauna_query_updated_login(self, **kwargs: str) -> Any:
         """Query data updated."""
         client = self.fauna_get_connection()
-        fauna_collection_name: str = kwargs["fauna_collection_name"]
+        # fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_index_name: str = kwargs["fauna_index_name"]
         fauna_search_term: str = kwargs["fauna_search_term"]
         try:
             result = client.query(
                 q.paginate(q.match(q.index(fauna_index_name), fauna_search_term))
             )
-            # print(result)
+            print(type(result["data"]))
+            print(result)
             return result
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
@@ -255,8 +255,6 @@ class DataBaseOperations:
         #                 Get(Var("device"))
         #               )
         #             )
-
-        return fauna_collection_name, fauna_index_name
 
 
 # def fauna_query_index_for_ref(self, **kwargs: str) -> str:
