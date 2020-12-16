@@ -231,10 +231,9 @@ class DataBaseOperations:
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_updated_login(self, **kwargs: str) -> Any:
+    def fauna_query(self, **kwargs: str) -> Any:
         """Query data updated."""
         client = self.fauna_get_connection()
-        # fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_index_name: str = kwargs["fauna_index_name"]
         fauna_search_term: str = kwargs["fauna_search_term"]
         try:
@@ -246,38 +245,3 @@ class DataBaseOperations:
             return result
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
-        #  Map(
-        #               Paginate(
-        #                 Match(Index("items_search_by_name"), "Name_conftest_101")
-        #               ),
-        #               Lambda(
-        #                 "device",
-        #                 Get(Var("device"))
-        #               )
-        #             )
-
-
-# def fauna_query_index_for_ref(self, **kwargs: str) -> str:
-#     """Query index with more specific information.
-#                 q.get(q.index("spells_by_element_with_name")))
-#                 gives reference but not the id we need
-#     q.paginate(q.match(q.index("spells_with_ref_by_element_name"), "fire")
-#     q.paginate(q.match(q.index("all_spell_names"))))
-#     q.paginate(q.match(q.index("spells_with_ref_by_element_name"), "fire")
-#     "data": [["Fire Beak",{ "@ref": "classes/spells/192900707573039616" }
-#     """
-#     client = self.fauna_get_connection()
-#     fauna_index_name: str = kwargs["fauna_index_name"]
-#     fauna_extended_term: str = kwargs["fauna_extended_term"]
-#     try:
-#         # client.query(q.get(q.index(fauna_index_name)))
-#         # client.query(q.get(q.index(fauna_index_name)))
-#         # q.match(q.index("spells_with_ref_by_element_name"), "fire"
-#         index_list = client.query(
-#             q.paginate(q.match(q.index(fauna_index_name), fauna_extended_term))
-#         )
-#         # print(index_list)
-#         return index_list
-#     except (Exception) as _error:  # pragma: no cover
-#         print(_error)
-#         raise ValueError("Fauna error.") from _error

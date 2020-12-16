@@ -189,79 +189,13 @@ class TestDatabaseOperations:
         assert expected in str(result)
 
     @staticmethod
-    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_query_updated_login(return_database_settings):  # pragma: no cover
-        """Test query index with data from conftest.
-
-                            use fauna_new_collection_name  as collection
-                            create new data using this format
-                            enter this data in fauna shell (until fix database insert)
-                            Map(
-                      [
-        [ "101", { name: "Name_conftest_101", extra: "Description conftest 101." } ],
-        [ "102", { name: "Name_conftest_102", extra: "Description conftest 102." }],
-        [ "103", { name: "Name_conftest_103", extra: "Description conftest 103." } ]
-                      ],
-                      Lambda(
-                        ["id", "data"],
-        Create(Ref(Collection("Conftest_db_items"), Var("id")), { data: Var("data") })
-                      )
-                    )
-
-                       next create index
-                       CreateIndex({
-                      name: "all_items_all_fields",
-                      source: Collection("Conftest_db_items"),
-                      values: [
-                        { field: ["data", "name"] },
-                        { field: ["data", "extra"] },
-                        { field: ["ref"] }
-                      ]
-                    })
-                            next create index for searching
-
-                    CreateIndex({
-                      name: "items_search_by_name",
-                      source: Collection("Conftest_db_items"),
-                      terms: [
-                        {
-                          field: ["data", "name"]
-                        }
-                      ]
-                    })
-                      # next do a test search with shell
-
-                    Map(
-                      Paginate(
-                        Match(Index("items_search_by_name"), "Name_from_conftest_101")
-                      ),
-                      Lambda(
-                        "device",
-                        Get(Var("device"))
-                      )
-                    )
-
-                    {
-                      data: [
-                        {
-                          ref: Ref(Collection("Conftest_db_items"), "101"),
-                          ts: 1608010572300000,
-                          data: {
-                            name: "Name_from_conftest_101",
-                            extra: "Description From Conftest 101."
-                          }
-                        }
-                      ]
-                    }
-                      # then write function to run test query with return value of
-                            extra: "Description From Conftest 101."
-        """
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_query(return_database_settings):  # pragma: no cover
+        """Test query index with data from conftest."""
         client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"]
         )
-        result = DataBaseOperations(
-            client_token=client_token
-        ).fauna_query_updated_login(
+        result = DataBaseOperations(client_token=client_token).fauna_query(
             fauna_collection_name=return_database_settings["fauna_new_collection_name"],
             fauna_index_name=return_database_settings["fauna_new_index_name"],
             fauna_search_term=return_database_settings["fauna_new_search_term"],
