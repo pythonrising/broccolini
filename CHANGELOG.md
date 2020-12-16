@@ -1,6 +1,10 @@
 
 # CHANGELOG
 
+## 0.1.9
+
+Update database functions.  Add commitizen support:
+
 ## 0.1.8
 
 Update type hinting. Cleanup test files:
