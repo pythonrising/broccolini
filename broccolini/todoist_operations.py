@@ -2,10 +2,11 @@
 
 Todoist is a todo list application.
 """
+
+
 import logging
 
-from typing import List
-
+# from typing import List
 from todoist import TodoistAPI
 
 
@@ -61,7 +62,7 @@ class TodoIstOperations:
         except Exception as _error:  # pragma: no cover
             raise ValueError("Todoist error.") from _error
 
-    def filter_items(self, **kwargs: str) -> List[TodoistAPI]:
+    def filter_items(self, **kwargs: str) -> list[TodoistAPI]:
         """Filter todoist items.
 
         Returns:
