@@ -206,8 +206,6 @@ class TestDatabaseOperations:
         Create(Ref(Collection("Conftest_db_items"), Var("id")), { data: Var("data") })
                       )
                     )
-
-        
         
         """
         client_token = get_authentication_values(
@@ -218,18 +216,50 @@ class TestDatabaseOperations:
             fauna_index_name=return_database_settings["fauna_new_index_name"],
             fauna_search_term=return_database_settings["fauna_new_search_term"],
         )
-        # assert result
-
-        
-
-        # print(result)
         expected = "id=101"
-        # expected = True
-        # assert
-        # print(type(result))
         expected_type = dict
         assert expected in str(result)
         assert isinstance(result, expected_type)
+        # print(result)
+        assert result['data'][0].id() == '101'
+        # print(f'reference_id is {reference_id}')
+
+
+        # assert result
+
+    # @staticmethod
+    # # @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    # def test_fauna_query_by_reference_id(return_database_settings):  # pragma: no cover
+    #     """Test query index with data from conftest when given a reference id.
+
+    #     Note reference id is returned in other fauna query function
+    #     This function will use known test value of 101
+    #     """
+    #     client_token = get_authentication_values(
+    #         return_database_settings["fauna_path_srv"]
+    #     )
+    #     result = DataBaseOperations(client_token=client_token).fauna_query(
+    #         fauna_collection_name=return_database_settings["fauna_new_collection_name"],
+    #         fauna_index_name=return_database_settings["fauna_new_index_name"],
+    #         fauna_search_term=return_database_settings["fauna_new_search_term"],
+    #     )
+    #     # print(len(result['data']))
+    #     print(result['data'][0])
+
+        # reference_id = result['data'][0].id()
+        # print(dir(greg.id))
+        # print(f'reference_id is {reference_id}')
+        
+
+        # for each in result['data']:
+        #     print(each)
+
+        # import pprint as pp
+        # pp.pprint(result['data'])
+
+
+
+        
 
 
 @pytest.fixture
