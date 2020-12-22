@@ -245,3 +245,19 @@ class DataBaseOperations:
             return result
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
+
+    def fauna_query_by_reference_id(self, **kwargs: str) -> Any:
+        """Query data using reference id ."""
+        client = self.fauna_get_connection()
+        fauna_index_name: str = kwargs["fauna_index_name"]
+        fauna_reference_id: str = kwargs["fauna_reference_id"]
+        return fauna_index_name, fauna_reference_id
+        # try:
+        #     result = client.query(
+        #         # q.paginate(q.match(q.index(fauna_index_name), fauna_reference_id))
+        #     )
+        #     return result
+        # except (Exception) as _error:  # pragma: no cover
+        #     raise ValueError("Fauna error.") from _error
+
+

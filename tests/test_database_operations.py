@@ -216,47 +216,32 @@ class TestDatabaseOperations:
             fauna_index_name=return_database_settings["fauna_new_index_name"],
             fauna_search_term=return_database_settings["fauna_new_search_term"],
         )
-        expected = "id=101"
+        expected = return_database_settings["fauna_reference_id"]
+        
         expected_type = dict
         assert expected in str(result)
         assert isinstance(result, expected_type)
-        # print(result)
-        assert result['data'][0].id() == '101'
-        # print(f'reference_id is {reference_id}')
+        assert result['data'][0].id() == expected
 
+    @staticmethod
+    # @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_query_by_reference_id(return_database_settings):  # pragma: no cover
+        """Test query index with data from conftest when given a reference id.
 
-        # assert result
+        Note reference id is returned in other fauna query function
+        This function will use known test value of 101
 
-    # @staticmethod
-    # # @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    # def test_fauna_query_by_reference_id(return_database_settings):  # pragma: no cover
-    #     """Test query index with data from conftest when given a reference id.
-
-    #     Note reference id is returned in other fauna query function
-    #     This function will use known test value of 101
-    #     """
-    #     client_token = get_authentication_values(
-    #         return_database_settings["fauna_path_srv"]
-    #     )
-    #     result = DataBaseOperations(client_token=client_token).fauna_query(
-    #         fauna_collection_name=return_database_settings["fauna_new_collection_name"],
-    #         fauna_index_name=return_database_settings["fauna_new_index_name"],
-    #         fauna_search_term=return_database_settings["fauna_new_search_term"],
-    #     )
-    #     # print(len(result['data']))
-    #     print(result['data'][0])
-
-        # reference_id = result['data'][0].id()
-        # print(dir(greg.id))
-        # print(f'reference_id is {reference_id}')
-        
-
-        # for each in result['data']:
-        #     print(each)
-
-        # import pprint as pp
-        # pp.pprint(result['data'])
-
+        """
+        client_token = get_authentication_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(client_token=client_token).fauna_query_by_reference_id(
+            fauna_collection_name=return_database_settings["fauna_new_collection_name"],
+            fauna_reference_id=return_database_settings["fauna_reference_id"],
+            fauna_index_name=return_database_settings["fauna_new_index_name"],
+            fauna_search_term=return_database_settings["fauna_new_search_term"],
+        )
+        print(result)
 
 
         
