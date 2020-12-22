@@ -148,7 +148,7 @@ class AWSOperations:
             raise ValueError("AWS error.") from _error
 
     def aws_sqs_send_message(self, **kwargs: str) -> bool:
-        """Send sqs message
+        """Send sqs message.
 
         Returns:
             bool: Success of send message.

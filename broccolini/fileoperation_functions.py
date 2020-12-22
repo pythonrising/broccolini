@@ -28,7 +28,7 @@ class FileOperationFunctions:
 
     @staticmethod
     def build_dictionary(**kwargs: Path) -> Dict[str, object]:
-        """Builds dictionary of values.
+        """Build dictionary of values.
 
         input: pathlib path object from the file system
         input_type: Path
@@ -77,10 +77,9 @@ class FileOperationFunctions:
 
     @staticmethod
     def filter_subject_from_list(**kwargs: str) -> str:
-        """When given list of parents in pathlib format - search for the relevant line
+        """When given list of parents in pathlib format - search for the relevant line.
 
         Note - return on first match is good because the list refers to the same path
-
         input: list_of_pathlib_files
         input_type = List[Path]
         output: match[1]

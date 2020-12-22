@@ -79,6 +79,8 @@ def return_database_settings():
         fauna_new_collection_name="Conftest_db_items",
         fauna_new_index_name="items_search_by_name",
         fauna_new_search_term="Name_conftest_101",
+        fauna_reference_id="101",
+        fauna_id_101_extra="Description conftest 101.",
     )
     return input_dict
 

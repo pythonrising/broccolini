@@ -113,7 +113,7 @@ class DataBaseOperations:
     #         raise ValueError("Fauna error.") from _error
 
     def fauna_query_index(self, **kwargs: str) -> Dict[str, str]:
-        """query index."""
+        """Query index."""
         client = self.fauna_get_connection()
         fauna_index_name: str = kwargs["fauna_index_name"]
         try:
@@ -149,6 +149,7 @@ class DataBaseOperations:
 
     def fauna_paginate_database(self) -> bool:
         """Fauna paginate database.
+
         Requires admin key to paginate databases instead of just server database.
         """
         client = self.fauna_get_connection()
@@ -244,4 +245,17 @@ class DataBaseOperations:
             # print(result)
             return result
         except (Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
+
+    def fauna_query_by_reference_id(self, **kwargs: str) -> Any:
+        """Query data using reference id ."""
+        client = self.fauna_get_connection()
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
+        fauna_reference_id: str = kwargs["fauna_reference_id"]
+        try:
+            result = client.query(
+                q.get(q.ref(q.collection(fauna_collection_name), fauna_reference_id))
+            )
+            return result
+        except BadRequest as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
