@@ -1,6 +1,10 @@
 
 # CHANGELOG
 
+## 0.1.10
+
+Added search function to database functions.  Documentation cleanup:
+
 ## 0.1.9
 
 Update database functions.  Add commitizen support:

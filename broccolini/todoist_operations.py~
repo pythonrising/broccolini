@@ -75,7 +75,7 @@ class TodoIstOperations:
                 todoist_api_token=todoist_api_token,
             )
 
-            item_list: List[TodoistAPI] = []
+            item_list: list[TodoistAPI] = []
             for each in data:
                 item_list.append(each["content"])
             return item_list
