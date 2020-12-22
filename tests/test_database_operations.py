@@ -238,8 +238,8 @@ class TestDatabaseOperations:
         result = DataBaseOperations(client_token=client_token).fauna_query_by_reference_id(
             fauna_collection_name=return_database_settings["fauna_new_collection_name"],
             fauna_reference_id=return_database_settings["fauna_reference_id"],
-            fauna_index_name=return_database_settings["fauna_new_index_name"],
-            fauna_search_term=return_database_settings["fauna_new_search_term"],
+            # fauna_index_name=return_database_settings["fauna_new_index_name"],
+            # fauna_search_term=return_database_settings["fauna_new_search_term"],
         )
         print(result)
 
