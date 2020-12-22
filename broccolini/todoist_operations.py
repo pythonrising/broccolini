@@ -27,13 +27,7 @@ class TodoIstOperations:
 
     @staticmethod
     def todoist_get_connection(**kwargs: str) -> TodoistAPI:
-        # def todoist_get_connection(**kwargs):
-        # def todoist_get_connection(**kwargs: str) -> str:
-        """[summary]
-
-        Returns:
-            str: [description]
-        """
+        """Get connection to todoist."""
         todoist_api_token: str = kwargs["todoist_api_token"]
         try:
             api = TodoistAPI(todoist_api_token)

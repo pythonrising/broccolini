@@ -113,7 +113,7 @@ class DataBaseOperations:
     #         raise ValueError("Fauna error.") from _error
 
     def fauna_query_index(self, **kwargs: str) -> Dict[str, str]:
-        """query index."""
+        """Query index."""
         client = self.fauna_get_connection()
         fauna_index_name: str = kwargs["fauna_index_name"]
         try:
@@ -149,6 +149,7 @@ class DataBaseOperations:
 
     def fauna_paginate_database(self) -> bool:
         """Fauna paginate database.
+
         Requires admin key to paginate databases instead of just server database.
         """
         client = self.fauna_get_connection()

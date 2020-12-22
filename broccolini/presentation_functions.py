@@ -29,8 +29,7 @@ logging.basicConfig(
 
 
 class PresentationOperations:
-    """Presentation
-    Operation Functions."""
+    """Presentation Operation Functions."""
 
     def __init__(self) -> None:
         """Init class - vars are called in the function as needed."""
@@ -42,7 +41,6 @@ class PresentationOperations:
 
     @staticmethod
     def prepare_template_with_pathlib(**kwargs):  # type: ignore
-
         """Prepare output using a template and dictionary.
 
         Take dictionary and a template file.  Combine to create
