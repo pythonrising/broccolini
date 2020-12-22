@@ -191,7 +191,25 @@ class TestDatabaseOperations:
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
     def test_fauna_query(return_database_settings):  # pragma: no cover
-        """Test query index with data from conftest."""
+        """Test query index with data from conftest.
+
+        Need to manually create the database information for the tests to pass
+
+           Map(
+                      [
+        [ "101", { name: "Name_conftest_101", extra: "Description conftest 101." } ],
+        [ "102", { name: "Name_conftest_102", extra: "Description conftest 102." }],
+        [ "103", { name: "Name_conftest_103", extra: "Description conftest 103." } ]
+                      ],
+                      Lambda(
+                        ["id", "data"],
+        Create(Ref(Collection("Conftest_db_items"), Var("id")), { data: Var("data") })
+                      )
+                    )
+
+        
+        
+        """
         client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"]
         )
@@ -201,6 +219,8 @@ class TestDatabaseOperations:
             fauna_search_term=return_database_settings["fauna_new_search_term"],
         )
         # assert result
+
+        
 
         # print(result)
         expected = "id=101"

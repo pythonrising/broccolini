@@ -240,8 +240,8 @@ class DataBaseOperations:
             result = client.query(
                 q.paginate(q.match(q.index(fauna_index_name), fauna_search_term))
             )
-            print(type(result["data"]))
-            print(result)
+            # print(type(result["data"]))
+            # print(result)
             return result
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
