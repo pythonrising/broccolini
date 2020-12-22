@@ -251,9 +251,6 @@ class DataBaseOperations:
         client = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
         fauna_reference_id: str = kwargs["fauna_reference_id"]
-        print(fauna_reference_id)
-        print(fauna_collection_name)
-        # return True
         try:
             result = client.query(
                 q.get(q.ref(q.collection(fauna_collection_name), fauna_reference_id))
@@ -261,5 +258,3 @@ class DataBaseOperations:
             return result
         except BadRequest as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
-
-

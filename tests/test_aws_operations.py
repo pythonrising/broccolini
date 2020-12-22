@@ -61,7 +61,7 @@ class TestAWSOperations:
 
     @staticmethod
     # @pytest.mark.dependency(depends=["test_login_to_aws"])
-    def DONTUSEtest_aws_iam_functions(return_aws_settings):  # pragma: no cover
+    def dont_test_aws_iam_functions(return_aws_settings):  # pragma: no cover
         """Test IAM settings."""
         aws_access_key_id = get_authentication_values(
             secret_path=return_aws_settings["aws_iam_key_id_path"]
@@ -94,7 +94,7 @@ class TestAWSOperations:
         assert isinstance(result_add_user_to_group, expected_type_add_user_to_group)
 
     @staticmethod
-    def DONTUSEtest_aws_iam_list_users(return_aws_settings):  # pragma: no cover
+    def dont_test_aws_iam_list_users(return_aws_settings):  # pragma: no cover
         """[summary]
 
         Args:
