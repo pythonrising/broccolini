@@ -86,6 +86,39 @@ def return_database_settings():
 
 
 @pytest.fixture(scope="session")
+def return_json_settings():
+    """Provide values for json functions."""
+
+    input_dict = dict(
+        json_output_file_name="./__output_files/result_sample.json",
+        json_dict_test={
+            "Title": {"DataType": "String", "StringValue": "The Whistler"},
+            "Author": {"DataType": "String", "StringValue": "John Grisham"},
+            "WeeksOn": {"DataType": "Number", "StringValue": "6"},
+        },
+        json_list_test=[
+            {
+                "api_version": "v1alpha1",
+                "directorate_name": "directname",
+                "project_name": "PROJNAMEHERE",
+                "target_revision": "main",
+            },
+            {
+                "file1_name": "file_to_be_copied_created_by_conftest.txt",
+                "file2_name": "file2_to_be_copied_created_by_conftest.txt",
+            },
+            {
+                "api_version": "v1alpha2",
+                "directorate_name": "adsfdssd2",
+                "project_name": "PROJNAMEHERE2",
+                "target_revision": "targetrev",
+            },
+        ],
+    )
+    return input_dict
+
+
+@pytest.fixture(scope="session")
 def return_aws_settings():
     """Provide values for AWS."""
     # faker = Faker("en_US")
