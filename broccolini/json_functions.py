@@ -7,7 +7,6 @@ import json
 import logging
 
 from typing import Dict
-from typing import Optional
 from typing import Tuple
 
 
@@ -59,7 +58,7 @@ class JsonFunctions:
         return contents
 
     @staticmethod
-    def write_dict_to_json(**kwargs: str) -> Optional[bool]:
+    def write_dict_to_json(**kwargs: str) -> bool:
         """Write python dict to json.
         Need to put in types here.
         input: input_file_name
@@ -68,12 +67,13 @@ class JsonFunctions:
         """
         input_dict = kwargs["input_dict"]
         output_file_name = kwargs["output_file_name"]
-
-        json_temp = json.dumps(input_dict, indent=4)
+        success = False
 
         with open(output_file_name, "w") as file_handle:
-            file_handle.write(json_temp)
-            return True
+            file_handle.write(json.dumps(input_dict, indent=4))
+            success = True
+
+        return success
 
     # fauna_document_data = db_upload_data["fauna_document_data"]
     # # fauna_formatted_dict = dict(data=fauna_document_data)

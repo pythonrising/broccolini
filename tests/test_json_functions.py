@@ -6,6 +6,8 @@ Testing json operations.  Mostly wrappers.
 """
 import logging
 
+from pathlib import Path
+
 from broccolini.json_functions import JsonFunctions
 
 
@@ -46,22 +48,17 @@ class TestJsonFunctions:
 
     @staticmethod
     def test_write_dict_to_json(return_json_settings, create_generic_json_test_file):
-        """Test write list to json file with list.
-        json_dict_test
-        output_file_name=create_generic_json_test_file,
-        """
-        # OUTPUT_FILE_NAME = r'__output_files/result_sample.json'
+        """Test write list to json file with list."""
         result = JsonFunctions().write_dict_to_json(
             input_dict=return_json_settings["json_dict_test"],
-            output_file_name=return_json_settings["json_output_file_name"],
+            output_file_name=create_generic_json_test_file,
         )
-        # print(result['Title'])
-        # assert that we dcan read the generated file
-        expected = True
 
-        # "Title": {
-        # "DataType": "String",
-        # "StringValue": "The Whistler"
+        path = Path(create_generic_json_test_file)
+        result_in_file = path.read_text()
+        expected = True
+        expected_in_file = '"DataType": "String",'
         expected_type = bool
         assert expected == result
         assert isinstance(result, expected_type)
+        assert expected_in_file in result_in_file
