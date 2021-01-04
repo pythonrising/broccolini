@@ -87,6 +87,30 @@ class DataBaseOperations:
         except (BadRequest, Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
+    def fauna_query_with_ref_id(self, **kwargs: str) -> Dict[Dict[str, str], str]:
+        """Query fauna when given ref id."""
+        client = self.fauna_get_connection()
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
+        ref_id: str = kwargs["ref_id"]
+        try:
+            result = client.query(
+                q.get(q.ref(q.collection(fauna_collection_name), ref_id))
+            )
+            return result
+        except (Exception) as _error:  # pragma: no cover
+            raise ValueError("Fauna error.") from _error
+
+    # def fauna_query_with_name(self, **kwargs: str) -> Dict[Dict[str, str], Any]:
+    #     """Query fauna when given name."""
+    #     client = self.fauna_get_connection()
+    #     fauna_index_name: str = kwargs["fauna_index_name"]
+    #     name: str = kwargs["name"]
+    #     try:
+    #         result = client.query(q.get(q.match(q.index(fauna_index_name), name)))
+    #         return result
+    #     except (Exception) as _error:  # pragma: no cover
+    #         raise ValueError("Fauna error.") from _error
+
     # def fauna_query_index_for_ref(self, **kwargs: str) -> str:
     #     """Query index with more specific information.
     #                 q.get(q.index("spells_by_element_with_name")))

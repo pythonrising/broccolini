@@ -225,7 +225,9 @@ class TestDatabaseOperations:
 
     @staticmethod
     @pytest.mark.dependency(depends=["test_login_to_fauna"])
-    def test_fauna_query_by_reference_id(return_database_settings):  # pragma: no cover
+    def test_fauna_query_by_reference_id_orig(
+        return_database_settings,
+    ):  # pragma: no cover
         """Test query index with data from conftest when given a reference id."""
         client_token = get_authentication_values(
             return_database_settings["fauna_path_srv"]
@@ -240,6 +242,70 @@ class TestDatabaseOperations:
         expected_type = dict
         assert extra == return_database_settings["fauna_id_101_extra"]
         assert isinstance(result, expected_type)
+
+    # def test_fauna_add_data(return_database_settings):
+    #     """Test add fauna function
+
+    #     Function works using fake data.
+    #     now moving to use real data under other test below
+
+    #     Needs to look like this or similar for the import to work
+    #     #   fauna_document_data=
+    # {"data": {"name": "tdata", "CtestDkey": ["air", "fire"]}},
+    #     import from json file into dictionary
+    #     """
+    #     client_token = get_authentication_values(
+    #         return_database_settings["fauna_path_srv"]
+    #     )
+
+    #     result = DataBaseOperations(client_token=client_token).fauna_delete_document(
+    #         fauna_collection_name=return_database_settings["fauna_collection_name"],
+    #     )
+    #     fauna_db_server_key: str = get_authentication_values(
+    #         secret_path=return_database_settings["fauna_db_key_path"],
+    #     )
+
+    #     DatabaseQueries(client_token=fauna_db_server_key).fauna_create_document(
+    #         fauna_collection_name=db_upload_data["fauna_collection_name"],
+    #         fauna_document_data=db_upload_data["fauna_document_data"],
+    #         # fauna_document_data=,
+    #         name=db_upload_data["fauna_search_term"],
+    #     )
+
+    @staticmethod
+    @pytest.mark.dependency(depends=["test_login_to_fauna"])
+    def test_fauna_query_with_ref_id(return_database_settings):  # pragma: no cover
+        """Test updated fauna query method."""
+        client_token = get_authentication_values(
+            return_database_settings["fauna_path_srv"]
+        )
+        result = DataBaseOperations(client_token=client_token).fauna_query_with_ref_id(
+            fauna_collection_name=return_database_settings["fauna_new_collection_name"],
+            ref_id=return_database_settings["fauna_reference_id"],
+        )
+        expected = return_database_settings["fauna_new_search_term"]
+        # print(result['data'])
+        expected_type = dict
+        assert isinstance(result, expected_type)
+        assert expected == result["data"]["name"]
+
+        # ).fauna_query_with_ref_id(return_database_settings['']
+
+
+# def test_fauna_query_with_ref_id(db_upload_data):
+#     """Test open."""
+#     fauna_db_server_key: str = get_authentication_values(
+#         secret_path=db_upload_data["fauna_db_key_path"],
+#     )
+#     result = DatabaseQueries(client_token=fauna_db_server_key).
+# fauna_query_with_ref_id(
+#         fauna_collection_name=db_upload_data["fauna_new_collection_name"],
+#         ref_id=db_upload_data["ref_id"],
+#     )
+#     expected_type = dict
+#     expected = 'LAPTOP-5GJ5ENRV'
+#     assert expected in str(result)
+#     assert isinstance(result, expected_type)
 
 
 @pytest.fixture
