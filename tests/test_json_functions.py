@@ -15,13 +15,16 @@ logging.basicConfig(
 
 
 class TestJsonFunctions:
-    """Test Json Functions."""
+    """Test Json Functions.
+    json_list_test
+    # def test_write_list_to_json(return_a_list,
+    """
 
     @staticmethod
-    def test_write_list_to_json(return_a_list, create_generic_json_test_file):
+    def test_write_list_to_json(return_json_settings, create_generic_json_test_file):
         """Test write list to json file with list."""
         result = JsonFunctions().write_list_to_json(
-            input_list=return_a_list,
+            input_list=return_json_settings["json_list_test"],
             output_file_name=create_generic_json_test_file,
         )
         expected = "generic_file_name_json"
@@ -39,4 +42,26 @@ class TestJsonFunctions:
         expected_type = dict
         expected = "website_from_conftest"
         assert result["website"] == expected
+        assert isinstance(result, expected_type)
+
+    @staticmethod
+    def test_write_dict_to_json(return_json_settings, create_generic_json_test_file):
+        """Test write list to json file with list.
+        json_dict_test
+        output_file_name=create_generic_json_test_file,
+        """
+        # OUTPUT_FILE_NAME = r'__output_files/result_sample.json'
+        result = JsonFunctions().write_dict_to_json(
+            input_dict=return_json_settings["json_dict_test"],
+            output_file_name=return_json_settings["json_output_file_name"],
+        )
+        # print(result['Title'])
+        # assert that we dcan read the generated file
+        expected = True
+
+        # "Title": {
+        # "DataType": "String",
+        # "StringValue": "The Whistler"
+        expected_type = bool
+        assert expected == result
         assert isinstance(result, expected_type)

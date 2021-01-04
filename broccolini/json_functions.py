@@ -7,6 +7,7 @@ import json
 import logging
 
 from typing import Dict
+from typing import Optional
 from typing import Tuple
 
 
@@ -56,3 +57,39 @@ class JsonFunctions:
         with open(input_file_name) as file_handle:
             contents: Dict[str, str] = json.load(file_handle)
         return contents
+
+    @staticmethod
+    def write_dict_to_json(**kwargs: str) -> Optional[bool]:
+        """Write python dict to json.
+        Need to put in types here.
+        input: input_file_name
+        input_type: dict
+        output: file_name
+        """
+        input_dict = kwargs["input_dict"]
+        output_file_name = kwargs["output_file_name"]
+
+        json_temp = json.dumps(input_dict, indent=4)
+
+        with open(output_file_name, "w") as file_handle:
+            file_handle.write(json_temp)
+            return True
+
+    # fauna_document_data = db_upload_data["fauna_document_data"]
+    # # fauna_formatted_dict = dict(data=fauna_document_data)
+
+    # # print(json.dumps(fauna_document_data, indent = 4))
+
+    #     """Convert a python list to a Json file.
+
+    #     input: list
+    #     input_type: list
+    #     output side effect: json output in a json file
+    #     output: success or failure
+    #     output_type: bool
+    #     """
+    #     input_list = kwargs["input_list"]
+    #     output_file_name: str = kwargs["output_file_name"]
+    #     with open(output_file_name, "w") as file_handle:
+    #         json.dump(input_list, file_handle)
+    #     return True, f"successfully wrote file:{output_file_name}"
