@@ -1,6 +1,10 @@
 
 # CHANGELOG
 
+## 0.1.11
+
+Added additional configurations to database and json functions:
+
 ## 0.1.10
 
 Added search function to database functions.  Documentation cleanup:
