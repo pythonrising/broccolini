@@ -74,22 +74,3 @@ class JsonFunctions:
             success = True
 
         return success
-
-    # fauna_document_data = db_upload_data["fauna_document_data"]
-    # # fauna_formatted_dict = dict(data=fauna_document_data)
-
-    # # print(json.dumps(fauna_document_data, indent = 4))
-
-    #     """Convert a python list to a Json file.
-
-    #     input: list
-    #     input_type: list
-    #     output side effect: json output in a json file
-    #     output: success or failure
-    #     output_type: bool
-    #     """
-    #     input_list = kwargs["input_list"]
-    #     output_file_name: str = kwargs["output_file_name"]
-    #     with open(output_file_name, "w") as file_handle:
-    #         json.dump(input_list, file_handle)
-    #     return True, f"successfully wrote file:{output_file_name}"
