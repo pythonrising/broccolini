@@ -1,6 +1,10 @@
 
 # CHANGELOG
 
+## 0.1.12
+
+Added additional cleanup to database and presentation functions:
+
 ## 0.1.11
 
 Added additional configurations to database and json functions:
