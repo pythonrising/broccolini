@@ -258,3 +258,12 @@ class DataBaseOperations:
             return result
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
+
+    def fauna_create_data_using_jinja(self, **kwargs: str) -> Any:
+        """Create a bulk upload file using a jinja template.
+
+        input: records_to_create: Dict[str, str]
+        returns: jinja_template: str
+        """
+        fauna_collection_name: str = kwargs["fauna_collection_name"]
+        return fauna_collection_name
