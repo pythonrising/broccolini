@@ -1,0 +1,12 @@
+Map(
+  [
+{% for each in jinja_var.input_list %}
+    [{ item_name: "{{each.item_name}}", type: "{{each.type}}", transaction_date: "{{each.transaction_date}}", author: "{{each.author}}", provider: "{{each.provider}}" } ],
+{% endfor %}
+  ],
+Lambda("post_title",
+    Create(
+      Collection("Items"), { data: { item_detail: Var("post_title") } }
+    )
+  )
+)

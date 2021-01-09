@@ -256,6 +256,27 @@ class TestDatabaseOperations:
         assert isinstance(result, expected_type)
         assert expected in str(result)
 
+    @staticmethod
+    def test_fauna_create_data_using_jinja(return_database_settings):
+        """Test gets id when given name."""
+        fauna_db_server_key: str = get_authentication_values(
+            secret_path=return_database_settings["fauna_path_srv"],
+        )
+        result = DataBaseOperations(
+            client_token=fauna_db_server_key
+        ).fauna_create_data_using_jinja(
+            fauna_collection_name=return_database_settings["fauna_collection_name"],
+            input_template_name=return_database_settings["fauna_input_template_name"],
+            fauna_input_data_csv=return_database_settings["fauna_input_data_csv"],
+            output_file=return_database_settings["fauna_output_file"],
+        )
+        print(result)
+
+        # expected = return_database_settings["fauna_collection_name"]
+        # expected_type = str
+        # assert isinstance(result, expected_type)
+        # assert expected in str(result)
+
 
 @pytest.fixture
 def _mocked_fauna(mocker):  # pragma: no cover
