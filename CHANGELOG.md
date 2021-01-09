@@ -1,7 +1,7 @@
 
 # CHANGELOG
 
-## 0.1.12
+## 0.1.12.1
 
 Added additional cleanup to database and presentation functions:
 
