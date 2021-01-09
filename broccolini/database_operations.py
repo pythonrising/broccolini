@@ -2,10 +2,12 @@
 
 DataBase operations.
 """
+import csv
 import logging
 
 from typing import Any
 from typing import Dict
+from typing import List
 
 import faunadb
 
@@ -16,8 +18,9 @@ from faunadb.errors import NotFound
 from faunadb.errors import UnexpectedError
 from faunadb.objects import Ref
 
+from broccolini.presentation_functions import PresentationOperations
 
-# from typing import Optional
+
 # from typing import Union
 
 
@@ -175,7 +178,9 @@ class DataBaseOperations:
         except NotFound as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_index_with_data(self, **kwargs: str) -> Any:  # pragma: no cover
+    def fauna_query_index_with_data(
+        self, **kwargs: str
+    ) -> Dict[Dict[str, str], str]:  # pragma: no cover
         """Query index when given the index name."""
         client = self.fauna_get_connection()
         fauna_index_name: str = kwargs["fauna_index_name"]
@@ -235,7 +240,7 @@ class DataBaseOperations:
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_query_by_reference_id(self, **kwargs: str) -> Any:
+    def fauna_query_by_reference_id(self, **kwargs: str) -> Dict[Dict[str, str], str]:
         """Query data using reference id ."""
         client = self.fauna_get_connection()
         fauna_collection_name: str = kwargs["fauna_collection_name"]
@@ -259,11 +264,39 @@ class DataBaseOperations:
         except (Exception) as _error:  # pragma: no cover
             raise ValueError("Fauna error.") from _error
 
-    def fauna_create_data_using_jinja(self, **kwargs: str) -> Any:
+    @staticmethod
+    def fauna_create_data_using_jinja(**kwargs: str) -> Any:
         """Create a bulk upload file using a jinja template.
 
         input: records_to_create: Dict[str, str]
-        returns: jinja_template: str
+        side_effect: jinja_template file type: io
+        returns: success: bool
         """
+        success = False
         fauna_collection_name: str = kwargs["fauna_collection_name"]
-        return fauna_collection_name
+        fauna_input_data_csv: str = kwargs["fauna_input_data_csv"]
+        output_file: str = kwargs["output_file"]
+        input_template_name: str = kwargs["input_template_name"]
+        input_list: List[Dict[str, str]] = []
+
+        with open(fauna_input_data_csv, "rt") as file_handle:
+            reader = csv.DictReader(file_handle)
+            for row in reader:
+                input_list.append(row)
+
+        input_dict = dict(
+            input_list=input_list,
+            fauna_collection_name=fauna_collection_name,
+        )
+
+        result = PresentationOperations().prepare_template_with_pathlib(
+            input_dictionary=input_dict,
+            input_template_name=input_template_name,
+            autoescape_formats=["html", "xml"],
+        )
+
+        with open(output_file, "w") as file_handle:
+            file_handle.write(result)
+            success = True
+
+        return success

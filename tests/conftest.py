@@ -81,6 +81,9 @@ def return_database_settings():
         fauna_new_search_term="Name_conftest_101",
         fauna_reference_id="101",
         fauna_id_101_extra="Description conftest 101.",
+        fauna_input_template_name="fauna_bulk_upload_preparation.jinja2",
+        fauna_input_data_csv="__input_files/fauna_input_data.csv",
+        fauna_output_file="__output_files/fauna_template_output.txt",
     )
     return input_dict
 
