@@ -73,6 +73,7 @@ def return_database_settings():
         fauna_db_name="pythonrising_dev",
         fauna_collection_name="collection_name_used_for_delete_test",
         fauna_index_name="index_name_used_for_delete_test",
+        fauna_index_name_all="all_Items",
         fauna_test_bad_database=r"bad_database",
         fauna_document_data={"data": {"name": "tdata", "CtestDkey": ["air", "fire"]}},
         fauna_extended_term="fire",

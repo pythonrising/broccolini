@@ -280,8 +280,14 @@ class TestDatabaseOperations:
         )
         result = DataBaseOperations(
             client_token=fauna_db_server_key
-        ).fauna_list_all_using_lambda()
-        print(result)
+        ).fauna_list_all_using_lambda(
+            fauna_index_name=return_database_settings["fauna_index_name_all"],
+        )
+        expected = "'ref': Ref(id="
+        expected_type = dict
+        assert isinstance(result, expected_type)
+        assert expected in str(result["data"])
+        # print(result)
 
         # expected = return_database_settings["fauna_collection_name"]
         # expected_type = str
