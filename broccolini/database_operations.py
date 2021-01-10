@@ -300,3 +300,17 @@ class DataBaseOperations:
             success = True
 
         return success
+
+    def fauna_list_all_using_lambda(self) -> Any:
+        """Follow example from serverless to list using lambda(javascript)
+
+        __credits__ = https://github.com/serverless/examples/blob/master/
+        aws-python-rest-api-with-faunadb/todos/list.py
+        """
+        client = self.fauna_get_connection()
+        all_todos = q.index("all_Items")
+        results = client.query(
+            q.map_expr(lambda ref: q.get(ref), q.paginate(q.match(all_todos)))
+        )
+
+        return results

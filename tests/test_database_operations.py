@@ -272,6 +272,17 @@ class TestDatabaseOperations:
         )
         print(result)
 
+    @staticmethod
+    def test_fauna_list_all_using_lambda(return_database_settings):
+        """Test list all without knowing ref id."""
+        fauna_db_server_key: str = get_authentication_values(
+            secret_path=return_database_settings["fauna_training_path"],
+        )
+        result = DataBaseOperations(
+            client_token=fauna_db_server_key
+        ).fauna_list_all_using_lambda()
+        print(result)
+
         # expected = return_database_settings["fauna_collection_name"]
         # expected_type = str
         # assert isinstance(result, expected_type)
