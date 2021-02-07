@@ -1,7 +1,11 @@
 
 # CHANGELOG
 
-## 0.1.12.2
+## 0.1.12.4
+
+Cleanup poetry versions:
+
+## 0.1.12.3
 
 Added additional cleanup to database functions:
 
