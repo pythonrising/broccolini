@@ -73,6 +73,7 @@ def return_database_settings():
         fauna_db_name="pythonrising_dev",
         fauna_collection_name="collection_name_used_for_delete_test",
         fauna_index_name="index_name_used_for_delete_test",
+        fauna_index_name_all="all_Items",
         fauna_test_bad_database=r"bad_database",
         fauna_document_data={"data": {"name": "tdata", "CtestDkey": ["air", "fire"]}},
         fauna_extended_term="fire",
@@ -84,6 +85,7 @@ def return_database_settings():
         fauna_input_template_name="fauna_bulk_upload_preparation.jinja2",
         fauna_input_data_csv="__input_files/fauna_input_data.csv",
         fauna_output_file="__output_files/fauna_template_output.txt",
+        fauna_training_path="python_rising/dev/faunadb/training_db/server/api_token",
     )
     return input_dict
 
