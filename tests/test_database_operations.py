@@ -232,7 +232,8 @@ class TestDatabaseOperations:
     #     )
     #     result = DataBaseOperations
     # (client_token=client_token).fauna_query_with_ref_id(
-    #         fauna_collection_name=return_database_settings["fauna_new_collection_name"],
+    #         fauna_collection_name=
+    # return_database_settings["fauna_new_collection_name"],
     #         ref_id=return_database_settings["fauna_reference_id"],
     #     )
     # expected = return_database_settings["fauna_new_search_term"]
