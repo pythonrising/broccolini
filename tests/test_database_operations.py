@@ -7,6 +7,9 @@ Testing common Database operations. Starting with www.faunadb.com.
 
 import logging
 
+from unittest import TestCase
+from unittest import mock
+
 import pytest
 
 from faunadb.client import FaunaClient
@@ -19,6 +22,42 @@ from broccolini.database_operations import DataBaseOperations
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
 )
+
+
+class TestWorkerModule(TestCase):
+    """Mock database funtions.
+
+        from broccolini.database_operations import DataBaseOperations
+    DataBaseOperations(client_token=client_token).fauna_get_connection()
+    """
+
+    def test_patching_class(self):
+        """Patch example for use in other mocking tests."""
+        # with mock.patch('work.os.getcwd', return_value='testing'):
+        #     assert work_on() == 'testing'
+
+        with mock.patch(
+            "broccolini.database_operations.DataBaseOperations.fauna_get_connection"
+        ) as mock_helper:
+            mock_helper.return_value.broccolini.database_operations.fauna_get_connection.return_value = (
+                "testing"
+            )
+            DataBaseOperations.fauna_get_connection("input_dictionary=input_dict")
+            mock_helper.assert_called_once_with("input_dictionary=input_dict")
+            # print(dir(DataBaseOperations.fauna_get_connection.return_value()))
+            # print(DataBaseOperations("input_dictionary=input_dict").fauna_get_connection.return_value)
+            # self.assertEqual(worker.work(), 'testing')
+            # self.assertEqual(DataBaseOperations("input_dictionary=input_dict").fauna_get_connection?, 'testing')
+            # print(DataBaseOperations.fauna_get_connection())
+            # print(DataBaseOperations.fauna_get_connection(in))
+            # print(dir(DataBaseOperations))
+            # self.assertEqual(DataBaseOperations.fauna_get_connection(), 'testing')
+            # self.assertEqual(DataBaseOperations.fauna_get_connection(
+            #     "input_dictionary=input_dict"
+            # ).return_value
+
+            # print(DataBaseOperations.fauna_get_connection())
+            # self.assertEqual(DataBaseOperations.work(), 'testing')
 
 
 class TestDatabaseOperations:

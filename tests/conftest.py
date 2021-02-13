@@ -91,6 +91,19 @@ def return_database_settings():
 
 
 @pytest.fixture(scope="session")
+def mock_settings():
+    """Provide values for mocks."""
+
+    input_dict = dict(
+        bad_mock_input_value="BAD MOCK VALUES FROM CONFTEST",
+        bad_mock_output_value="BAD MOCK VALUES FROM CONFTEST",
+        mock_input_value="mock_input_from_conftest",
+        mock_output_value="mock_input_from_conftest",
+    )
+    return input_dict
+
+
+@pytest.fixture(scope="session")
 def return_json_settings():
     """Provide values for json functions."""
 
