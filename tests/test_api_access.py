@@ -13,12 +13,6 @@ from unittest import mock
 from broccolini.api_access import ApiAccess
 
 
-# import pytest
-
-
-# from broccolini.common import get_authentication_values
-
-
 logging.basicConfig(
     level=logging.DEBUG, format=" %(asctime)s - %(levelname)s - %(message)s"
 )
