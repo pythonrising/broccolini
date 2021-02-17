@@ -7,9 +7,9 @@ import logging
 from os import environ
 from typing import Dict, List
 
-import boto3
+import boto3  # pragma: no cover
 
-from botocore.exceptions import ClientError
+from botocore.exceptions import ClientError  # pragma: no cover
 
 
 logging.basicConfig(
