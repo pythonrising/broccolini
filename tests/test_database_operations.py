@@ -25,7 +25,7 @@ logging.basicConfig(
 
 
 class TestWorkerModule(TestCase):
-    """Mock database funtions.
+    """Mock database functions.
 
         from broccolini.database_operations import DataBaseOperations
     DataBaseOperations(client_token=client_token).fauna_get_connection()
