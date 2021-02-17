@@ -122,10 +122,6 @@ class TestDatabaseOperations:
             )
             return True
         except ValueError:
-            # result = this.fauna_create_index(
-            #     fauna_collection_name=return_database_settings["fauna_collection_name"],
-            #     fauna_index_name=return_database_settings["fauna_index_name"],
-            # )
             result = "need to create index"
         expected_type = str
         assert isinstance(result, expected_type)

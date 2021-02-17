@@ -26,7 +26,7 @@ class ApiAccess:
         return f"{class_name}"
 
     @staticmethod
-    def return_statistics_from_api(**kwargs: str) -> Response:
+    def return_statistics_from_api(**kwargs: str) -> Response:  # pragma: no cover
         """Get data."""
         api_url: str = kwargs["api_url"]
         api_key: str = kwargs["api_key"]

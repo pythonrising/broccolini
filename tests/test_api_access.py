@@ -21,7 +21,7 @@ class TestWorkerModule(TestCase):
     """Mock API functions."""
 
     @staticmethod
-    def test_return_statistics_from_api():
+    def test_return_statistics_from_api():  # pragma: no cover
         """Patch example for use in other mocking tests."""
         with mock.patch(
             # from broccolini.api_access import ApiAccess
@@ -34,6 +34,7 @@ class TestWorkerModule(TestCase):
             # ApiAccess.return_statistics_from_api("input_dictionary=input_dict")
             mock_helper.assert_called_once()
             # mock_helper.assert_called_once_with("input_dictionary=input_dict")
+            # return_statistics_from_api
 
 
 # class TestApiAccess:
