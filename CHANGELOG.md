@@ -1,6 +1,10 @@
 
 # CHANGELOG
 
+## 0.1.12.5
+
+"Added mock testing and increased test coverage"
+
 ## 0.1.12.4
 
 Cleanup poetry versions:
