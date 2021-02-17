@@ -7,8 +7,7 @@ Testing API access functions.
 
 import logging
 
-from unittest import TestCase
-from unittest import mock
+from unittest import TestCase, mock
 
 from broccolini.api_access import ApiAccess
 

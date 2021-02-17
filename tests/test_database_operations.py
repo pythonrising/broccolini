@@ -7,8 +7,7 @@ Testing common Database operations. Starting with www.faunadb.com.
 
 import logging
 
-from unittest import TestCase
-from unittest import mock
+from unittest import TestCase, mock
 
 import pytest
 
