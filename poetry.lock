@@ -268,7 +268,7 @@ pipenv = ["pipenv"]
 
 [[package]]
 name = "faker"
-version = "6.1.1"
+version = "6.5.0"
 description = "Faker is a Python package that generates fake data for you."
 category = "main"
 optional = false
@@ -1385,8 +1385,8 @@ dparse = [
     {file = "dparse-0.5.1.tar.gz", hash = "sha256:a1b5f169102e1c894f9a7d5ccf6f9402a836a5d24be80a986c7ce9eaed78f367"},
 ]
 faker = [
-    {file = "Faker-6.1.1-py3-none-any.whl", hash = "sha256:bf2a9b3f8d00a5dada61fc4a3f80fe0d6795c7f02a138a7d2ef2db5817c7d017"},
-    {file = "Faker-6.1.1.tar.gz", hash = "sha256:d4aecdb877519d06c2fdc01ffc5ecf70658981acf5e13cd07ded9892994ef5c6"},
+    {file = "Faker-6.5.0-py3-none-any.whl", hash = "sha256:90b69e9e05d622edb2fa5ebfda7bef41c88675cace85e72689fde5b8723d00a3"},
+    {file = "Faker-6.5.0.tar.gz", hash = "sha256:da395fe545f40d4366b82b1a02448847a4586bd2b28af393b3edbd1e45d1e0fc"},
 ]
 fastapi = [
     {file = "fastapi-0.61.2-py3-none-any.whl", hash = "sha256:8c8517680a221e69eb34073adf46c503092db2f24845b7bdc7f85b54f24ff0df"},
