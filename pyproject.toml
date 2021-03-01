@@ -40,7 +40,7 @@ PyGithub = "^1.54"
 pylint = "^2.6.0"
 safety = "^1.10.3"
 Faker = "^6.0.0"
-mypy = "^0.800"
+mypy = ">=0.800,<0.813"
 pytest-cov = "^2.11.1"
 
 [tool.poetry.dev-dependencies]
